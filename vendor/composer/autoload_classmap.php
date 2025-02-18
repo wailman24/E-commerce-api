@@ -7,9 +7,18 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
+    'App\\Http\\Controllers\\EmailVerificationController' => $baseDir . '/app/Http/Controllers/EmailVerificationController.php',
+    'App\\Http\\Controllers\\ReviewController' => $baseDir . '/app/Http/Controllers/ReviewController.php',
+    'App\\Http\\Controllers\\SellerController' => $baseDir . '/app/Http/Controllers/SellerController.php',
+    'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
     'App\\Http\\Controllers\\WishlistController' => $baseDir . '/app/Http/Controllers/WishlistController.php',
+    'App\\Http\\Middleware\\is_admin' => $baseDir . '/app/Http/Middleware/is_admin.php',
+    'App\\Http\\Middleware\\is_seller' => $baseDir . '/app/Http/Middleware/is_seller.php',
+    'App\\Http\\Resources\\SellerResource' => $baseDir . '/app/Http/Resources/SellerResource.php',
+    'App\\Http\\Resources\\UserResource' => $baseDir . '/app/Http/Resources/UserResource.php',
     'App\\Models\\Product' => $baseDir . '/app/Models/Product.php',
     'App\\Models\\Review' => $baseDir . '/app/Models/Review.php',
+    'App\\Models\\Seller' => $baseDir . '/app/Models/Seller.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\Wishlist' => $baseDir . '/app/Models/Wishlist.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
