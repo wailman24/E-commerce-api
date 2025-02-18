@@ -16,6 +16,7 @@ class Product extends Model
         'category_id',
         'about',
         'prix',
+        'stock',
         'seller_id',
     ];
 
@@ -25,7 +26,12 @@ class Product extends Model
     }
 
     public function Seller(){
-        //return $this->hasOne(Seller::class);
+        return $this->hasOne(Seller::class);
+
+    }
+
+    public function Image(){
+        return $this->hasMany(Image::class);
 
     }
 
