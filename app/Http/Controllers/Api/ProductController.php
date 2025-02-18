@@ -43,6 +43,7 @@ class ProductController extends Controller
             'category_id'=>'required|integer|exists:categories,id',
             'about'=>'required|string|max:1000',
             'prix'=>'required|integer|min:0',
+            'stock'=>'integer|min:0',
             'seller_id'=>'required|integer|exists:sellers,id',
 
 
@@ -60,6 +61,7 @@ class ProductController extends Controller
             'category_id'=>$request->category_id,
             'about'=>$request->about,
             'prix'=>$request->prix,
+            'stock'=>$request->stock,
             'seller_id'=>$request->seller_id,
 
         ]);
@@ -96,6 +98,7 @@ class ProductController extends Controller
             'category_id'=>'required|integer|exists:categories,id',
             'about'=>'required|string|max:1000',
             'prix'=>'required|integer|min:0',
+            'stock'=>'integer|min:0',
             'seller_id'=>'required|integer|exists:sellers,id',
 
 
@@ -113,6 +116,7 @@ class ProductController extends Controller
             'category_id'=>$request->category_id,
             'about'=>$request->about,
             'prix'=>$request->prix,
+            'stock'=>$request->stock,
             'seller_id'=>$request->seller_id,
 
         ]);
