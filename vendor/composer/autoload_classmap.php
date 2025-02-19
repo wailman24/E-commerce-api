@@ -7,9 +7,11 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
-    'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
-    'App\\Http\\Resources\\UserResource' => $baseDir . '/app/Http/Resources/UserResource.php',
+    'App\\Http\\Controllers\\WishlistController' => $baseDir . '/app/Http/Controllers/WishlistController.php',
+    'App\\Models\\Product' => $baseDir . '/app/Models/Product.php',
+    'App\\Models\\Review' => $baseDir . '/app/Models/Review.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
+    'App\\Models\\Wishlist' => $baseDir . '/app/Models/Wishlist.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Brick\\Math\\BigDecimal' => $vendorDir . '/brick/math/src/BigDecimal.php',

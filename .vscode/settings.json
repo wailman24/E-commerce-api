@@ -1,0 +1,12 @@
+{
+    "php.validate.executablePath": "C:/xampp/php/php.exe",
+    "intelephense.environment.phpVersion": "8.3",
+    "intelephense.completion.autoImport": true,
+    "intelephense.completion.fullyQualifyGlobalConstantsAndFunctions": true,
+    "intelephense.files.maxSize": 5000000,
+    "intelephense.telemetry.enabled": false,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    }
+}
