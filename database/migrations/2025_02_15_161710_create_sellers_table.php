@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->string('phone');
             $table->string('adress');
-            $table->enum('status', ['accepted', 'pending', 'rejected']);
-
+            $table->enum('status', ['accepted', 'pending', 'rejected'])->default('pending');
+            //add default value uphere
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

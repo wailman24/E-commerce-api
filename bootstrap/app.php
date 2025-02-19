@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\is_admin;
+use App\Http\Middleware\is_seller;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,6 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
             'auth:sanctum' => \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+            'isSeller' => is_seller::class,
+            'isAdmin' => is_admin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

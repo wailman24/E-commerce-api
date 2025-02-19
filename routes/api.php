@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\SellerController;
+
 //use App\Http\Controllers\Auth\AuthController;
 
 
@@ -11,6 +13,13 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::delete('/delete/{id}', [UserController::class, 'delete']);
 
+Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {});
+Route::post('/addseller', [SellerController::class, 'store']);
+
+Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
+    Route::get('/getallseller', [SellerController::class, 'index']);
+    Route::put('/sellerstatus/{id}', [SellerController::class, 'updatestatus']);
+});
 
 
 

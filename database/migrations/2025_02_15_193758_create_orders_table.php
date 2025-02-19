@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('adress_delivery');
-            $table->string('total');
+            $table->decimal('total');
             $table->enum('status', ['pending', 'shipped', 'delivered']);
-
+            $table->boolean('is_done')->default(false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });

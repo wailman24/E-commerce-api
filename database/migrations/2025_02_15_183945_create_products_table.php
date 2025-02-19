@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedBigInteger('category_id');
             $table->string('about');
-            $table->string('prix');
+            $table->decimal('prix');
+            $table->integer('stock');
             $table->boolean('is_valid')->default(false);
             $table->unsignedBigInteger('seller_id');
 

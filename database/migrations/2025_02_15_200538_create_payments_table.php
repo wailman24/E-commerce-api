@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id');
             $table->string('methode');
             $table->foreign('order_id')->references('id')->on('orders');
-            $table->enum('status', ['completed', 'pending', 'failed']);
+            $table->enum('status', ['completed', 'pending', 'failed'])->default('pending');
             $table->timestamps();
         });
     }
