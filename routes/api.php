@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\SellerController;
-
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\CategorieController;
 //use App\Http\Controllers\Auth\AuthController;
 
 
@@ -25,6 +26,8 @@ Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
 });
 
 
+Route::apiResource('Categories', CategorieController::class);
+Route::apiResource('Products', ProductController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
     // Email verification route
