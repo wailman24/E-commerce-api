@@ -29,7 +29,7 @@ Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
 
 Route::apiResource('Categories', CategorieController::class);
 Route::apiResource('Products', ProductController::class);
-Route::apiResource('Images',ImageController::class);
+Route::apiResource('Images', ImageController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
     // Email verification route
