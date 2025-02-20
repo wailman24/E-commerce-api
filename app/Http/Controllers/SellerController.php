@@ -136,7 +136,12 @@ class SellerController extends Controller
         try {
             $seller = Seller::where('id', $id)->first();
 
-
+            if (!$seller) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Seller Not Found.'
+                ], 404);
+            }
             $useller = $seller->update([
                 'status' => $request->status
             ]);
