@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ImageResource;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Exists;
 
 class ImageController extends Controller
 {
@@ -38,8 +39,7 @@ class ImageController extends Controller
     public function store(Request $request)
     {
         $validator =Validator::make($request->all(),[
-            'image_url'=>'required|string|max:2000|unique:images',
-            'is_main'=>'required|boolean',
+            'image_url'=>'required|mimes:png,jpg,jpeg,webp',
             'product_id'=>'integer|exists:products,id',
 
 
@@ -50,11 +50,14 @@ class ImageController extends Controller
                 'error'=>$validator->messages(),
             ],422);
         }
-        
+
+        $imagePath = null;
+        if ($request->hasFile('image_url')) {
+            $imagePath = $request->file('image_url')->store('uploads/images', 'public');
+        }
 
         $data = Image::create([
-            'image_url'=>$request->image_url,
-            'is_main'=>$request->is_main,
+            'image_url'=>$imagePath,
             'product_id'=>$request->product_id,
 
         ]);
@@ -88,8 +91,7 @@ class ImageController extends Controller
     public function update(Request $request, Image $Image)
     {
         $validator =Validator::make($request->all(),[
-            'image_url'=>'required|string|max:2000|unique:images',
-            'is_main'=>'required|boolean',
+            'image_url'=>'required|mimes:png,jpg,jpeg,webp',
             'product_id'=>'integer|exists:products,id',
  
          ]);
@@ -100,10 +102,22 @@ class ImageController extends Controller
              ],422);
          } 
          
+         /*if($request->has('image_url')){
+            $file = $request->file('image_url');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extension;
+
+            $path = 'upload/ProductImages/';
+            $file->move($path,$filename);
+        }*/
+        
+        $imagePath = null;
+        if ($request->hasFile('image_url')) {
+            $imagePath = $request->file('image_url')->store('uploads/images', 'public');
+        }
  
          $Image->update([
-            'image_url'=>$request->image_url,
-            'is_main'=>$request->is_main,
+            'image_url'=>$imagePath,
             'product_id'=>$request->product_id,
          ]);
  
