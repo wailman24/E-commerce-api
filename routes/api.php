@@ -22,7 +22,7 @@ Route::middleware(['auth:sanctum', 'isClient'])->group(function () {
 });
 
 Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
-    Route::put('/sellerstatus/{id}', [SellerController::class, 'updatestatus']);
+
     Route::get('/getallseller', [SellerController::class, 'index']);
     Route::put('/sellerstatus/{id}', [SellerController::class, 'updatestatus']);
     Route::delete('/deleteseller/{id}', [SellerController::class, 'destroy']);
