@@ -8,6 +8,7 @@ use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\SellerResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Database\Eloquent\Collection;
 
 class SellerController extends Controller
@@ -165,10 +166,16 @@ class SellerController extends Controller
     public function destroy(string $id)
     {
         $seller = Seller::where('id', $id)->first();
+        if (!$seller) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Seller Not Found.'
+            ], 404);
+        }
         $user = User::where('id', $seller->user_id)->first();
         $seller->delete();
         $user->update(['role_id' => '3']);
 
-        return new SellerResource($seller);
+        return new UserResource($user);
     }
 }
