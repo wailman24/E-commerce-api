@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\SellerController;
 
 //use App\Http\Controllers\Auth\AuthController;
@@ -36,3 +37,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/email/resend', [EmailVerificationController::class, 'resend'])
         ->name('verification.resend');
 });
+
+Route::apiResource('/order_item', OrderItemController::class);
