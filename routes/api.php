@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
-
+    Route::put('/sellerstatus/{id}', [SellerController::class, 'updatestatus']);
     Route::get('/getallseller', [SellerController::class, 'index']);
     Route::put('/sellerstatus/{id}', [SellerController::class, 'updatestatus']);
 });
