@@ -14,4 +14,9 @@ class Seller extends Model
         'adress',
         'status'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

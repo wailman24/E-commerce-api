@@ -52,15 +52,13 @@ class SellerController extends Controller
                 'store' => 'required',
                 'phone' => 'required|unique:sellers',
                 'adress' => 'required',
+
                 'logo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             ]);
             $imagePath = null;
             if ($request->hasFile('logo')) {
-                $image = $request->file('logo');
-                $imagePath = 'uploads/images/' . uniqid() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('uploads/images'), $imagePath);
+                $imagePath = $request->file('logo')->store('uploads/images', 'public');
             }
-
 
             $seller = Seller::create([
                 'user_id' => $user->id,
@@ -91,9 +89,43 @@ class SellerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function updateseller(Request $request, $id)
     {
-        //
+        try {
+            $request->validate([
+                'store' => 'required|string',
+                'phone' => 'required',
+                'adress' => 'required|string',
+                'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+
+            // Find seller
+            $seller = Seller::findOrFail($id);
+            if (!$seller) {
+                return response()->json(['status' => false, 'message' => 'Seller not found'], 404);
+            }
+            $imagePath = null;
+            if ($request->hasFile('logo')) {
+                $imagePath = $request->file('logo')->store('uploads/images', 'public');
+                $seller->update(['logo' => $imagePath]);
+            }
+            // Update seller details
+            $seller->update([
+                'store' => $request->store,
+                'phone' => $request->phone,
+                'adress' => $request->adress,
+                'logo' => $imagePath
+            ]);
+
+
+
+            return new SellerResource($seller);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -104,6 +136,7 @@ class SellerController extends Controller
         try {
             $seller = Seller::where('id', $id)->first();
 
+
             $useller = $seller->update([
                 'status' => $request->status
             ]);
@@ -111,6 +144,7 @@ class SellerController extends Controller
                 $user = User::where('id', $seller->user_id)->first();
                 $user->update(['role_id' => '2']);
             }
+            $seller = Seller::where('id', $id)->first();
             return new SellerResource($seller);
         } catch (\Throwable $th) {
             return response()->json([
@@ -125,6 +159,11 @@ class SellerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $seller = Seller::where('id', $id)->first();
+        $user = User::where('id', $seller->user_id)->first();
+        $seller->delete();
+        $user->update(['role_id' => '3']);
+
+        return new SellerResource($seller);
     }
 }

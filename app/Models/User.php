@@ -27,6 +27,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'role_id'
     ];
 
+    public function seller()
+    {
+        return $this->hasOne(Seller::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
