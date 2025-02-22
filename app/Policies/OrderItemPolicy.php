@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\Order_item;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Order_item;
 use Illuminate\Auth\Access\Response;
 
 class OrderItemPolicy
@@ -62,5 +63,14 @@ class OrderItemPolicy
     public function forceDelete(User $user, Order_item $orderItem): bool
     {
         return false;
+    }
+
+    public function modify(User $user, Order_item $order_item)
+    {
+        $order = Order::where('id', $order_item->order_id)->first();
+
+        return $user->id === $order->user_id
+        ? Response::allow()
+        : Response::deny('you can not modify this item');
     }
 }

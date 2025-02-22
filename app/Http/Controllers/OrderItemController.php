@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Order_item;
 use Illuminate\Http\Request;
+use function PHPSTORM_META\type;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\OrderItemResource;
 
-use function PHPSTORM_META\type;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Resources\OrderItemResource;
+use App\Http\Resources\OrderResource;
 
 class OrderItemController extends Controller
 {
@@ -23,8 +25,11 @@ class OrderItemController extends Controller
                       ->where('user_id', $user->id)
                       ->where('is_done', false)->first();
 
-        $items = Order_item::all()->where('order_id', $order->id);
-        return OrderItemResource::collection($items);
+        if(isset($order)){
+            $items = Order_item::all()->where('order_id', $order->id);
+            return OrderItemResource::collection($items);
+        }
+        return "your cart is empty";
     }
 
     /**
@@ -65,7 +70,7 @@ class OrderItemController extends Controller
         // $order->increment('total', $order_item->price);
         $order->update(['total' => $order->total + $order_item->price]);
 
-        return ['Order' => $order, 'Order_item' => $order_item];
+        return new OrderItemResource($order_item);
 
     }
 
@@ -82,6 +87,9 @@ class OrderItemController extends Controller
      */
     public function update(Request $request, Order_item $order_item)
     {
+        // Gate::authorize('modify',$request->user(), $order_item);
+        Gate::authorize('modify', $order_item);
+
         $product = DB::table('products')
                      ->select('stock', 'prix')
                      ->where('id', $order_item->product_id)->first();
@@ -116,7 +124,7 @@ class OrderItemController extends Controller
             }
         }
 
-        return response()->json($order_item);
+        return new OrderItemResource($order_item);
     }
 
     /**
@@ -124,6 +132,8 @@ class OrderItemController extends Controller
      */
     public function destroy(Order_item $order_item)
     {
+        Gate::authorize('modify', $order_item);
+
         $order_id = $order_item->order_id;
         $order_item->delete();
         $exist = Order_item::where('order_id', $order_id)->exists();

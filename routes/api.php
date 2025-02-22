@@ -3,9 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\EmailVerificationController;
-use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SellerController;
+use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\EmailVerificationController;
 
 //use App\Http\Controllers\Auth\AuthController;
 
@@ -23,6 +24,8 @@ Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
     Route::put('/sellerstatus/{id}', [SellerController::class, 'updatestatus']);
     Route::get('/getallseller', [SellerController::class, 'index']);
     Route::put('/sellerstatus/{id}', [SellerController::class, 'updatestatus']);
+
+    Route::get('/order', [OrderController::class, 'index']);
 });
 
 
@@ -37,14 +40,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/email/resend', [EmailVerificationController::class, 'resend'])
         ->name('verification.resend');
 
-    // Route::get('/order_item', [OrderItemController::class, 'index']);
+
 });
 
-// Route::get('/order_item', [OrderItemController::class, 'index']);
 
 // Route::apiResource('/order_item', OrderItemController::class);
-// Route::get('/order_item', [OrderItemController::class, 'index']);
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'isClient'])->group(function () {
     Route::get('/order_item', [OrderItemController::class, 'index']);
     Route::post('/order_item', [OrderItemController::class, 'store']);
     Route::put('/order_item/{order_item}', [OrderItemController::class, 'update']);
