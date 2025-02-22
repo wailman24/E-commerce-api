@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Seller;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\SellerResource;
 use App\Http\Resources\UserResource;
@@ -71,6 +72,44 @@ class SellerController extends Controller
             ]);
 
             return new SellerResource($seller);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function updateseller(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'store' => 'required|string',
+                'phone' => 'required',
+                'adress' => 'required|string',
+                'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+
+            // Find seller
+            $seller = Seller::findOrFail($id);
+            if (!$seller) {
+                return response()->json(['status' => false, 'message' => 'Seller not found'], 404);
+            }
+            $imagePath = null;
+            if ($request->hasFile('logo')) {
+                $imagePath = $request->file('logo')->store('uploads/images', 'public');
+                $seller->update(['logo' => $imagePath]);
+            }
+            // Update seller details
+            $seller->update([
+                'store' => $request->store,
+                'phone' => $request->phone,
+                'adress' => $request->adress,
+                'logo' => $imagePath
+            ]);
+
+            return new SellerResource($seller);
+
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,

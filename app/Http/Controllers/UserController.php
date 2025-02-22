@@ -75,6 +75,27 @@ class UserController extends Controller
         }
     }
 
+    public function logout(Request $request)
+    {
+        // Récupérer l'utilisateur authentifié
+        $user = $request->user();
+
+        if ($user) {
+            // Supprimer le token d'authentification actuel
+            $user->tokens()->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Logout successful'
+            ], 200);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'User not authenticated'
+        ], 401);
+    }
+
     public function delete($id)
     {
         $user = User::where('id', $id)->first();

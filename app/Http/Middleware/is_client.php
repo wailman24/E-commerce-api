@@ -20,10 +20,10 @@ class is_client
         $user = Auth::user();
         $roleid = $user->role_id;
         $role = DB::table('roles')->where('id', $roleid)->first();
-        if ($role->name != 'client') {
+        if ($role->name != 'Client') {
             return response()->json([
                 'status' => false,
-                'message' => 'your are not allowed'
+                'message' => 'you are not allowed'
             ], 405);
         }
         return $next($request);

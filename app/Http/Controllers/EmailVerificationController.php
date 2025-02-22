@@ -23,7 +23,6 @@ class EmailVerificationController extends Controller
         }
 
         if ($user->markEmailAsVerified()) {
-            $user->update(['email_verified_at' => now()]);
             event(new Verified($request->user()));
         }
 

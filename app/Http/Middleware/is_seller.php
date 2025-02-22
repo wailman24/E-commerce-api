@@ -23,7 +23,7 @@ class is_seller
         if ($role->name != 'seller') {
             return response()->json([
                 'status' => false,
-                'message' => 'your are not allowed'
+                'message' => 'you are not allowed'
             ], 405);
         }
         return $next($request);
