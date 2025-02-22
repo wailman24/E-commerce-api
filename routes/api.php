@@ -15,21 +15,48 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::delete('/delete/{id}', [UserController::class, 'delete']);
 
-Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {});
+Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {
+
+
+    Route::post('/addimage', [ImageController::class, 'store']);
+    Route::post('/updateimage/{Image}', [ImageController::class, 'updateimage']);
+    Route::delete('/deleteimage/{Image}', [ImageController::class, 'destroy']);
+
+    Route::post('/addproduct', [ProductController::class, 'store']);
+    Route::put('/updateproduct/{Product}', [ProductController::class, 'update']);
+    Route::delete('/deleteproduct/{Product}', [ProductController::class, 'destroy']);
+    
+});
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/addseller', [SellerController::class, 'store']);
 });
+
 
 Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
 
     Route::get('/getallseller', [SellerController::class, 'index']);
     Route::put('/sellerstatus/{id}', [SellerController::class, 'updatestatus']);
+
+    Route::post('/addcategory', [CategorieController::class, 'store']);
+    Route::put('/updatecategory/{Category}', [CategorieController::class, 'update']);
+    Route::delete('/deletecategory/{Category}', [CategorieController::class, 'destroy']);
+
+    Route::put('/productstatus/{Product}', [ProductController::class, 'updatestatus']);
+    Route::delete('/deleteproductadmin/{Product}', [ProductController::class, 'destroy']);
+
+    Route::delete('/deleteimageadmin/{Image}', [ImageController::class, 'destroy']);
+    
+
 });
 
+Route::get('/getallcategory', [CategorieController::class, 'index']);
+Route::get('/getcategory/{Category}', [CategorieController::class, 'show']);
 
-Route::apiResource('Categories', CategorieController::class);
-Route::apiResource('Products', ProductController::class);
-Route::apiResource('Images', ImageController::class);
+Route::get('/getallproduct', [ProductController::class, 'index']);
+Route::get('/getproduct/{Product}', [ProductController::class, 'show']);
+
+Route::get('/getallimage', [ImageController::class, 'index']);
+Route::get('/getimage/{Image}', [ImageController::class, 'show']);
 
 Route::middleware('auth:sanctum')->group(function () {
     // Email verification route

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Categorie;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategorieResource;
 use Illuminate\Support\Facades\Validator;
@@ -87,8 +88,13 @@ class CategorieController extends Controller
     public function update(Request $request, Categorie $Category)
     {
         $validator =Validator::make($request->all(),[
-           'name'=>'required|string|max:255|unique:categories',
-           'category_id'=>'required|integer|exists:categories,id',
+           'name'=>[
+            'required', 
+            'string', 
+            'max:255', 
+            Rule::unique('categories', 'name')->ignore($Category->id),
+        ],
+           'category_id'=>'integer|exists:categories,id',
 
         ]);
 
@@ -120,4 +126,5 @@ class CategorieController extends Controller
             'message'=>'Categorie deleted successfully',
         ],200);
     }
+    
 }
