@@ -3,7 +3,7 @@
 use App\Http\Middleware\is_admin;
 use App\Http\Middleware\is_client;
 use App\Http\Middleware\is_seller;
-use App\Http\Middleware\is_client;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
