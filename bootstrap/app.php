@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Middleware\CheckRoleMiddleware;
 use App\Http\Middleware\is_admin;
+use App\Http\Middleware\is_client;
+use App\Http\Middleware\is_client_or_seller;
 use App\Http\Middleware\is_seller;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -21,6 +24,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
             'isSeller' => is_seller::class,
             'isAdmin' => is_admin::class,
+            'isClient' => is_client::class,
+            'isClientOrSeller' => is_client_or_seller::class,
+            'Role' => CheckRoleMiddleware::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

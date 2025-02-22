@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class is_admin
+class is_client
 {
     /**
      * Handle an incoming request.
@@ -20,12 +20,12 @@ class is_admin
         $user = Auth::user();
         $roleid = $user->role_id;
         $role = DB::table('roles')->where('id', $roleid)->first();
-        if ($role->name != 'Admin') {
+        if ($role->name != 'Client') {
             return response()->json([
                 'status' => false,
                 'message' => 'you are not allowed'
             ], 405);
         }
         return $next($request);
-    }
+    }  
 }

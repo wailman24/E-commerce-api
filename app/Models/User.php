@@ -57,4 +57,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Wishlist::class);
     }
+
+    /*public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }*/
 }

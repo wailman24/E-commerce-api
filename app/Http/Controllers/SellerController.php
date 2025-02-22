@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\SellerResource;
+use App\Models\User;
 use App\Models\Seller;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\SellerResource;
+use Illuminate\Database\Eloquent\Collection;
 
 class SellerController extends Controller
 {
@@ -79,6 +81,44 @@ class SellerController extends Controller
         }
     }
 
+    public function updateseller(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'store' => 'required|string',
+                'phone' => 'required',
+                'adress' => 'required|string',
+                'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+
+            // Find seller
+            $seller = Seller::findOrFail($id);
+            if (!$seller) {
+                return response()->json(['status' => false, 'message' => 'Seller not found'], 404);
+            }
+            $imagePath = null;
+            if ($request->hasFile('logo')) {
+                $imagePath = $request->file('logo')->store('uploads/images', 'public');
+                $seller->update(['logo' => $imagePath]);
+            }
+            // Update seller details
+            $seller->update([
+                'store' => $request->store,
+                'phone' => $request->phone,
+                'adress' => $request->adress,
+                'logo' => $imagePath
+            ]);
+
+            return new SellerResource($seller);
+            
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
     /**
      * Display the specified resource.
      */
@@ -98,13 +138,58 @@ class SellerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function updatestatus(Request $request, string $id) {}
+    public function updatestatus(Request $request,$id) {
+        try {
+            // Vérifier si le vendeur existe
+            $seller = Seller::where('id', $id)->first();
+
+            if (!$seller) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Seller Not Found.'
+                ], 404);
+            }
+
+            // Mettre à jour le statut du vendeur
+            $seller->update([
+                'status' => $request->status
+            ]);
+
+            // Si le vendeur est accepté, mettre à jour son rôle utilisateur
+            if ($request->status == 'accepted') {
+                $user = User::where('id', $seller->user_id)->first();
+                $user->update(['role_id' => '3']);
+            }
+             
+            return new SellerResource($seller);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $seller = Seller::where('id', $id)->first();
+
+        if (!$seller) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Seller Not Found.'
+            ], 404);
+        }
+
+        $user = User::where('id', $seller->user_id)->first();
+        $seller->delete();
+        $user->update(['role_id' => '1']);
+
+        return new UserResource($user);
     }
 }
