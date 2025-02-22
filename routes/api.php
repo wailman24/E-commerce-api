@@ -36,6 +36,17 @@ Route::middleware('auth:sanctum')->group(function () {
     // Resend email verification route
     Route::post('/email/resend', [EmailVerificationController::class, 'resend'])
         ->name('verification.resend');
+
+    // Route::get('/order_item', [OrderItemController::class, 'index']);
 });
 
-Route::apiResource('/order_item', OrderItemController::class);
+// Route::get('/order_item', [OrderItemController::class, 'index']);
+
+// Route::apiResource('/order_item', OrderItemController::class);
+// Route::get('/order_item', [OrderItemController::class, 'index']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/order_item', [OrderItemController::class, 'index']);
+    Route::post('/order_item', [OrderItemController::class, 'store']);
+    Route::put('/order_item/{order_item}', [OrderItemController::class, 'update']);
+    Route::delete('/order_item/{order_item}', [OrderItemController::class, 'destroy']);
+});

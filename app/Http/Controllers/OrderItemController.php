@@ -6,6 +6,10 @@ use App\Models\Order;
 use App\Models\Order_item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\OrderItemResource;
+
+use function PHPSTORM_META\type;
 
 class OrderItemController extends Controller
 {
@@ -14,7 +18,13 @@ class OrderItemController extends Controller
      */
     public function index()
     {
-        return Order_item::all();
+        $user = Auth::user();
+        $order = Order::select('id')
+                      ->where('user_id', $user->id)
+                      ->where('is_done', false)->first();
+
+        $items = Order_item::all()->where('order_id', $order->id);
+        return OrderItemResource::collection($items);
     }
 
     /**
@@ -22,25 +32,38 @@ class OrderItemController extends Controller
      */
     public function store(Request $request)
     {
-        $feilds = $request->validate([
+        $fields = $request->validate([
             'product_id' => 'required',
             'qte' => 'required',
-            'price' => 'required'
         ]);
 
-        $order = Order::where('user_id', $request->user_id)->where('is_done', false)->first();
+        $product = DB::table('products')
+                     ->select('prix')
+                     ->where('id', $request->product_id)->first();
+
+        $fields['price'] = ($product->prix) * $fields['qte'];
+
+        $order = Order::where('user_id', $request->user()->id)
+                      ->where('is_done', false)->first();
 
         if(!isset($order)){
-            $feild = $request->validate(['user_id' => 'required']);
-            $feild['adress_delivery'] = 'Beni Messous';
-            $feild['total'] = '0';
-            $feild['status'] = 'pending';
-            $order = Order::create($feild);
+            $field['user_id'] = $request->user()->id;
+            $field['adress_delivery'] = '';
+            $field['total'] = 0;
+            $field['status'] = 'pending';
+            $field['is_done'] = false;
+            $order = Order::create($field);
         }
 
-        $feilds['order_id'] = $order->id;
+        $fields['order_id'] = $order->id;
 
-        $order_item = Order_item::create($feilds);
+        $order_item = Order_item::create($fields);
+
+        // $field['total'] = $order->total + $order_item->price;
+        // $order->update($field);
+        
+        // $order->increment('total', $order_item->price);
+        $order->update(['total' => $order->total + $order_item->price]);
 
         return ['Order' => $order, 'Order_item' => $order_item];
 
@@ -59,26 +82,41 @@ class OrderItemController extends Controller
      */
     public function update(Request $request, Order_item $order_item)
     {
-        $product = DB::table('products')->where('id', $order_item->id)->first();
+        $product = DB::table('products')
+                     ->select('stock', 'prix')
+                     ->where('id', $order_item->product_id)->first();
+
+        $order = Order::where('id', $order_item->order_id)
+                      ->where('is_done', false)->first();
 
         if($request->option == 'inc'){
-            if(intval($order_item->qte) == intval($product->stock)){
+            if($order_item->qte == $product->stock){
                 return "the stock is empty";
             }
-            $feild['qte'] = strval(intval($order_item->qte) + 1);
+
+            $order_item->update([
+                'qte' => $order_item->qte + 1,
+                'price' => $order_item->price + $product->prix
+            ]);
+
+            $order->update(['total' => $order->total + $product->prix]);
         }
         else{
             if($request->option == 'dec'){
-                if(intval($order_item->qte) == 1){
+                if($order_item->qte == 1){
                     return 'delete?';
                 }
-                $feild['qte'] = strval(intval($order_item->qte) - 1);
+
+                $order_item->update([
+                    'qte' => $order_item->qte - 1,
+                    'price' => $order_item->price - $product->prix
+                ]);
+
+                $order->update(['total' => $order->total - $product->prix]);
             }
         }
 
-        $order_item->update($feild);
-
-        return $order_item;
+        return response()->json($order_item);
     }
 
     /**
@@ -86,7 +124,13 @@ class OrderItemController extends Controller
      */
     public function destroy(Order_item $order_item)
     {
+        $order_id = $order_item->order_id;
         $order_item->delete();
+        $exist = Order_item::where('order_id', $order_id)->exists();
+
+        if(!$exist){
+            Order::where('id', $order_id)->delete();
+        }
 
         return 'this item has been deleted';
     }
