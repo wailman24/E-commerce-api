@@ -2,24 +2,36 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable, HasApiTokens;
 
     protected $fillable = [
-        "name",
-        "category_id",
-        "about",
-        "prix",
-        "is_valid",
-        "seller_id"
+        'name',
+        'category_id',
+        'about',
+        'prix',
+        'stock',
+        'seller_id',
     ];
 
-    public function reviews()
+    public function Categorie()
     {
-        return $this->hasMany(Review::class);
+        return $this->hasOne(Categorie::class);
+    }
+
+    public function Seller()
+    {
+        return $this->hasOne(Seller::class);
+    }
+
+    public function Image()
+    {
+        return $this->hasMany(Image::class);
     }
 }
