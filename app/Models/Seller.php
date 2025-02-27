@@ -12,7 +12,8 @@ class Seller extends Model
         'logo',
         'phone',
         'adress',
-        'status'
+        'status',
+        'paypal'
     ];
 
     public function user()

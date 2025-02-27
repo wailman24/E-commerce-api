@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('adress');
             $table->enum('status', ['accepted', 'pending', 'rejected'])->default('pending');
+            $table->string('paypal');
             //add default value uphere
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

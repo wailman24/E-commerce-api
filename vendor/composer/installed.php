@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'cec6a96a6821b86e68bc4d967b2015f7a1767294',
+        'reference' => '1a0d9da5dc7a86756724c268997d145eb7b53cf6',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -422,9 +422,9 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '1a0d9da5dc7a86756724c268997d145eb7b53cf6',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -1108,6 +1108,15 @@
             'replaced' => array(
                 0 => '*',
             ),
+        ),
+        'srmklive/paypal' => array(
+            'pretty_version' => '3.0.32',
+            'version' => '3.0.32.0',
+            'reference' => '031d69d7c99f9ef0874a34cb85326ede28cd7aed',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../srmklive/paypal',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'staabm/side-effects-detector' => array(
             'pretty_version' => '1.0.5',

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ProductResource;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -15,16 +16,32 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function getallproducts()
     {
-        $Product= Product::get();
-        if ($Product->count() > 0) {
+        $user = Auth::user();
+        if ($user->role_id == 1) {
+            $Product = Product::all();
             return ProductResource::collection($Product);
-        }else{
-
-            return response()->json(['message'=>'No Product Available'],200);
+        } else {
+            $seller_id = Seller::where('user_id', $user->id)->first();
+            $Products = Product::where('seller_id', $seller_id)->get();
+            return ProductResource::collection($Products);
         }
+    }
 
+    public function getallproductsforsellers()
+    {
+        $user = Auth::user();
+
+        $seller_id = Seller::where('user_id', $user->id)->first();
+        $Products = Product::where('seller_id', $seller_id)->get();
+        return ProductResource::collection($Products);
+    }
+
+    public function getvalidproducts()
+    {
+        $Products = Product::where('is_valid', true)->get();
+        return ProductResource::collection($Products);
     }
 
     /**
@@ -40,39 +57,46 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
-        $seller = Seller::where('user_id', $user->id)->first();
+        try {
 
-        $validator =Validator::make($request->all(),[
-            'name'=>'required|string|max:255',
-            'category_id'=>'required|integer|exists:categories,id',
-            'about'=>'required|string|min:20|max:2000',
-            'prix'=>'required|numeric|min:0',
-            'stock'=>'required|integer|min:0',
+            $user = Auth::user();
+            $seller = Seller::where('user_id', $user->id)->first();
 
-        ]);
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'category_id' => 'required|integer|exists:categories,id',
+                'about' => 'required|string|min:20|max:2000',
+                'prix' => 'required|numeric|min:0',
+                'stock' => 'required|integer|min:0',
 
-        if ($validator->fails()) {
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'error' => $validator->messages(),
+                ], 422);
+            }
+
+
+            $data = Product::create([
+                'name' => $request->name,
+                'category_id' => $request->category_id,
+                'about' => $request->about,
+                'prix' => $request->prix,
+                'stock' => $request->stock,
+                'seller_id' => $seller->id,
+            ]);
+
             return response()->json([
-                'error'=>$validator->messages(),
-            ],422);
+                'message' => 'Product created successfully',
+                'DATA' => new ProductResource($data),
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
         }
-        
-
-        $data = Product::create([
-            'name'=>$request->name,
-            'category_id'=>$request->category_id,
-            'about'=>$request->about,
-            'prix'=>$request->prix,
-            'stock'=>$request->stock,
-            'seller_id' => $seller->id,
-
-        ]);
-
-        return response()->json([
-            'message'=>'Product created successfully',
-            'DATA' => new ProductResource($data) ,
-        ],200);
     }
 
     /**
@@ -80,7 +104,7 @@ class ProductController extends Controller
      */
     public function show(Product $Product)
     {
-        return new ProductResource($Product) ;
+        return new ProductResource($Product);
     }
 
     /**
@@ -110,12 +134,12 @@ class ProductController extends Controller
             ], 403);
         }
 
-        $validator =Validator::make($request->all(),[
-            'name'=>'required|string|max:255',
-            'category_id'=>'required|integer|exists:categories,id',
-            'about'=>'required|string|min:20|max:2000',
-            'prix'=>'required|numeric|min:0',
-            'stock'=>'required|integer|min:0',
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|integer|exists:categories,id',
+            'about' => 'required|string|min:20|max:2000',
+            'prix' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
 
         ]);
 
@@ -123,24 +147,24 @@ class ProductController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'error'=>$validator->messages(),
-            ],422);
+                'error' => $validator->messages(),
+            ], 422);
         }
-        
+
 
         $Product->update([
-            'name'=>$request->name,
-            'category_id'=>$request->category_id,
-            'about'=>$request->about,
-            'prix'=>$request->prix,
-            'stock'=>$request->stock,
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'about' => $request->about,
+            'prix' => $request->prix,
+            'stock' => $request->stock,
 
         ]);
 
         return response()->json([
-            'message'=>'Product Updated successfully',
-            'DATA' => new ProductResource($Product) ,
-        ],200);
+            'message' => 'Product Updated successfully',
+            'DATA' => new ProductResource($Product),
+        ], 200);
     }
 
     /**
@@ -152,7 +176,7 @@ class ProductController extends Controller
         if ($user->role_id !== 2) {
 
             $seller = Seller::where('user_id', $user->id)->first();
-        
+
             if ($Product->seller_id !== $seller->id) {
                 return response()->json([
                     'status' => false,
@@ -163,24 +187,23 @@ class ProductController extends Controller
 
         $Product->delete();
         return response()->json([
-            'message'=>'Product deleted successfully',
-        ],200);
+            'message' => 'Product deleted successfully',
+        ], 200);
     }
 
-    public function updatestatus( Product $Product)
-    {   
+    public function updatestatus(Product $Product)
+    {
 
         $Product->is_valid = !$Product->is_valid;
         $valid = 'unvalidated';
-        if($Product->is_valid){
+        if ($Product->is_valid) {
             $valid = 'validated';
         }
         $Product->update([
-            'is_valid'=>$Product->is_valid,
+            'is_valid' => $Product->is_valid,
         ]);
         return response()->json([
-            'message'=>'the product has been '.$valid,
-
-        ],200);
+            'message' => 'the product has been ' . $valid,
+        ], 200);
     }
 }

@@ -20,7 +20,7 @@ class is_seller
         $user = Auth::user();
         $roleid = $user->role_id;
         $role = DB::table('roles')->where('id', $roleid)->first();
-        if ($role->name != 'seller') {
+        if ($role->name != 'Seller') {
             return response()->json([
                 'status' => false,
                 'message' => 'you are not allowed'

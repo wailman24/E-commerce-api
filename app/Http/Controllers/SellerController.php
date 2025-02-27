@@ -54,7 +54,7 @@ class SellerController extends Controller
                 'store' => 'required',
                 'phone' => 'required|unique:sellers',
                 'adress' => 'required',
-
+                'paypal' => 'required',
                 'logo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             ]);
             $imagePath = null;
@@ -69,6 +69,7 @@ class SellerController extends Controller
                 'adress' => $request->adress,
                 'status' => 'pending',
                 'logo' => $imagePath, // Save image path in DB
+                'paypal' => $request->paypal
             ]);
 
             return new SellerResource($seller);
@@ -88,6 +89,7 @@ class SellerController extends Controller
                 'phone' => 'required',
                 'adress' => 'required|string',
                 'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'paypal' => 'required'
             ]);
 
             // Find seller
@@ -105,7 +107,8 @@ class SellerController extends Controller
                 'store' => $request->store,
                 'phone' => $request->phone,
                 'adress' => $request->adress,
-                'logo' => $imagePath
+                'logo' => $imagePath,
+                'paypal' => $request->paypal
             ]);
 
             return new SellerResource($seller);

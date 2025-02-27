@@ -15,7 +15,7 @@ use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategorieController;
 //use App\Http\Controllers\Auth\AuthController;
-
+use App\Http\Controllers\PaymentController;
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
@@ -28,6 +28,7 @@ Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {
     Route::post('/updateimage/{Image}', [ImageController::class, 'updateimage']);
     Route::delete('/deleteimage/{Image}', [ImageController::class, 'destroy']);
 
+    Route::get('/getallproductsforsellers', [ProductController::class, 'getallproductsforsellers']);
     Route::post('/addproduct', [ProductController::class, 'store']);
     Route::put('/updateproduct/{Product}', [ProductController::class, 'update']);
     Route::delete('/deleteproduct/{Product}', [ProductController::class, 'destroy']);
@@ -35,14 +36,25 @@ Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {
 
 Route::middleware(['auth:sanctum', 'isClient'])->group(function () {
 
+    Route::post('/payment', [PaymentController::class, 'createPayment'])->name('payment');
+
+
+    ///////
+
     Route::post('/addseller', [SellerController::class, 'store']);
 });
 
 Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
 
+
+    Route::post('/payout/{seller}', [PaymentController::class, 'payoutToSeller']);
+
+    //////
+
     Route::get('/getallseller', [SellerController::class, 'index']);
     Route::put('/sellerstatus/{id}', [SellerController::class, 'updatestatus']);
     Route::delete('/deleteseller/{id}', [SellerController::class, 'destroy']);
+    Route::get('/getallproducts', [ProductController::class, 'getallproducts']);
 
     ///////////////////////////////////////////////////
 
@@ -88,13 +100,21 @@ Route::get('/products/{productId}/reviews', [ReviewController::class, 'index']);
 Route::get('/getallcategory', [CategorieController::class, 'index']);
 Route::get('/getcategory/{Category}', [CategorieController::class, 'show']);
 
-Route::get('/getallproduct', [ProductController::class, 'index']);
+Route::get('/getvalidproducts', [ProductController::class, 'getvalidproducts']);
 Route::get('/getproduct/{Product}', [ProductController::class, 'show']);
 
 Route::get('/getallimage', [ImageController::class, 'index']);
 Route::get('/getimage/{Image}', [ImageController::class, 'show']);
 
+/////////////////////////////////////////////////
+
+//payment
+Route::get('/payment/success', [PaymentController::class, 'Success'])->name('payment.success');
+Route::get('/payment/cancel', [PaymentController::class, 'Cancel'])->name('payment.cancel');
+
+
 Route::middleware('auth:sanctum')->group(function () {
+
     // Email verification route
     Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
         ->middleware(['signed'])

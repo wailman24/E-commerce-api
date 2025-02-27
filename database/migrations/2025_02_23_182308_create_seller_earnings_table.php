@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('seller_earnings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id');
-            $table->string('methode');
-            $table->enum('status', ['completed', 'pending', 'failed'])->default('pending');
+            $table->unsignedBigInteger('seller_id');
+            $table->decimal('unpaid_amount', 10, 2)->default(0.00);
+            $table->decimal('paid_amount', 10, 2)->default(0.00);
 
-            $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('seller_earnings');
     }
 };
