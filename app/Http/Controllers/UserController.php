@@ -24,17 +24,23 @@ class UserController extends Controller
                 'name' => 'required|string',
                 'email' => 'required|email|unique:users',
                 'password' => 'required',
-                'role_id' => 'required|exists:roles,id'
+                //'role_id' => 'required|exists:roles,id'
             ]);
             $hashedpass = Hash::make($request->password);
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => $hashedpass,
-                'role_id' => $request->role_id
+                'role_id' => 3
             ]);
             event(new Registered($user));
-            return new UserResource($user);
+            $token = $user->createToken("auth_token")->plainTextToken;
+            //return new UserResource($user);
+            return response()->json([
+                'status' => true,
+                'message' => 'User registered Successfully',
+                'token' => $token
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -104,5 +110,11 @@ class UserController extends Controller
         return response()->json([
             'message' => 'deleted'
         ]);
+    }
+
+    public function getuser()
+    {
+        $user = Auth::user();
+        return new UserResource($user);
     }
 }

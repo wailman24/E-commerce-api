@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('unpaid_amount', 10, 2)->default(0.00);
             $table->decimal('paid_amount', 10, 2)->default(0.00);
 
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -144,6 +144,7 @@ class PaymentController extends Controller
                             /// decrease qte from the product
 
                             //dd($item->stock);
+
                             $U_qte = $item->stock - $item->qte;
 
                             //// update product

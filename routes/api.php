@@ -115,6 +115,8 @@ Route::get('/payment/cancel', [PaymentController::class, 'Cancel'])->name('payme
 
 Route::middleware('auth:sanctum')->group(function () {
 
+    /// get the authenticatided user
+    Route::get('/getuser', [UserController::class, 'getuser']);
     // Email verification route
     Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
         ->middleware(['signed'])

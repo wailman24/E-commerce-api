@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Categorie extends Model
 {
     use HasFactory, Notifiable,HasApiTokens;
-    
+
     protected $table = 'categories';
 
     protected $fillable = [
@@ -22,12 +22,12 @@ class Categorie extends Model
     public function subcategories(){
         return $this->hasMany(Categorie::class, 'category_id');
     }
-    
+
     public function parentCategory(){
         return $this->belongsTo(Categorie::class, 'category_id');
     }
 
-    public function Product(){
+    public function product(){
         return $this->hasMany(Product::class);
 
     }

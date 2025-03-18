@@ -13,4 +13,9 @@ class Seller_earning extends Model
         'unpaid_amount',
         'paid_amount'
     ];
+
+    public function seller()
+    {
+        return $this->hasOne(Seller::class);
+    }
 }

@@ -20,18 +20,33 @@ class Product extends Model
         'seller_id',
     ];
 
-    public function Categorie()
+    public function categorie()
     {
-        return $this->hasOne(Categorie::class);
+        return $this->belongsTo(Categorie::class);
     }
 
-    public function Seller()
+    public function seller()
     {
-        return $this->hasOne(Seller::class);
+        return $this->belongsTo(Seller::class);
     }
 
-    public function Image()
+    public function image()
     {
         return $this->hasMany(Image::class);
+    }
+
+    public function review()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    public function order_item()
+    {
+        return $this->hasMany(Order_item::class);
     }
 }

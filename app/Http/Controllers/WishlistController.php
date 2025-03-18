@@ -17,11 +17,11 @@ class WishlistController extends Controller
      */
     public function view_wishlist()
     {
-        /** @var User $user */
+
         $user = Auth::user();
 
 
-        $wishlist = $user?->wishlists()->with('product')->get();       
+        $wishlist = $user?->wishlists()->with('product')->get();
         return response()->json($wishlist, 200);
     }
 
@@ -30,21 +30,20 @@ class WishlistController extends Controller
      * Ajouter un produit à la wishlist.
      */
     public function add_to_wishlist(Request $request)
-    {   
-        try{
-        // Valide le produit_id dans la requête et verifie s'il existe
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-        ]);
-        }
-        catch (\Throwable $th) {
+    {
+        try {
+            // Valide le produit_id dans la requête et verifie s'il existe
+            $request->validate([
+                'product_id' => 'required|exists:products,id',
+            ]);
+        } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
                 'message' => $th->getMessage()
             ], 500);
         }
-        
-    
+
+
 
         // Vérifie si l'utilisateur est authentifié
         $user = Auth::user();
@@ -56,7 +55,7 @@ class WishlistController extends Controller
                 'register' => url('/api/register')
             ], 401);
         }
-        
+
         // Vérifie si le produit est déjà dans la wishlist
         $existing = Wishlist::where('user_id', $user->id)  //where('user_id', $user->id)
             ->where('product_id', $request->product_id)
@@ -79,7 +78,6 @@ class WishlistController extends Controller
             'success' => true,
             'message' => 'Product Added To The Wishlist.'
         ], 201);
-        
     }
 
 
@@ -88,18 +86,18 @@ class WishlistController extends Controller
      */
     public function remove_from_wishlist(Request $request)
     {
-        try{
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-        ]);
-        }catch (\Throwable $th) {
+        try {
+            $request->validate([
+                'product_id' => 'required|exists:products,id',
+            ]);
+        } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
                 'message' => $th->getMessage()
             ], 500);
         }
-        
-        
+
+
 
         /** @var int|null $userId */
         $userId = Auth::id();
@@ -112,7 +110,7 @@ class WishlistController extends Controller
             ], 401);
         }
 
-        $wishlist = Wishlist::where('user_id', $userId)   
+        $wishlist = Wishlist::where('user_id', $userId)
             ->where('product_id', $request->product_id)
             ->first();
 
@@ -129,6 +127,5 @@ class WishlistController extends Controller
             'success' => true,
             'message' => 'Product Removed From The Wishlist.'
         ], 200);
-    
     }
 }
