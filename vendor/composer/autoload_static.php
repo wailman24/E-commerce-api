@@ -155,6 +155,7 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
         array (
             'Illuminate\\Support\\' => 19,
             'Illuminate\\' => 11,
+            'Ichtrojan\\Otp\\' => 14,
         ),
         'G' => 
         array (
@@ -504,6 +505,10 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate',
         ),
+        'Ichtrojan\\Otp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ichtrojan/laravel-otp/src',
+        ),
         'GuzzleHttp\\UriTemplate\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/uri-template/src',
@@ -605,6 +610,7 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
         'App\\Http\\Controllers\\EmailVerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmailVerificationController.php',
         'App\\Http\\Controllers\\OrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/OrderController.php',
         'App\\Http\\Controllers\\OrderItemController' => __DIR__ . '/../..' . '/app/Http/Controllers/OrderItemController.php',
+        'App\\Http\\Controllers\\PaymentController' => __DIR__ . '/../..' . '/app/Http/Controllers/PaymentController.php',
         'App\\Http\\Controllers\\ReviewController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReviewController.php',
         'App\\Http\\Controllers\\SellerController' => __DIR__ . '/../..' . '/app/Http/Controllers/SellerController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
@@ -631,12 +637,15 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
         'App\\Models\\Image' => __DIR__ . '/../..' . '/app/Models/Image.php',
         'App\\Models\\Order' => __DIR__ . '/../..' . '/app/Models/Order.php',
         'App\\Models\\Order_item' => __DIR__ . '/../..' . '/app/Models/Order_item.php',
+        'App\\Models\\Payment' => __DIR__ . '/../..' . '/app/Models/Payment.php',
         'App\\Models\\Product' => __DIR__ . '/../..' . '/app/Models/Product.php',
         'App\\Models\\Review' => __DIR__ . '/../..' . '/app/Models/Review.php',
         'App\\Models\\Role' => __DIR__ . '/../..' . '/app/Models/Role.php',
         'App\\Models\\Seller' => __DIR__ . '/../..' . '/app/Models/Seller.php',
+        'App\\Models\\Seller_earning' => __DIR__ . '/../..' . '/app/Models/Seller_earning.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\Wishlist' => __DIR__ . '/../..' . '/app/Models/Wishlist.php',
+        'App\\Notifications\\ApiVerifyEmail' => __DIR__ . '/../..' . '/app/Notifications/ApiVerifyEmail.php',
         'App\\Policies\\OrderItemPolicy' => __DIR__ . '/../..' . '/app/Policies/OrderItemPolicy.php',
         'App\\Policies\\OrderPolicy' => __DIR__ . '/../..' . '/app/Policies/OrderPolicy.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -1671,6 +1680,10 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
         'Hamcrest\\Type\\IsString' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Type/IsString.php',
         'Hamcrest\\Util' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
         'Hamcrest\\Xml\\HasXPath' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
+        'Ichtrojan\\Otp\\Commands\\CleanOtps' => __DIR__ . '/..' . '/ichtrojan/laravel-otp/src/Commands/CleanOtps.php',
+        'Ichtrojan\\Otp\\Models\\Otp' => __DIR__ . '/..' . '/ichtrojan/laravel-otp/src/Models/Otp.php',
+        'Ichtrojan\\Otp\\Otp' => __DIR__ . '/..' . '/ichtrojan/laravel-otp/src/Otp.php',
+        'Ichtrojan\\Otp\\OtpServiceProvider' => __DIR__ . '/..' . '/ichtrojan/laravel-otp/src/OtpServiceProvider.php',
         'Illuminate\\Auth\\Access\\AuthorizationException' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Auth/Access/AuthorizationException.php',
         'Illuminate\\Auth\\Access\\Events\\GateEvaluated' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Auth/Access/Events/GateEvaluated.php',
         'Illuminate\\Auth\\Access\\Gate' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Auth/Access/Gate.php',

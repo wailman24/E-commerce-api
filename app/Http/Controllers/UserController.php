@@ -24,22 +24,14 @@ class UserController extends Controller
                 'name' => 'required|string',
                 'email' => 'required|email|unique:users',
                 'password' => 'required',
-                //'role_id' => 'required|exists:roles,id'
             ]);
-            $hashedpass = Hash::make($request->password);
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => $hashedpass,
-                'role_id' => 3
-            ]);
-            event(new Registered($user));
-            $token = $user->createToken("auth_token")->plainTextToken;
-            //return new UserResource($user);
+
+            $otpcontr = new OtpController();
+            $otpcontr->sendOtp($request->email);
+
             return response()->json([
                 'status' => true,
-                'message' => 'User registered Successfully',
-                'token' => $token
+                'message' => 'OTP sent successfully. Please verify your email before completing registration.',
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -65,7 +57,13 @@ class UserController extends Controller
             }
             // $user = Auth::user();
             //$user = DB::table('users')->where('email',  $request->email)->first();
-
+            // 🔹 Check if the user's email is verified
+            if (!$user->hasVerifiedEmail()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Your email is not verified. Please check your email and verify your account.',
+                ], 403); // 403 Forbidden
+            }
             $token = $user->createToken("auth_token")->plainTextToken;
 
             return response()->json([

@@ -14,11 +14,12 @@ use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategorieController;
+use App\Http\Controllers\OtpController;
 //use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PaymentController;
 
 Route::post('/register', [UserController::class, 'register']);
-Route::post('/login', [UserController::class, 'login']);
+Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::delete('/delete/{id}', [UserController::class, 'delete']);
 
 Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {
@@ -112,20 +113,22 @@ Route::get('/getimage/{Image}', [ImageController::class, 'show']);
 Route::get('/payment/success', [PaymentController::class, 'Success'])->name('payment.success');
 Route::get('/payment/cancel', [PaymentController::class, 'Cancel'])->name('payment.cancel');
 
+Route::post('/send-otp', [OtpController::class, 'sendOtp']);
+Route::post('/verify-otp', [OtpController::class, 'verifyOtp']);
 
 Route::middleware('auth:sanctum')->group(function () {
-
+    Route::post('/logout', [UserController::class, 'logout']);
     /// get the authenticatided user
     Route::get('/getuser', [UserController::class, 'getuser']);
     // Email verification route
-    Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
+    /*     Route::get('/email/verify/{id}/{hash}', EmailVerificationController::class)
         ->middleware(['signed'])
         ->name('verification.verify');
-    // To Logout Route
-    Route::post('/logout', [UserController::class, 'logout']);
-    // Resend email verification route
+
+    // Resend verification email
     Route::post('/email/resend', [EmailVerificationController::class, 'resend'])
-        ->name('verification.resend');
+        ->middleware('auth:sanctum')
+        ->name('verification.resend'); */
 });
 
 /*  */

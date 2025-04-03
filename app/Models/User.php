@@ -28,6 +28,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'role_id'
     ];
 
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new \App\Notifications\ApiVerifyEmail);
+    }
     public function seller()
     {
         return $this->hasOne(Seller::class);
