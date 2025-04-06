@@ -54,7 +54,9 @@ class OtpController extends Controller
         try {
             $request->validate([
                 'email' => 'required|email',
-                'otp' => 'required|digits:6'
+                'otp' => 'required|numeric',
+                'name' => 'required|string',
+                'password' => 'required|string',
             ]);
 
             // Retrieve OTP from database
@@ -75,6 +77,7 @@ class OtpController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'email_verified_at' => now(),
                 'role_id' => 3
             ]);
 

@@ -57,13 +57,7 @@ class UserController extends Controller
             }
             // $user = Auth::user();
             //$user = DB::table('users')->where('email',  $request->email)->first();
-            // 🔹 Check if the user's email is verified
-            if (!$user->hasVerifiedEmail()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Your email is not verified. Please check your email and verify your account.',
-                ], 403); // 403 Forbidden
-            }
+
             $token = $user->createToken("auth_token")->plainTextToken;
 
             return response()->json([

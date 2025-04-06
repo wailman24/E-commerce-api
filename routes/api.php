@@ -19,7 +19,7 @@ use App\Http\Controllers\OtpController;
 use App\Http\Controllers\PaymentController;
 
 Route::post('/register', [UserController::class, 'register']);
-Route::post('/login', [UserController::class, 'login'])->name('login');
+Route::post('/login', [UserController::class, 'login']);
 Route::delete('/delete/{id}', [UserController::class, 'delete']);
 
 Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {
@@ -113,7 +113,7 @@ Route::get('/getimage/{Image}', [ImageController::class, 'show']);
 Route::get('/payment/success', [PaymentController::class, 'Success'])->name('payment.success');
 Route::get('/payment/cancel', [PaymentController::class, 'Cancel'])->name('payment.cancel');
 
-Route::post('/send-otp', [OtpController::class, 'sendOtp']);
+//Route::post('/send-otp', [OtpController::class, 'sendOtp']);
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp']);
 
 Route::middleware('auth:sanctum')->group(function () {
