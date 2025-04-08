@@ -55,6 +55,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'top_purchased_product' => env('TOP_PURCHASED_PRODUCT', '5'),
 
     /*
     |--------------------------------------------------------------------------

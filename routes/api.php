@@ -120,15 +120,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [UserController::class, 'logout']);
     /// get the authenticatided user
     Route::get('/getuser', [UserController::class, 'getuser']);
-    // Email verification route
-    /*     Route::get('/email/verify/{id}/{hash}', EmailVerificationController::class)
-        ->middleware(['signed'])
-        ->name('verification.verify');
 
-    // Resend verification email
-    Route::post('/email/resend', [EmailVerificationController::class, 'resend'])
-        ->middleware('auth:sanctum')
-        ->name('verification.resend'); */
+    Route::get('/getBestDealsProducts', [ProductController::class, 'getBestDealsProducts']);
 });
 
 /*  */
