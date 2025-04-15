@@ -41,6 +41,7 @@ class ProductController extends Controller
     public function getvalidproducts()
     {
         $Products = Product::where('is_valid', true)->get();
+        //return new ProductResource($Products);
         return ProductResource::collection($Products);
     }
 
@@ -103,7 +104,8 @@ class ProductController extends Controller
     {
 
         $products = Product::with(['images'])->withSum('order_item as total_qte', 'qte')->orderByDesc('total_qte')->take(env('TOP_PURCHASED_PRODUCT'))->get();
-        return $products;
+        //return new ProductResource($products);
+        return ProductResource::collection($products);
     }
     /**
      * Display the specified resource.
