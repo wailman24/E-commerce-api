@@ -29,7 +29,6 @@ class OrderItemController extends Controller
             $items = Order_item::all()->where('order_id', $order->id);
             return OrderItemResource::collection($items);
         }
-        return "your cart is empty";
     }
 
     /**
@@ -44,8 +43,8 @@ class OrderItemController extends Controller
 
             $request->validate([
                 'product_id' => 'required',
-                'qte' => 'required',
-                'adress_delivery' => 'required',
+                //'qte' => 'required',
+                //'adress_delivery' => 'nullable',
             ]);
 
             $product = DB::table('products')
@@ -53,7 +52,7 @@ class OrderItemController extends Controller
                 ->where('id', $request->product_id)->first();
 
             //$fields['price'] = ($product->prix) * $fields['qte'];
-            $price = $product->prix * $request->qte;
+            $price = $product->prix;
             $order = Order::where('user_id', $user->id)
                 ->where('is_done', false)->first();
 
@@ -68,7 +67,7 @@ class OrderItemController extends Controller
             if (!isset($order)) {
                 $order = Order::create([
                     'user_id' => $user->id,
-                    'adress_delivery' => $request->adress_delivery,
+                    'adress_delivery' => 'to be changed',
                     'total' => 0,
                     'status' => 'pending'
                 ]);
@@ -79,7 +78,7 @@ class OrderItemController extends Controller
             $order_item = Order_item::create([
                 'product_id' => $request->product_id,
                 'order_id' => $order_id,
-                'qte' => $request->qte,
+                'qte' => 1,
                 'price' => $price
             ]);
 

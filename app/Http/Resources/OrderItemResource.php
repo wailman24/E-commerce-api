@@ -17,10 +17,10 @@ class OrderItemResource extends JsonResource
     {
         $product = DB::table('products')->where('id', $this->product_id)->first();
         $order = DB::table('orders')->where('id', $this->order_id)->first();
-        
+
         return [
             'id' => $this->id,
-            'product' => $product,
+            'product' => new ProductResource($product),
             'order' => $order,
             'qte' => $this->qte,
             'price' => $this->price
