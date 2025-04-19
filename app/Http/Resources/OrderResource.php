@@ -16,7 +16,7 @@ class OrderResource extends JsonResource
     public function toArray(Request $request): array
     {
         $user = DB::table('users')->where('id', $this->user_id)->first();
-
+        
         return [
             'id' => $this->id,
             'user' => $user,
@@ -24,6 +24,8 @@ class OrderResource extends JsonResource
             'total' => $this->total,
             'status' => $this->status,
             'is_done' => $this->is_done,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at
         ];
     }
 }

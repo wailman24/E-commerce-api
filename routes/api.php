@@ -90,6 +90,13 @@ Route::middleware(['auth:sanctum', 'isClientOrSeller'])->group(function () {
     Route::post('/order_item', [OrderItemController::class, 'store']);
     Route::put('/order_item/{order_item}', [OrderItemController::class, 'update']);
     Route::delete('/order_item/{order_item}', [OrderItemController::class, 'destroy']);
+    /// inc and dec ///
+
+    Route::put('/dec/{order_item}', [OrderItemController::class, 'dec']);
+    Route::put('/inc/{order_item}', [OrderItemController::class, 'inc']);
+
+    ///////////////////
+
 });
 
 

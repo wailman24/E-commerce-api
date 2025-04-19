@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Resources\OrderItemResource;
 use App\Http\Resources\OrderResource;
+use GuzzleHttp\Psr7\Response;
 
 class OrderItemController extends Controller
 {
@@ -26,8 +27,13 @@ class OrderItemController extends Controller
             ->where('is_done', false)->first();
 
         if (isset($order)) {
-            $items = Order_item::all()->where('order_id', $order->id);
+            $items = Order_item::where('order_id', $order->id)->get();
             return OrderItemResource::collection($items);
+        } else {
+            return response()->json([
+                'items' => [],
+                'message' => 'No active order for this user.'
+            ], 200);
         }
     }
 
@@ -57,14 +63,29 @@ class OrderItemController extends Controller
                 ->where('is_done', false)->first();
 
 
-            if ($request->qte > $product->stock) {
+            /*     if ($request->qte > $product->stock) {
                 return response()->json([
                     'status' => false,
                     'message' => 'you should take qte less than or equal to ' . $product->stock
                 ], 500);
             }
+ */
             //$total = $order->total + $price;
-            if (!isset($order)) {
+            if (isset($order)) {
+                $order_item = Order_item::where('order_id', $order->id)
+                    ->where('product_id', $request->product_id)
+                    ->first();
+
+                if ($order_item) {
+                    $order_item->update([
+                        'qte' => $order_item->qte + 1,
+                        'price' => $order_item->price + $product->prix
+                    ]);
+
+                    $order->update(['total' => $order->total + $product->prix]);
+                    return new OrderItemResource($order_item);
+                }
+            } else {
                 $order = Order::create([
                     'user_id' => $user->id,
                     'adress_delivery' => 'to be changed',
@@ -73,11 +94,10 @@ class OrderItemController extends Controller
                 ]);
             }
 
-            $order_id = $order->id;
 
             $order_item = Order_item::create([
                 'product_id' => $request->product_id,
-                'order_id' => $order_id,
+                'order_id' => $order->id,
                 'qte' => 1,
                 'price' => $price
             ]);
@@ -107,8 +127,6 @@ class OrderItemController extends Controller
     public function update(Request $request, Order_item $order_item)
     {
         try {
-
-
             // Gate::authorize('modify',$request->user(), $order_item);
             Gate::authorize('modify', $order_item);
 
@@ -155,6 +173,69 @@ class OrderItemController extends Controller
         }
     }
 
+    public function inc(Request $request, Order_item $order_item)
+    {
+        try {
+
+            Gate::authorize('modify', $order_item);
+            $product = DB::table('products')
+                ->select('stock', 'prix')
+                ->where('id', $order_item->product_id)->first();
+
+            $order = Order::where('id', $order_item->order_id)
+                ->where('is_done', false)->first();
+
+            if ($order_item->qte == $product->stock) {
+                return "the stock is empty";
+            }
+
+            $order_item->update([
+                'qte' => $order_item->qte + 1,
+                'price' => $order_item->price + $product->prix
+            ]);
+
+            $order->update(['total' => $order->total + $product->prix]);
+            return new OrderItemResource($order_item);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function dec(Request $request, Order_item $order_item)
+    {
+        try {
+
+            Gate::authorize('modify', $order_item);
+            $product = DB::table('products')
+                ->select('stock', 'prix')
+                ->where('id', $order_item->product_id)->first();
+
+            $order = Order::where('id', $order_item->order_id)
+                ->where('is_done', false)->first();
+
+            if ($order_item->qte == 1) {
+                return 'delete?';
+            }
+
+            $order_item->update([
+                'qte' => $order_item->qte - 1,
+                'price' => $order_item->price - $product->prix
+            ]);
+
+            $order->update(['total' => $order->total - $product->prix]);
+
+            return new OrderItemResource($order_item);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -168,8 +249,13 @@ class OrderItemController extends Controller
 
         if (!$exist) {
             Order::where('id', $order_id)->delete();
+        } else {
+            $total = Order_item::where('order_id', $order_id)->sum('price');
+            Order::where('id', $order_id)->update(['total' => $total]);
         }
 
-        return 'this item has been deleted';
+
+
+        return new OrderItemResource($order_item);
     }
 }
