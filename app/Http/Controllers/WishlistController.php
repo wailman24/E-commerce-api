@@ -42,20 +42,15 @@ class WishlistController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
-
-
-
-        // Vérifie si l'utilisateur est authentifié
         $user = Auth::user();
-
+        /*
         if (!$user) {
             return response()->json([
                 'success' => false,
                 'message' => 'User Not Authenticated. Please Register At The Link Below',
                 'register' => url('/api/register')
             ], 401);
-        }
-
+        } */
         // Vérifie si le produit est déjà dans la wishlist
         $existing = Wishlist::where('user_id', $user->id)  //where('user_id', $user->id)
             ->where('product_id', $request->product_id)
@@ -67,7 +62,6 @@ class WishlistController extends Controller
                 'message' => 'Product Already In The Wishlist.'
             ], 409);
         }
-
         // Ajoute à la wishlist
         Wishlist::create([
             'user_id' => $user->id,  //$user->id
