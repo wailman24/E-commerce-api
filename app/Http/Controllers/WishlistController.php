@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\WishlistResource;
 use App\Models\Product;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -17,14 +18,34 @@ class WishlistController extends Controller
      */
     public function view_wishlist()
     {
+        try {
+            $user = Auth::user();
 
-        $user = Auth::user();
 
+            //$wishlist = $user?->wishlist()->with('product')->get();
+            $wishlist = Wishlist::where('user_id', $user->id)->get();
 
-        $wishlist = $user?->wishlists()->with('product')->get();
-        return response()->json($wishlist, 200);
+            //if (!$wishlist) return " your wishlist is empty";
+            return WishlistResource::collection($wishlist);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 
+    public function isexist(Request $request, Product $product)
+    {
+        $user = Auth::user();
+
+        $existing = Wishlist::where('user_id', $user->id)  //where('user_id', $user->id)
+            ->where('product_id', $product->id)
+            ->first();
+
+        if ($existing)
+            return new WishlistResource($existing);
+    }
 
     /**
      * Ajouter un produit à la wishlist.
@@ -43,14 +64,7 @@ class WishlistController extends Controller
             ], 500);
         }
         $user = Auth::user();
-        /*
-        if (!$user) {
-            return response()->json([
-                'success' => false,
-                'message' => 'User Not Authenticated. Please Register At The Link Below',
-                'register' => url('/api/register')
-            ], 401);
-        } */
+
         // Vérifie si le produit est déjà dans la wishlist
         $existing = Wishlist::where('user_id', $user->id)  //where('user_id', $user->id)
             ->where('product_id', $request->product_id)
@@ -58,9 +72,9 @@ class WishlistController extends Controller
 
         if ($existing) {
             return response()->json([
-                'success' => false,
+
                 'message' => 'Product Already In The Wishlist.'
-            ], 409);
+            ]);
         }
         // Ajoute à la wishlist
         Wishlist::create([
@@ -95,14 +109,6 @@ class WishlistController extends Controller
 
         /** @var int|null $userId */
         $userId = Auth::id();
-
-        if (!$userId) {
-            return response()->json([
-                'success' => false,
-                'message' => 'User Not Authenticated.  Please Register At The Link Below',
-                'register' => url('/api/register')
-            ], 401);
-        }
 
         $wishlist = Wishlist::where('user_id', $userId)
             ->where('product_id', $request->product_id)

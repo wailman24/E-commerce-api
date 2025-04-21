@@ -81,6 +81,7 @@ Route::middleware(['auth:sanctum', 'isClientOrSeller'])->group(function () {
     Route::get('/wishlist', [WishlistController::class, 'view_wishlist']);
     Route::post('/wishlist/add', [WishlistController::class, 'add_to_wishlist']);
     Route::delete('/wishlist/remove', [WishlistController::class, 'remove_from_wishlist']);
+    Route::get('/existinwishlist/{product}', [WishlistController::class, 'isexist']);
     Route::post('/products/{productId}/reviews', [ReviewController::class, 'store']);
     Route::put('/reviews/{reviewId}', [ReviewController::class, 'update']);
 
