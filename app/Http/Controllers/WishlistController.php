@@ -35,17 +35,23 @@ class WishlistController extends Controller
         }
     }
 
-    public function isexist(Request $request, Product $product)
+    public function is_in_wishlist($product_id)
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
 
-        $existing = Wishlist::where('user_id', $user->id)  //where('user_id', $user->id)
-            ->where('product_id', $product->id)
-            ->first();
+            $exists = Wishlist::where('user_id', $user->id)
+                ->where('product_id', $product_id)
+                ->exists();
 
-        if ($existing)
-            return new WishlistResource($existing);
+            return response()->json(['exists' => $exists]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Something went wrong: ' . $th->getMessage()
+            ], 500);
+        }
     }
+
 
     /**
      * Ajouter un produit à la wishlist.
