@@ -63,35 +63,38 @@ class WishlistController extends Controller
             $request->validate([
                 'product_id' => 'required|exists:products,id',
             ]);
+
+            $user = Auth::user();
+
+            // Vérifie si le produit est déjà dans la wishlist
+            $existing = Wishlist::where('user_id', $user->id)  //where('user_id', $user->id)
+                ->where('product_id', $request->product_id)
+                ->first();
+
+            if ($existing) {
+                $existing->delete();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Product Removed From The Wishlist.'
+                ], 200);
+            }
+            // Ajoute à la wishlist
+            Wishlist::create([
+                'user_id' => $user->id,  //$user->id
+                'product_id' => $request->product_id,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Product Added To The Wishlist.'
+            ], 201);
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
                 'message' => $th->getMessage()
             ], 500);
         }
-        $user = Auth::user();
-
-        // Vérifie si le produit est déjà dans la wishlist
-        $existing = Wishlist::where('user_id', $user->id)  //where('user_id', $user->id)
-            ->where('product_id', $request->product_id)
-            ->first();
-
-        if ($existing) {
-            return response()->json([
-
-                'message' => 'Product Already In The Wishlist.'
-            ]);
-        }
-        // Ajoute à la wishlist
-        Wishlist::create([
-            'user_id' => $user->id,  //$user->id
-            'product_id' => $request->product_id,
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Product Added To The Wishlist.'
-        ], 201);
     }
 
 
@@ -111,9 +114,6 @@ class WishlistController extends Controller
             ], 500);
         }
 
-
-
-        /** @var int|null $userId */
         $userId = Auth::id();
 
         $wishlist = Wishlist::where('user_id', $userId)
