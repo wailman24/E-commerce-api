@@ -69,7 +69,7 @@ class OrderItemController extends Controller
                     'message' => 'you should take qte less than or equal to ' . $product->stock
                 ], 500);
             }
- */
+            */
             //$total = $order->total + $price;
             if (isset($order)) {
                 $order_item = Order_item::where('order_id', $order->id)
@@ -111,14 +111,6 @@ class OrderItemController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
@@ -236,6 +228,23 @@ class OrderItemController extends Controller
         }
     }
 
+    public function is_in_cart(Request $request, Order_item $order_item)
+    {
+        $user = Auth::user();
+
+        $order = Order::where('user_id', $user->id)
+            ->where('is_done', false)->first();
+
+        if (isset($order)) {
+            $order_item = Order_item::where('order_id', $order->id)
+                ->where('product_id', $request->product_id)
+                ->first();
+
+            if ($order_item) {
+                return new OrderItemResource($order_item);
+            }
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */
