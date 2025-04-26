@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Resources\OrderItemResource;
 use App\Http\Resources\OrderResource;
+use App\Models\Product;
 use GuzzleHttp\Psr7\Response;
 
 class OrderItemController extends Controller
@@ -21,19 +22,28 @@ class OrderItemController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $order = Order::select('id')
-            ->where('user_id', $user->id)
-            ->where('is_done', false)->first();
+        try {
+            $user = Auth::user();
+            $order = Order::where('user_id', $user->id)
+                ->where('is_done', false)->first();
 
-        if (isset($order)) {
-            $items = Order_item::where('order_id', $order->id)->get();
-            return OrderItemResource::collection($items);
-        } else {
+            if (isset($order)) {
+                $items = Order_item::where('order_id', $order->id)->get();
+                return response()->json([
+                    'data' => OrderItemResource::collection($items),
+                    //'message' => 'No active order for this user.'
+                ], 200);
+            } else {
+                return response()->json([
+                    'items' => [],
+                    'message' => 'No active order for this user.'
+                ], 200);
+            }
+        } catch (\Throwable $th) {
             return response()->json([
-                'items' => [],
-                'message' => 'No active order for this user.'
-            ], 200);
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
         }
     }
 
@@ -43,8 +53,6 @@ class OrderItemController extends Controller
     public function store(Request $request)
     {
         try {
-
-
             $user = Auth::user();
 
             $request->validate([
@@ -77,13 +85,18 @@ class OrderItemController extends Controller
                     ->first();
 
                 if ($order_item) {
-                    $order_item->update([
-                        'qte' => $order_item->qte + 1,
-                        'price' => $order_item->price + $product->prix
-                    ]);
 
-                    $order->update(['total' => $order->total + $product->prix]);
-                    return new OrderItemResource($order_item);
+                    if ($order_item->qte == $product->stock) {
+                        return response()->json([]);
+                    } else {
+                        $order_item->update([
+                            'qte' => $order_item->qte + 1,
+                            'price' => $order_item->price + $product->prix
+                        ]);
+
+                        $order->update(['total' => $order->total + $product->prix]);
+                        return new OrderItemResource($order_item);
+                    }
                 }
             } else {
                 $order = Order::create([
@@ -228,21 +241,28 @@ class OrderItemController extends Controller
         }
     }
 
-    public function is_in_cart(Request $request, Order_item $order_item)
+    public function is_in_cart($product_id)
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
+            $order = Order::where('user_id', $user->id)
+                ->where('is_done', false)->first();
 
-        $order = Order::where('user_id', $user->id)
-            ->where('is_done', false)->first();
+            if (isset($order)) {
+                $exists = Order_item::where('order_id', $order->id)
+                    ->where('product_id', $product_id)
+                    ->exists();
 
-        if (isset($order)) {
-            $order_item = Order_item::where('order_id', $order->id)
-                ->where('product_id', $request->product_id)
-                ->first();
-
-            if ($order_item) {
-                return new OrderItemResource($order_item);
+                if ($exists) {
+                    return response()->json(['exists' => $exists]);
+                } else {
+                    return response()->json(['message' => 'does not exist']);
+                }
             }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Something went wrong: ' . $th->getMessage()
+            ], 500);
         }
     }
     /**

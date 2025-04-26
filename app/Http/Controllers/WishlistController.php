@@ -44,7 +44,11 @@ class WishlistController extends Controller
                 ->where('product_id', $product_id)
                 ->exists();
 
-            return response()->json(['exists' => $exists]);
+            if ($exists) {
+                return response()->json(['exists' => $exists]);
+            } else {
+                return response()->json(['message' => 'does not exist']);
+            }
         } catch (\Throwable $th) {
             return response()->json([
                 'error' => 'Something went wrong: ' . $th->getMessage()
@@ -80,13 +84,14 @@ class WishlistController extends Controller
                 ], 200);
             }
             // Ajoute à la wishlist
-            Wishlist::create([
+            $wishlist = Wishlist::create([
                 'user_id' => $user->id,  //$user->id
                 'product_id' => $request->product_id,
             ]);
 
             return response()->json([
                 'success' => true,
+                'data' => new WishlistResource($wishlist),
                 'message' => 'Product Added To The Wishlist.'
             ], 201);
         } catch (\Throwable $th) {

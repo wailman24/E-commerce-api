@@ -11,17 +11,16 @@ use Illuminate\Support\Facades\Validator;
 
 class CategorieController extends Controller
 {
-    public function index()
+    public function getall()
     {
-        
-        $categorie= Categorie::get();
+
+        $categorie = Categorie::get();
         if ($categorie->count() > 0) {
             return CategorieResource::collection($categorie);
-        }else{
+        } else {
 
-            return response()->json(['message'=>'No Categorie Available'],200);
+            return response()->json(['message' => 'No Categorie Available'], 200);
         }
-
     }
 
     /**
@@ -37,33 +36,31 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $validator =Validator::make($request->all(),[
-            'name'=>'required|string|max:255|unique:categories',
-            'category_id'=>'integer|exists:categories,id',
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255|unique:categories',
+            'category_id' => 'integer|exists:categories,id',
 
 
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'error'=>$validator->messages(),
-            ],422);
+                'error' => $validator->messages(),
+            ], 422);
         }
-        
+
 
         $data = Categorie::create([
-            'name'=>$request->name,
-            'category_id'=>$request->category_id,
+            'name' => $request->name,
+            'category_id' => $request->category_id,
 
         ]);
 
         return response()->json([
-            'message'=>'Categorie created successfully',
-            'DATA' => new CategorieResource($data) ,
-        ],200);
-
-
+            'message' => 'Categorie created successfully',
+            'DATA' => new CategorieResource($data),
+        ], 200);
     }
 
     /**
@@ -71,7 +68,7 @@ class CategorieController extends Controller
      */
     public function show(Categorie $Category)
     {
-        return new CategorieResource($Category) ;
+        return new CategorieResource($Category);
     }
 
     /**
@@ -87,33 +84,33 @@ class CategorieController extends Controller
      */
     public function update(Request $request, Categorie $Category)
     {
-        $validator =Validator::make($request->all(),[
-           'name'=>[
-            'required', 
-            'string', 
-            'max:255', 
-            Rule::unique('categories', 'name')->ignore($Category->id),
-        ],
-           'category_id'=>'integer|exists:categories,id',
+        $validator = Validator::make($request->all(), [
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('categories', 'name')->ignore($Category->id),
+            ],
+            'category_id' => 'integer|exists:categories,id',
 
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'error'=>$validator->messages(),
-            ],422);
-        } 
-        
+                'error' => $validator->messages(),
+            ], 422);
+        }
+
 
         $Category->update([
-            'name'=>$request->name,
-            'category_id'=>$request->category_id,
+            'name' => $request->name,
+            'category_id' => $request->category_id,
         ]);
 
         return response()->json([
-            'message'=>'Categorie updated successfully',
-            'DATA' => new CategorieResource($Category) ,
-        ],200);
+            'message' => 'Categorie updated successfully',
+            'DATA' => new CategorieResource($Category),
+        ], 200);
     }
 
     /**
@@ -123,8 +120,7 @@ class CategorieController extends Controller
     {
         $Category->delete();
         return response()->json([
-            'message'=>'Categorie deleted successfully',
-        ],200);
+            'message' => 'Categorie deleted successfully',
+        ], 200);
     }
-    
 }
