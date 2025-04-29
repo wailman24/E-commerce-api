@@ -83,7 +83,7 @@ class OtpController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => 'User registered successfully. Please verify your email.',
+                'message' => 'User registered successfully',
             ], 201); // Use 201 for resource creation success
 
             //return response()->json(['message' => 'OTP verified successfully']);
