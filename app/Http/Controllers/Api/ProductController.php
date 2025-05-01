@@ -31,11 +31,24 @@ class ProductController extends Controller
 
     public function getallproductsforsellers()
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
 
-        $seller_id = Seller::where('user_id', $user->id)->first();
-        $Products = Product::where('seller_id', $seller_id)->get();
-        return ProductResource::collection($Products);
+            $seller_id = Seller::where('user_id', $user->id)->first();
+            if (!$seller_id) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Seller not found for this user.',
+                ], 404);
+            }
+            $Products = Product::where('seller_id', $seller_id->id)->get();
+            return ProductResource::collection($Products);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 
     public function getvalidproducts()
