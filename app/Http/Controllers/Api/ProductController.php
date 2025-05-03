@@ -206,17 +206,23 @@ class ProductController extends Controller
 
     public function updatestatus(Product $Product)
     {
-
-        $Product->is_valid = !$Product->is_valid;
-        $valid = 'unvalidated';
-        if ($Product->is_valid) {
-            $valid = 'validated';
+        try {
+            $Product->is_valid = !$Product->is_valid;
+            $valid = 'unvalidated';
+            if ($Product->is_valid) {
+                $valid = 'validated';
+            }
+            $Product->update([
+                'is_valid' => $Product->is_valid,
+            ]);
+            return response()->json([
+                'message' => 'the product has been ' . $valid,
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
         }
-        $Product->update([
-            'is_valid' => $Product->is_valid,
-        ]);
-        return response()->json([
-            'message' => 'the product has been ' . $valid,
-        ], 200);
     }
 }
