@@ -41,7 +41,6 @@ class CategorieController extends Controller
             'name' => 'required|string|max:255|unique:categories',
             'category_id' => 'integer|exists:categories,id',
 
-
         ]);
 
         if ($validator->fails()) {

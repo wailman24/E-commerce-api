@@ -42,7 +42,7 @@ class ImageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Product $Product, Image $Image)
+    public function store(Request $request)
     {
         try {
             $user = Auth::user();
