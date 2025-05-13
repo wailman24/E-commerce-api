@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\CategorieController;
 use App\Http\Controllers\OtpController;
 //use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PaymentController;
+use App\Models\Order_item;
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
@@ -28,6 +29,8 @@ Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {
     Route::post('/addimage', [ImageController::class, 'store']);
     Route::post('/updateimage/{Image}', [ImageController::class, 'updateimage']);
     Route::delete('/deleteimage/{Image}', [ImageController::class, 'destroy']);
+
+    Route::put('/updateitemstatus/{Item}', [OrderItemController::class, 'updateitemstatus']);
 
     Route::get('/getallselleritems', [OrderItemController::class, 'getallselleritems']);
 

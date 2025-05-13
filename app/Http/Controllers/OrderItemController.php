@@ -66,31 +66,44 @@ class OrderItemController extends Controller
         }
     }
 
-    public function updatestatus(Request $request, Order_item $item)
+    public function updateitemstatus(Request $request, Order_item $Item)
     {
-        $request->validate([
-            'status' => 'required|in:pending,shipped,delivered'
-        ]);
+        try {
+            $request->validate([
+                'status' => 'required|in:pending,shipped,delivered'
+            ]);
 
-        $item->update([
-            'status' => $request->status
-        ]);
+            $Item->update([
+                'status' => $request->status
+            ]);
 
-        $statuses = $item->order->order_item()->pluck('status')->unique();
-        $order = $item->order;
-        if ($statuses->count() === 1) {
-            // All items have the same status
-            $order->update(['status' => $statuses->first()]);
-        } else {
+            $statuses = $Item->order->order_item()->pluck('status')->unique();
+            $order = $Item->order;
 
-            foreach ($statuses as $status) {
-                if ($statuses->contains($status)) {
-                    $order->update(['status' => $status]);
-                    break;
+            // Mise à jour du statut global de la commande
+            if ($statuses->count() === 1) {
+                $order->update(['status' => $statuses->first()]);
+            } else {
+                if ($statuses->contains('pending')) {
+                    $order->update(['status' => 'pending']);
+                } elseif ($statuses->contains('shipped')) {
+                    $order->update(['status' => 'shipped']);
+                } else {
+                    $order->update(['status' => 'delivered']);
                 }
             }
+
+            return response()->json([
+                'item' => new OrderItemResource($Item)
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
         }
     }
+
 
     public function store(Request $request)
     {
