@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Resources\OrderItemResource;
 use App\Http\Resources\OrderResource;
 use App\Models\Product;
+use App\Models\Seller;
 use GuzzleHttp\Psr7\Response;
 
 class OrderItemController extends Controller
@@ -47,9 +48,50 @@ class OrderItemController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function getallselleritems()
+    {
+        try {
+            $user = Auth::user();
+            $seller = Seller::where('user_id', $user->id)->first();
+            $items = Order_item::join('products', 'order_items.product_id', '=', 'products.id')
+                ->where('products.seller_id', '=', $seller->id)
+                ->select('order_items.*')
+                ->get();
+            return OrderItemResource::collection($items);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function updatestatus(Request $request, Order_item $item)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,shipped,delivered'
+        ]);
+
+        $item->update([
+            'status' => $request->status
+        ]);
+
+        $statuses = $item->order->order_item()->pluck('status')->unique();
+        $order = $item->order;
+        if ($statuses->count() === 1) {
+            // All items have the same status
+            $order->update(['status' => $statuses->first()]);
+        } else {
+
+            foreach ($statuses as $status) {
+                if ($statuses->contains($status)) {
+                    $order->update(['status' => $status]);
+                    break;
+                }
+            }
+        }
+    }
+
     public function store(Request $request)
     {
         try {
@@ -282,8 +324,6 @@ class OrderItemController extends Controller
             $total = Order_item::where('order_id', $order_id)->sum('price');
             Order::where('id', $order_id)->update(['total' => $total]);
         }
-
-
 
         return new OrderItemResource($order_item);
     }

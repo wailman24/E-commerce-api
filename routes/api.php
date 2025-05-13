@@ -29,7 +29,10 @@ Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {
     Route::post('/updateimage/{Image}', [ImageController::class, 'updateimage']);
     Route::delete('/deleteimage/{Image}', [ImageController::class, 'destroy']);
 
+    Route::get('/getallselleritems', [OrderItemController::class, 'getallselleritems']);
+
     Route::get('/getallproductsforsellers', [ProductController::class, 'getallproductsforsellers']);
+    Route::get('/getnotvalidproductforseller', [ProductController::class, 'getnotvalidproductforseller']);
     Route::post('/addproduct', [ProductController::class, 'store']);
     Route::put('/updateproduct/{Product}', [ProductController::class, 'update']);
     Route::delete('/deleteproduct/{Product}', [ProductController::class, 'destroy']);
@@ -38,7 +41,6 @@ Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {
 Route::middleware(['auth:sanctum', 'isClient'])->group(function () {
 
     Route::post('/payment', [PaymentController::class, 'createPayment'])->name('payment');
-
 
     ///////
 
