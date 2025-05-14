@@ -52,6 +52,7 @@ Route::middleware(['auth:sanctum', 'isClient'])->group(function () {
 
 Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
 
+    Route::get('/getalluser', [UserController::class, 'getalluser']);
 
     Route::post('/payout/{seller}', [PaymentController::class, 'payoutToSeller']);
 

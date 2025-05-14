@@ -109,4 +109,9 @@ class UserController extends Controller
         $user = Auth::user();
         return new UserResource($user);
     }
+
+    public function getalluser()
+    {
+        return UserResource::collection(User::all());
+    }
 }
