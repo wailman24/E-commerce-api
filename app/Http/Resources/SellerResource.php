@@ -24,7 +24,8 @@ class SellerResource extends JsonResource
             'phone' => $this->phone,
             'adress' => $this->adress,
             'logo' => $this->logo,
-            'status' => $this->status
+            'status' => $this->status,
+            'paypal' => $this->paypal,
         ];
     }
 }
