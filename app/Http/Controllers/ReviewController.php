@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ReviewController extends Controller
 {
@@ -28,15 +29,23 @@ class ReviewController extends Controller
      */
     public function store(Request $request, $productId)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'nullable|string|max:500',
+
         ]);
 
         if (!Product::find($productId)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Product Not Found'], 404);
+                'message' => 'Product Not Found'
+            ], 404);
+        }
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->messages(),
+            ], 422);
         }
 
         $review = Review::create([
@@ -48,7 +57,9 @@ class ReviewController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Review Has Been Added Successfully', 'review' => $review], 201);
+            'message' => 'Review Has Been Added Successfully',
+            'review' => $review
+        ], 201);
     }
 
 
@@ -62,7 +73,8 @@ class ReviewController extends Controller
         if (!$review) {
             return response()->json([
                 'success' => false,
-                'message' => 'Review Not Found'], 404);
+                'message' => 'Review Not Found'
+            ], 404);
         }
 
         return response()->json($review, 200);
@@ -82,24 +94,28 @@ class ReviewController extends Controller
             ->first();
 
         if ($review->user_id !== Auth::id()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'You are not allowed to update this review'], 403);
+            return response()->json([
+                'success' => false,
+                'message' => 'You are not allowed to update this review'
+            ], 403);
         }
 
         if (!$review) {
             return response()->json([
                 'success' => false,
-                'message' => 'Review Not Found'], 404);
+                'message' => 'Review Not Found'
+            ], 404);
         }
 
-        
+
 
         $review->update($request->only(['rating', 'comment']));
 
         return response()->json([
             'success' => true,
-            'message' => 'Review Updated', 'review' => $review], 200);
+            'message' => 'Review Updated',
+            'review' => $review
+        ], 200);
     }
 
     /**
@@ -113,13 +129,15 @@ class ReviewController extends Controller
         if (!$review) {
             return response()->json([
                 'success' => false,
-                'message' => 'Review Not Found'], 404);
+                'message' => 'Review Not Found'
+            ], 404);
         }
 
         if ($review->user_id !== Auth::id()) {
             return response()->json([
                 'success' => false,
-                'message' => 'You Are Not Allowed To Update This Review'], 403);
+                'message' => 'You Are Not Allowed To Update This Review'
+            ], 403);
         }
 
         $review->delete();

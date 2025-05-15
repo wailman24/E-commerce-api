@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ProductResource;
-use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -120,51 +119,58 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $Product)
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
 
-        $seller = Seller::where('user_id', $user->id)->first();
+            $seller = Seller::where('user_id', $user->id)->first();
 
-        if ($Product->seller_id !== $seller->id) {
+            if ($Product->seller_id !== $seller->id) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'you are not allowed not modify other seller\'s products ',
+                    'sp_id' => $Product->seller_id,
+                    's_id' => $seller->id
+
+                ], 403);
+            }
+
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'category_id' => 'required|integer|exists:categories,id',
+                'about' => 'required|string|min:20|max:2000',
+                'prix' => 'required|numeric|min:0',
+                'stock' => 'required|integer|min:0',
+
+            ]);
+
+
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'error' => $validator->messages(),
+                ], 422);
+            }
+
+
+            $Product->update([
+                'name' => $request->name,
+                'category_id' => $request->category_id,
+                'about' => $request->about,
+                'prix' => $request->prix,
+                'stock' => $request->stock,
+
+            ]);
+
+            return response()->json([
+                'message' => 'Product Updated successfully',
+                'DATA' => new ProductResource($Product),
+            ], 200);
+        } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
-                'message' => 'you are not allowed not modify other seller\'s products ',
-                'sp_id' => $Product->seller_id,
-                's_id' => $seller->id
-
-            ], 403);
+                'message' => $th->getMessage()
+            ], 500);
         }
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'category_id' => 'required|integer|exists:categories,id',
-            'about' => 'required|string|min:20|max:2000',
-            'prix' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-
-        ]);
-
-
-
-        if ($validator->fails()) {
-            return response()->json([
-                'error' => $validator->messages(),
-            ], 422);
-        }
-
-
-        $Product->update([
-            'name' => $request->name,
-            'category_id' => $request->category_id,
-            'about' => $request->about,
-            'prix' => $request->prix,
-            'stock' => $request->stock,
-
-        ]);
-
-        return response()->json([
-            'message' => 'Product Updated successfully',
-            'DATA' => new ProductResource($Product),
-        ], 200);
     }
 
     /**
@@ -172,23 +178,30 @@ class ProductController extends Controller
      */
     public function destroy(Product $Product)
     {
-        $user = Auth::user();
-        if ($user->role_id !== 2) {
+        try {
+            $user = Auth::user();
+            if ($user->role_id !== 2) {
 
-            $seller = Seller::where('user_id', $user->id)->first();
+                $seller = Seller::where('user_id', $user->id)->first();
 
-            if ($Product->seller_id !== $seller->id) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'you are not allowed not delete other seller\'s products '
-                ], 403);
+                if ($Product->seller_id !== $seller->id) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'you are not allowed not delete other seller\'s products '
+                    ], 403);
+                }
             }
-        }
 
-        $Product->delete();
-        return response()->json([
-            'message' => 'Product deleted successfully',
-        ], 200);
+            $Product->delete();
+            return response()->json([
+                'message' => 'Product deleted successfully',
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 
     public function updatestatus(Product $Product)

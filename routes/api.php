@@ -75,6 +75,10 @@ Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
     /////////////////////////////////////////////////
 
     Route::delete('/reviews/{reviewId}', [ReviewController::class, 'destroy']);
+
+    //////////////////////////////////////////
+
+    Route::get('/recommendations/users/{UserID}', [ProductRecommendationController::class, 'getRecommendations_collaborative']);
 });
 
 Route::middleware(['auth:sanctum', 'isClientOrSeller'])->group(function () {
@@ -131,9 +135,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
+Route::get('/recommendations/content/{productID}', [ProductRecommendationController::class, 'getRecommendations_content']);
 
+Route::get('/recommendations/popular', [ProductRecommendationController::class, 'getRecommendations_popularity']);
 
-
-
-Route::post('/recommendation', [ProductRecommendationController::class, 'getRecommendations']);
 /*  */

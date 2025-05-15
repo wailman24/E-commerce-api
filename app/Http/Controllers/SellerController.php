@@ -7,9 +7,10 @@ use App\Models\Seller;
 
 use Illuminate\Http\Request;
 
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\SellerResource;
-use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
 
 class SellerController extends Controller
@@ -51,15 +52,15 @@ class SellerController extends Controller
                 ], 500);
             }
             $request->validate([
-                'store' => 'required',
+                'store' => 'required|string',
                 'phone' => 'required|unique:sellers',
-                'adress' => 'required',
+                'adress' => 'required|string',
                 'paypal' => 'required',
                 'logo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             ]);
             $imagePath = null;
             if ($request->hasFile('logo')) {
-                $imagePath = $request->file('logo')->store('uploads/images', 'public');
+                $imagePath = $request->file('logo')->store('uploads/logos', 'public');
             }
 
             $seller = Seller::create([
@@ -86,10 +87,10 @@ class SellerController extends Controller
         try {
             $request->validate([
                 'store' => 'required|string',
-                'phone' => 'required',
+                'phone' => 'required|unique:sellers',
                 'adress' => 'required|string',
-                'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'paypal' => 'required'
+                'paypal' => 'required',
+                'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
             // Find seller
@@ -99,9 +100,12 @@ class SellerController extends Controller
             }
             $imagePath = null;
             if ($request->hasFile('logo')) {
-                $imagePath = $request->file('logo')->store('uploads/images', 'public');
-                $seller->update(['logo' => $imagePath]);
+                if ($seller->logo && Storage::disk('public')->exists($seller->logo)) {
+                    Storage::disk('public')->delete($seller->logo);
+                }
+                $imagePath = $request->file('logo')->store('uploads/logos', 'public');
             }
+
             // Update seller details
             $seller->update([
                 'store' => $request->store,
@@ -171,6 +175,11 @@ class SellerController extends Controller
                 'message' => 'Seller Not Found.'
             ], 404);
         }
+
+        if ($seller->logo && Storage::disk('public')->exists($seller->logo)) {
+            Storage::disk('public')->delete($seller->logo);
+        }
+
         $user = User::where('id', $seller->user_id)->first();
         $seller->delete();
         $user->update(['role_id' => '3']);

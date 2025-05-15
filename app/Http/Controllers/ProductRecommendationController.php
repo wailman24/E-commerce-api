@@ -3,58 +3,51 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class ProductRecommendationController extends Controller
 {
-    public function getRecommendations(Request $request)
+    public function getRecommendations_content($productID)
     {
-        // Validate input (product name)
-        $request->validate([
-            'product_name' => 'required|string',
-        ]);
+        $url = "http://127.0.0.1:5000/recommend_content/" . rawurlencode($productID);
 
-        $productName = $request->input('product_name');
+        $response = Http::get($url);
 
-        // Path to the Python script (relative to Laravel base path)
-        //$pythonScriptPath = base_path('../recommander_system/recommender.py');
-        //C:\Users\badro\AppData\Local\Programs\Python\Python313\Scripts\
-        $pythonPath = 'C:\Users\badro\AppData\Local\Programs\Python\Python313\python.exe'; // Use the correct Python path
-
-        // Run the Python script with the product name
-        $process = new Process([$pythonPath, 'C:\xampp\htdocs\recommander_system\recommander.py', escapeshellarg($productName)]);
-        $process->run();
-
-
-        // Check if the process executed successfully
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
+        if ($response->successful()) {
+            $data = $response->json();
+            return response()->json($data); // or pass $data to a view
+        } else {
+            return response()->json(['error' => 'Failed to fetch recommendations'], 500);
         }
+    }
 
-        // Get and decode the Python script output
-        $output = trim($process->getOutput());
+    public function getRecommendations_collaborative($UserID)
+    {
+        $url = "http://127.0.0.1:5000/recommend_users/" . rawurlencode($UserID);
 
-        try {
-            $recommendedProducts = json_decode($output, true);
+        $response = Http::get($url);
 
-            // Ensure output is a valid array
-            if (!is_array($recommendedProducts)) {
-                throw new \Exception("Invalid JSON response from Python script.");
-            }
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Failed to process recommendations.',
-                'message' => $e->getMessage()
-            ], 500);
+        if ($response->successful()) {
+            $data = $response->json();
+            return response()->json($data); // or pass $data to a view
+        } else {
+            return response()->json(['error' => 'Failed to fetch recommendations'], 500);
         }
+    }
 
-        // Return the recommended products as JSON
-        return response()->json([
-            'recommended_products' => $recommendedProducts
-        ]);
+    public function getRecommendations_popularity()
+    {
+        $url = "http://127.0.0.1:5000/recommend_popular";
+
+        $response = Http::get($url);
+
+        if ($response->successful()) {
+            $data = $response->json();
+            return response()->json($data); // or pass $data to a view
+        } else {
+            return response()->json(['error' => 'Failed to fetch recommendations'], 500);
+        }
     }
 }
-
-exec('C:\Users\badro\AppData\Local\Programs\Python\Python313\python.exe --version', $output);
-print_r($output);
