@@ -21,18 +21,6 @@ class SellerController extends Controller
     {
         return SellerResource::collection(Seller::all());
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         try {
@@ -119,49 +107,49 @@ class SellerController extends Controller
             ], 500);
         }
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function updatestatus(Request $request, $id)
+    public function updatesellerstatus(Request $request, $id)
     {
         try {
-            $seller = Seller::where('id', $id)->first();
+            // Validate input
+            $request->validate([
+                'status' => 'required|in:pending,accepted,rejected',
+            ]);
+
+            // Fetch seller
+            $seller = Seller::find($id);
 
             if (!$seller) {
                 return response()->json([
-                    'status' => false,
-                    'message' => 'Seller Not Found.'
+                    'message' => 'Seller not found.'
                 ], 404);
             }
-            $useller = $seller->update([
-                'status' => $request->status
-            ]);
-            if ($request->status == 'accepted') {
-                $user = User::where('id', $seller->user_id)->first();
-                $user->update(['role_id' => '2']);
+
+            // Update seller status
+            $seller->status = $request->status;
+            $seller->save();
+
+            // Promote user to seller if accepted
+            if ($request->status === 'accepted') {
+                $user = User::find($seller->user_id);
+                if ($user) {
+                    $user->role_id = 2; // Assuming 2 = seller
+                    $user->save();
+                }
             }
-            $seller = Seller::where('id', $id)->first();
-            return new SellerResource($seller);
+
+            // Return updated seller
+            return response()->json([
+                'message' => 'Seller status updated successfully.',
+                'seller' => new SellerResource($seller)
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
-                'status' => false,
-                'message' => $th->getMessage()
+                'message' => 'Server error: ' . $th->getMessage()
             ], 500);
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
         $seller = Seller::where('id', $id)->first();
@@ -176,5 +164,10 @@ class SellerController extends Controller
         $user->update(['role_id' => '3']);
 
         return new UserResource($user);
+    }
+    public function getpendingsellers()
+    {
+        $pendingSellers = Seller::where('status', 'pending')->get();
+        return SellerResource::collection($pendingSellers);
     }
 }

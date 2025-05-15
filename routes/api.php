@@ -21,7 +21,7 @@ use App\Models\Order_item;
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
-Route::delete('/delete/{id}', [UserController::class, 'delete']);
+
 
 Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {
     Route::post('/updateseller/{id}', [SellerController::class, 'updateseller']);
@@ -53,13 +53,15 @@ Route::middleware(['auth:sanctum', 'isClient'])->group(function () {
 Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
 
     Route::get('/getalluser', [UserController::class, 'getalluser']);
+    Route::delete('/deleteuser/{id}', [UserController::class, 'delete']);
 
     Route::post('/payout/{seller}', [PaymentController::class, 'payoutToSeller']);
 
     //////
 
     Route::get('/getallseller', [SellerController::class, 'index']);
-    Route::put('/sellerstatus/{id}', [SellerController::class, 'updatestatus']);
+    Route::get('/getpendingsellers', [SellerController::class, 'getpendingsellers']);
+    Route::put('/updatesellerstatus/{id}', [SellerController::class, 'updatesellerstatus']);
     Route::delete('/deleteseller/{id}', [SellerController::class, 'destroy']);
     Route::get('/getallproducts', [ProductController::class, 'getallproducts']);
 
