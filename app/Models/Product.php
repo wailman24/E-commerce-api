@@ -18,6 +18,7 @@ class Product extends Model
         'prix',
         'stock',
         'seller_id',
+        'is_valid'
     ];
 
     public function categorie()

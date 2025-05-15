@@ -28,11 +28,6 @@ class ProductResource extends JsonResource
             })
             ->sum('qte');
 
-        if ($this->is_valid) {
-            $validity = "Validated";
-        } else {
-            $validity = "Not Validated";
-        }
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -40,7 +35,7 @@ class ProductResource extends JsonResource
             'about' => $this->about,
             'prix' => $this->prix,
             'stock' => $this->stock,
-            'is_valid' => $validity,
+            'is_valid' => (bool) $this->is_valid,
             'seller_id' => $this->seller_id,
             'total_sold' => $total_sold,
             'images' => ImageResource::collection($images),

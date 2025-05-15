@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ProductResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -196,41 +197,27 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $Product)
+    public function destroy($id)
     {
-        $user = Auth::user();
-        if ($user->role_id !== 2) {
-
-            $seller = Seller::where('user_id', $user->id)->first();
-
-            if ($Product->seller_id !== $seller->id) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'you are not allowed not delete other seller\'s products '
-                ], 403);
-            }
-        }
-
-        $Product->delete();
+        $product = Product::findOrFail($id);
+        $product->delete();
         return response()->json([
             'message' => 'Product deleted successfully',
         ], 200);
     }
-
-    public function updatestatus(Product $Product)
+    public function updateproductstatus(Request $request, $id)
     {
         try {
-            $Product->is_valid = !$Product->is_valid;
-            $valid = 'unvalidated';
-            if ($Product->is_valid) {
-                $valid = 'validated';
-            }
-            $Product->update([
-                'is_valid' => $Product->is_valid,
+            $request->validate([
+                'is_valid' => 'required|boolean',
             ]);
-            return response()->json([
-                'message' => 'the product has been ' . $valid,
-            ], 200);
+            $product = Product::findOrFail($id);
+            $updated = $product->update([
+                'is_valid' => $request->is_valid,
+            ]);
+            Log::info("Update result: " . json_encode($updated));
+            Log::info("Product is_valid now: " . $product->fresh()->is_valid);
+            return response()->json(['message' => 'Status updated']);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,

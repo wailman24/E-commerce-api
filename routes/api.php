@@ -38,7 +38,7 @@ Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {
     Route::get('/getnotvalidproductforseller', [ProductController::class, 'getnotvalidproductforseller']);
     Route::post('/addproduct', [ProductController::class, 'store']);
     Route::put('/updateproduct/{Product}', [ProductController::class, 'update']);
-    Route::delete('/deleteproduct/{Product}', [ProductController::class, 'destroy']);
+    Route::delete('/deleteproduct/{id}', [ProductController::class, 'destroy']);
 });
 
 Route::middleware(['auth:sanctum', 'isClient'])->group(function () {
@@ -75,8 +75,9 @@ Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
     Route::put('/updatecategory/{Category}', [CategorieController::class, 'update']);
     Route::delete('/deletecategory/{Category}', [CategorieController::class, 'destroy']);
 
-    Route::put('/productstatus/{Product}', [ProductController::class, 'updatestatus']);
-    Route::delete('/deleteproductadmin/{Product}', [ProductController::class, 'destroy']);
+    Route::put('/updateproductstatus/{id}', [ProductController::class, 'updateproductstatus']);
+
+    Route::delete('/deleteproductadmin/{id}', [ProductController::class, 'destroy']);
 
     Route::delete('/deleteimageadmin/{Image}', [ImageController::class, 'destroy']);
 
