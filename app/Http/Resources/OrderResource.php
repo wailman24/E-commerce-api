@@ -16,10 +16,10 @@ class OrderResource extends JsonResource
     public function toArray(Request $request): array
     {
         $user = DB::table('users')->where('id', $this->user_id)->first();
-        
+
         return [
             'id' => $this->id,
-            'user' => $user,
+            'user' => new UserResource($user),
             'adress_delivery' => $this->adress_delivery,
             'total' => $this->total,
             'status' => $this->status,

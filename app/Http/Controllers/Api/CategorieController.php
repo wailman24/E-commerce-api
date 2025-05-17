@@ -13,14 +13,8 @@ class CategorieController extends Controller
 {
     public function getall()
     {
-
-        $categorie = Categorie::get();
-        if ($categorie->count() > 0) {
-            return CategorieResource::collection($categorie);
-        } else {
-
-            return response()->json(['message' => 'No Categorie Available'], 200);
-        }
+        $categorie = Categorie::all();
+        return CategorieResource::collection($categorie);
     }
 
     /**
@@ -40,7 +34,6 @@ class CategorieController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255|unique:categories',
             'category_id' => 'integer|exists:categories,id',
-
         ]);
 
         if ($validator->fails()) {
@@ -81,42 +74,45 @@ class CategorieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Categorie $Category)
+    public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique('categories', 'name')->ignore($Category->id),
-            ],
-            'category_id' => 'integer|exists:categories,id',
 
-        ]);
+        try {
 
-        if ($validator->fails()) {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'category_id' => 'nullable|integer|exists:categories,id',
+            ]);
+
+            $Category = Categorie::find($id);
+            if (!$Category) {
+                return response()->json([
+                    'message' => 'Categorie not found',
+                ], 404);
+            }
+            $Category->update([
+                'name' => $request->name,
+                'category_id' => $request->category_id,
+            ]);
+
             return response()->json([
-                'error' => $validator->messages(),
-            ], 422);
+                'message' => 'Categorie updated successfully',
+                'DATA' => new CategorieResource($Category),
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
         }
-
-
-        $Category->update([
-            'name' => $request->name,
-            'category_id' => $request->category_id,
-        ]);
-
-        return response()->json([
-            'message' => 'Categorie updated successfully',
-            'DATA' => new CategorieResource($Category),
-        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categorie $Category)
+    public function destroy($Category)
     {
+        $Category = Categorie::find($Category);
         $Category->delete();
         return response()->json([
             'message' => 'Categorie deleted successfully',

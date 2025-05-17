@@ -21,6 +21,12 @@ class OrderItemController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function getallitems()
+    {
+        return OrderItemResource::collection(Order_item::all());
+    }
+
     public function index()
     {
         try {

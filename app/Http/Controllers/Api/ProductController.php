@@ -225,4 +225,16 @@ class ProductController extends Controller
             ], 500);
         }
     }
+    public function getnotvalidproductforadmin()
+    {
+        try {
+            $Products = Product::where('is_valid', 0)->get();
+            return ProductResource::collection($Products);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
 }

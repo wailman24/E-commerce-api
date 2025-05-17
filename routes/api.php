@@ -67,18 +67,19 @@ Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
 
     ///////////////////////////////////////////////////
 
-    Route::get('/order', [OrderController::class, 'index']);
+    Route::get('/allorders', [OrderController::class, 'index']);
 
+    Route::get('/allitems', [OrderItemController::class, 'getallitems']);
     //////////////////////////////////////////////////
 
     Route::post('/addcategory', [CategorieController::class, 'store']);
-    Route::put('/updatecategory/{Category}', [CategorieController::class, 'update']);
+    Route::put('/updatecategory/{id}', [CategorieController::class, 'update']);
     Route::delete('/deletecategory/{Category}', [CategorieController::class, 'destroy']);
 
     Route::put('/updateproductstatus/{id}', [ProductController::class, 'updateproductstatus']);
 
     Route::delete('/deleteproductadmin/{id}', [ProductController::class, 'destroy']);
-
+    Route::get('/getnotvalidproductforadmin', [ProductController::class, 'getnotvalidproductforadmin']);
     Route::delete('/deleteimageadmin/{Image}', [ImageController::class, 'destroy']);
 
     /////////////////////////////////////////////////
