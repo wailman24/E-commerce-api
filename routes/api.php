@@ -66,7 +66,9 @@ Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
     Route::get('/getallproducts', [ProductController::class, 'getallproducts']);
 
     ///////////////////////////////////////////////////
+    Route::get('/getCardsData', [OrderController::class, 'getCardsData']);
 
+    Route::get('/getOrdersCountChartData', [OrderController::class, 'getOrdersCountChartData']);
     Route::get('/allorders', [OrderController::class, 'index']);
 
     Route::get('/allitems', [OrderItemController::class, 'getallitems']);
@@ -86,7 +88,6 @@ Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
 
     Route::delete('/reviews/{reviewId}', [ReviewController::class, 'destroy']);
 });
-
 Route::middleware(['auth:sanctum', 'isClientOrSeller'])->group(function () {
     Route::get('/wishlist', [WishlistController::class, 'view_wishlist']);
     Route::post('/wishlist/add', [WishlistController::class, 'add_to_wishlist']);

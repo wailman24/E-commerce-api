@@ -8,8 +8,9 @@ use App\Http\Resources\OrderResource;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Seller;
+use Illuminate\Support\Facades\DB;
 
-use function Laravel\Prompts\select;
+
 
 class OrderController extends Controller
 {
@@ -18,6 +19,7 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         return OrderResource::collection(Order::all()->where('is_done', true));
     }
 
@@ -49,35 +51,52 @@ class OrderController extends Controller
         return OrderResource::collection($orders);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreOrderRequest $request)
+    public function getOrdersCountChartData()
     {
-        //
+        $data = DB::table('orders')
+            ->selectRaw('DATE(created_at) as date, COUNT(*) as ordersCount')
+            ->where('is_done', true) // Optional: filter only completed orders
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->orderBy('date')
+            ->get();
+
+        return response()->json($data);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Order $order)
+    public function getCardsData()
     {
-        //
-    }
+        $user = request()->user(); // <- This works ONLY IF auth:sanctum is applied
+        // ✅ always works
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateOrderRequest $request, Order $order)
-    {
-        //
-    }
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Order $order)
-    {
-        //
+        if ($user->role_id === 1) {
+            $orders = Order::where('is_done', true)->get();
+            //$pendingOrders = Order::where('is_done', false)->count();
+
+            return response()->json([
+                'role' => 'admin',
+                'totalOrders' => $orders->count(),
+                'totalRevenue' => $orders->sum('total'),
+                'totalUsers' => DB::table('users')->count(),
+                'totalSellers' => DB::table('sellers')->count(),
+                //'pendingOrders' => $pendingOrders,
+            ]);
+        } elseif ($user->role_id === 2) {
+            $orders = Order::where('seller_id', $user->id)->where('is_done', true)->get();
+            $pendingOrders = Order::where('seller_id', $user->id)->where('is_done', false)->count();
+
+            return response()->json([
+                'role' => 'seller',
+                'myProducts' => DB::table('products')->where('seller_id', $user->id)->count(),
+                'myOrders' => $orders->count(),
+                'myRevenue' => $orders->sum('total'),
+                'myPendingOrders' => $pendingOrders,
+            ]);
+        }
+
+        // return response()->json(['error' => 'Unauthorized'], 403);
     }
 }
