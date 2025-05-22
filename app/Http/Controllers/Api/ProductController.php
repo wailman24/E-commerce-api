@@ -17,6 +17,13 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function getproduct($id)
+    {
+        $product = Product::findOrFail($id);
+        return new ProductResource($product);
+    }
+
     public function getallproducts()
     {
         $user = Auth::user();
