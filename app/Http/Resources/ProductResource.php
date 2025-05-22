@@ -21,7 +21,8 @@ class ProductResource extends JsonResource
         $images = Image::where('product_id', $this->id)->get();
         $rating = Review::where('product_id', $this->id)->avg('rating');
         $revcount = Review::where('product_id', $this->id)->count();
-        $categorie = Categorie::where('category_id', $this->category_id)->first();
+        $categorie = Categorie::find($this->category_id);
+
         $total_sold = Order_item::where('product_id', $this->id)
             ->whereHas('order', function ($query) {
                 $query->where('is_done', true); // Filtering!
@@ -32,6 +33,7 @@ class ProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'categorie' => $categorie?->name,
+            'category_id' => $this->category_id,
             'about' => $this->about,
             'prix' => $this->prix,
             'stock' => $this->stock,

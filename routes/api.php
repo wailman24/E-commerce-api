@@ -26,6 +26,8 @@ Route::post('/login', [UserController::class, 'login']);
 Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {
     Route::post('/updateseller/{id}', [SellerController::class, 'updateseller']);
 
+    Route::get('/getseller/{id}', [SellerController::class, 'getseller']);
+
     Route::post('/addimage', [ImageController::class, 'store']);
     Route::post('/updateimage/{Image}', [ImageController::class, 'updateimage']);
     Route::delete('/deleteimage/{Image}', [ImageController::class, 'destroy']);

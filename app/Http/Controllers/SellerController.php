@@ -21,6 +21,11 @@ class SellerController extends Controller
     {
         return SellerResource::collection(Seller::all());
     }
+    public function getseller($id)
+    {
+        $seller = Seller::findOrFail($id);
+        return new SellerResource($seller);
+    }
     public function store(Request $request)
     {
         try {

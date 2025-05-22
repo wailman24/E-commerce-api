@@ -47,9 +47,8 @@ class OrderController extends Controller
     public function order_history()
     {
         $user = Auth::user();
-        $orders = Order::all()
-            ->where('user_id', $user->id)
-            ->where('is_done', true);
+        $orders = Order::where('user_id', $user->id)
+            ->where('is_done', true)->get();
         return OrderResource::collection($orders);
     }
 
