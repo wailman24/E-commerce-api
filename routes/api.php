@@ -156,6 +156,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getBestDealsProducts', [ProductController::class, 'getBestDealsProducts']);
 });
 
-
+Route::get('/getPopularCategories', [CategorieController::class, 'getPopularCategories']);
 Route::post('/recommendation', [ProductRecommendationController::class, 'getRecommendations']);
 /*  */

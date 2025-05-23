@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Commands\\ClearExpiredOtps' => $baseDir . '/app/Console/Commands/ClearExpiredOtps.php',
     'App\\Console\\Commands\\ExportProductsToCSV' => $baseDir . '/app/Console/Commands/ExportProductsToCSV.php',
+    'App\\Console\\Commands\\ImportCategories' => $baseDir . '/app/Console/Commands/ImportCategories.php',
     'App\\Http\\Controllers\\Api\\CategorieController' => $baseDir . '/app/Http/Controllers/Api/CategorieController.php',
     'App\\Http\\Controllers\\Api\\ImageController' => $baseDir . '/app/Http/Controllers/Api/ImageController.php',
     'App\\Http\\Controllers\\Api\\ProductController' => $baseDir . '/app/Http/Controllers/Api/ProductController.php',

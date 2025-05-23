@@ -611,6 +611,7 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
     public static $classMap = array (
         'App\\Console\\Commands\\ClearExpiredOtps' => __DIR__ . '/../..' . '/app/Console/Commands/ClearExpiredOtps.php',
         'App\\Console\\Commands\\ExportProductsToCSV' => __DIR__ . '/../..' . '/app/Console/Commands/ExportProductsToCSV.php',
+        'App\\Console\\Commands\\ImportCategories' => __DIR__ . '/../..' . '/app/Console/Commands/ImportCategories.php',
         'App\\Http\\Controllers\\Api\\CategorieController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/CategorieController.php',
         'App\\Http\\Controllers\\Api\\ImageController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ImageController.php',
         'App\\Http\\Controllers\\Api\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ProductController.php',

@@ -11,6 +11,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -93,14 +94,14 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         try {
-
+            DB::beginTransaction();
             $user = Auth::user();
             $seller = Seller::where('user_id', $user->id)->first();
 
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'category_id' => 'required|integer|exists:categories,id',
-                'about' => 'required|string|min:20|max:2000',
+                'about' => 'required|string|min:20',
                 'prix' => 'required|numeric|min:0',
                 'stock' => 'required|integer|min:0',
 
@@ -112,6 +113,8 @@ class ProductController extends Controller
                 ], 422);
             }
 
+
+            DB::commit();
 
             $data = Product::create([
                 'name' => $request->name,
@@ -127,6 +130,7 @@ class ProductController extends Controller
                 'DATA' => new ProductResource($data),
             ], 200);
         } catch (\Throwable $th) {
+            DB::rollBack();
             return response()->json([
                 'status' => false,
                 'message' => $th->getMessage()

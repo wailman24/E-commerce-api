@@ -8,6 +8,8 @@ use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategorieResource;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+
 
 class CategorieController extends Controller
 {
@@ -107,6 +109,30 @@ class CategorieController extends Controller
         }
     }
 
+    public function getPopularCategories()
+    {
+        try {
+            $categories = Categorie::select(
+                'categories.id',
+                'categories.name',
+
+                DB::raw('SUM(order_items.qte) as total_qte')
+            )
+                ->join('products', 'categories.id', '=', 'products.category_id')
+                ->join('order_items', 'products.id', '=', 'order_items.product_id')
+                ->groupBy('categories.id', 'categories.name')
+                ->orderByDesc('total_qte')
+                ->take(5)
+                ->get();
+
+            return response()->json($categories);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */
