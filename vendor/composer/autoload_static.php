@@ -211,9 +211,9 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
-            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'Whoops\\' => 
         array (
@@ -609,14 +609,15 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
     );
 
     public static $classMap = array (
+        'App\\Console\\Commands\\ClearExpiredOtps' => __DIR__ . '/../..' . '/app/Console/Commands/ClearExpiredOtps.php',
         'App\\Console\\Commands\\ExportProductsToCSV' => __DIR__ . '/../..' . '/app/Console/Commands/ExportProductsToCSV.php',
         'App\\Http\\Controllers\\Api\\CategorieController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/CategorieController.php',
         'App\\Http\\Controllers\\Api\\ImageController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ImageController.php',
         'App\\Http\\Controllers\\Api\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ProductController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
-        'App\\Http\\Controllers\\EmailVerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmailVerificationController.php',
         'App\\Http\\Controllers\\OrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/OrderController.php',
         'App\\Http\\Controllers\\OrderItemController' => __DIR__ . '/../..' . '/app/Http/Controllers/OrderItemController.php',
+        'App\\Http\\Controllers\\OtpController' => __DIR__ . '/../..' . '/app/Http/Controllers/OtpController.php',
         'App\\Http\\Controllers\\PaymentController' => __DIR__ . '/../..' . '/app/Http/Controllers/PaymentController.php',
         'App\\Http\\Controllers\\ProductRecommendationController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductRecommendationController.php',
         'App\\Http\\Controllers\\ReviewController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReviewController.php',
@@ -624,6 +625,7 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Controllers\\WishlistController' => __DIR__ . '/../..' . '/app/Http/Controllers/WishlistController.php',
         'App\\Http\\Middleware\\CheckRoleMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckRoleMiddleware.php',
+        'App\\Http\\Middleware\\IsSellerOrAdmin' => __DIR__ . '/../..' . '/app/Http/Middleware/IsSellerOrAdmin.php',
         'App\\Http\\Middleware\\is_admin' => __DIR__ . '/../..' . '/app/Http/Middleware/is_admin.php',
         'App\\Http\\Middleware\\is_client' => __DIR__ . '/../..' . '/app/Http/Middleware/is_client.php',
         'App\\Http\\Middleware\\is_client_or_seller' => __DIR__ . '/../..' . '/app/Http/Middleware/is_client_or_seller.php',
@@ -645,6 +647,7 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
         'App\\Models\\Image' => __DIR__ . '/../..' . '/app/Models/Image.php',
         'App\\Models\\Order' => __DIR__ . '/../..' . '/app/Models/Order.php',
         'App\\Models\\Order_item' => __DIR__ . '/../..' . '/app/Models/Order_item.php',
+        'App\\Models\\Otp' => __DIR__ . '/../..' . '/app/Models/Otp.php',
         'App\\Models\\Payment' => __DIR__ . '/../..' . '/app/Models/Payment.php',
         'App\\Models\\Product' => __DIR__ . '/../..' . '/app/Models/Product.php',
         'App\\Models\\Review' => __DIR__ . '/../..' . '/app/Models/Review.php',

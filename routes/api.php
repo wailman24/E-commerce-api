@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductRecommendationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -16,7 +17,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategorieController;
 use App\Http\Controllers\OtpController;
 //use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\PaymentController;
+//use App\Http\Controllers\PaymentController;
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
@@ -154,11 +155,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/order_history', [OrderController::class, 'order_history']);
     Route::get('/getBestDealsProducts', [ProductController::class, 'getBestDealsProducts']);
 });
-
-
-
-
-
 
 
 Route::post('/recommendation', [ProductRecommendationController::class, 'getRecommendations']);

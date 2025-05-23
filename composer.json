@@ -9,7 +9,7 @@
         "php": "^8.2",
         "ichtrojan/laravel-otp": "^2.0",
         "laravel/framework": "^11.31",
-        "laravel/sanctum": "^4.0",
+        "laravel/sanctum": "^4.1",
         "laravel/tinker": "^2.9",
         "league/csv": "^9.23",
         "srmklive/paypal": "^3.0",

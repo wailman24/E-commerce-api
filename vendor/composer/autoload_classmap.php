@@ -6,15 +6,15 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Console\\Commands\\ClearExpiredOtps' => $baseDir . '/app/Console/Commands/ClearExpiredOtps.php',
     'App\\Console\\Commands\\ExportProductsToCSV' => $baseDir . '/app/Console/Commands/ExportProductsToCSV.php',
     'App\\Http\\Controllers\\Api\\CategorieController' => $baseDir . '/app/Http/Controllers/Api/CategorieController.php',
     'App\\Http\\Controllers\\Api\\ImageController' => $baseDir . '/app/Http/Controllers/Api/ImageController.php',
     'App\\Http\\Controllers\\Api\\ProductController' => $baseDir . '/app/Http/Controllers/Api/ProductController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
-    'App\\Http\\Controllers\\EmailVerificationController' => $baseDir . '/app/Http/Controllers/EmailVerificationController.php',
     'App\\Http\\Controllers\\OrderController' => $baseDir . '/app/Http/Controllers/OrderController.php',
     'App\\Http\\Controllers\\OrderItemController' => $baseDir . '/app/Http/Controllers/OrderItemController.php',
-    'App\\Http\\Controllers\\PaymentController' => $baseDir . '/app/Http/Controllers/PaymentController.php',
+    'App\\Http\\Controllers\\OtpController' => $baseDir . '/app/Http/Controllers/OtpController.php',
     'App\\Http\\Controllers\\PaymentController' => $baseDir . '/app/Http/Controllers/PaymentController.php',
     'App\\Http\\Controllers\\ProductRecommendationController' => $baseDir . '/app/Http/Controllers/ProductRecommendationController.php',
     'App\\Http\\Controllers\\ReviewController' => $baseDir . '/app/Http/Controllers/ReviewController.php',
@@ -22,6 +22,7 @@ return array(
     'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
     'App\\Http\\Controllers\\WishlistController' => $baseDir . '/app/Http/Controllers/WishlistController.php',
     'App\\Http\\Middleware\\CheckRoleMiddleware' => $baseDir . '/app/Http/Middleware/CheckRoleMiddleware.php',
+    'App\\Http\\Middleware\\IsSellerOrAdmin' => $baseDir . '/app/Http/Middleware/IsSellerOrAdmin.php',
     'App\\Http\\Middleware\\is_admin' => $baseDir . '/app/Http/Middleware/is_admin.php',
     'App\\Http\\Middleware\\is_client' => $baseDir . '/app/Http/Middleware/is_client.php',
     'App\\Http\\Middleware\\is_client_or_seller' => $baseDir . '/app/Http/Middleware/is_client_or_seller.php',
@@ -43,6 +44,7 @@ return array(
     'App\\Models\\Image' => $baseDir . '/app/Models/Image.php',
     'App\\Models\\Order' => $baseDir . '/app/Models/Order.php',
     'App\\Models\\Order_item' => $baseDir . '/app/Models/Order_item.php',
+    'App\\Models\\Otp' => $baseDir . '/app/Models/Otp.php',
     'App\\Models\\Payment' => $baseDir . '/app/Models/Payment.php',
     'App\\Models\\Product' => $baseDir . '/app/Models/Product.php',
     'App\\Models\\Review' => $baseDir . '/app/Models/Review.php',
