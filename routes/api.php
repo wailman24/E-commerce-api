@@ -2,19 +2,20 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\OrderController;
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\Api\ImageController;
 
+use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\Api\ProductController;
-use App\Http\Controllers\Api\CategorieController;
 //use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Api\CategorieController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\ProductRecommendationController;
 
@@ -138,5 +139,16 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/recommendations/content/{productID}', [ProductRecommendationController::class, 'getRecommendations_content']);
 
 Route::get('/recommendations/popular', [ProductRecommendationController::class, 'getRecommendations_popularity']);
+
+
+
+Route::get('/export-recommendation-data', function (Request $request) {
+    if ($request->header('X-Secret-Key') !== env('EXPORT_SECRET')) {
+        abort(403, 'Unauthorized');
+    }
+    Artisan::call('app:export-products-to-csv');
+    Artisan::call('export:reviews');
+    return response()->json(['status' => 'Export triggered']);
+});
 
 /*  */

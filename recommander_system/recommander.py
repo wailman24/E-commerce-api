@@ -5,8 +5,28 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.cluster import KMeans
 from flask import Flask, request, jsonify
 from kneed import KneeLocator
+import requests
+import time
+import threading
+
 
 app = Flask(__name__)
+
+def trigger_export():
+    url = "http://127.0.0.1:8000/api/export-recommendation-data"
+    headers = {"X-Secret-Key": "export_data"}
+    try:
+        response = requests.get(url, headers=headers)
+        print(f"Triggered at {time.ctime()}: {response.json()}")
+    except Exception as e:
+        print(f"Error: {e}")
+
+def periodic_trigger():
+    while True:
+        trigger_export()
+        time.sleep(60)
+
+threading.Thread(target=periodic_trigger, daemon=True).start()
 
 ### ---------- CONTENT-BASED ---------- ###
 
