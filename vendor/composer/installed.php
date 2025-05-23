@@ -520,6 +520,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'league/csv' => array(
+            'pretty_version' => '9.23.0',
+            'version' => '9.23.0.0',
+            'reference' => '774008ad8a634448e4f8e288905e070e8b317ff3',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../league/csv',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'league/flysystem' => array(
             'pretty_version' => '3.29.1',
             'version' => '3.29.1.0',
@@ -1323,9 +1332,9 @@
             'dev_requirement' => false,
         ),
         'symfony/process' => array(
-            'pretty_version' => 'v7.2.0',
-            'version' => '7.2.0.0',
-            'reference' => 'd34b22ba9390ec19d2dd966c40aa9e8462f27a7e',
+            'pretty_version' => 'v7.2.5',
+            'version' => '7.2.5.0',
+            'reference' => '87b7c93e57df9d8e39a093d32587702380ff045d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/process',
             'aliases' => array(),

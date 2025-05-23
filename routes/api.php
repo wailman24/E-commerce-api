@@ -3,21 +3,20 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ReviewController;
-
-use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\SellerController;
-use App\Http\Controllers\OrderItemController;
-use App\Http\Controllers\EmailVerificationController;
 
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SellerController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\Api\ImageController;
+
+use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategorieController;
 use App\Http\Controllers\OtpController;
 //use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PaymentController;
-use App\Models\Order_item;
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
@@ -156,4 +155,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getBestDealsProducts', [ProductController::class, 'getBestDealsProducts']);
 });
 
+
+
+
+
+
+
+Route::post('/recommendation', [ProductRecommendationController::class, 'getRecommendations']);
 /*  */
