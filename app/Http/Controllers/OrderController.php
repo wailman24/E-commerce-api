@@ -46,10 +46,16 @@ class OrderController extends Controller
  */
     public function order_history()
     {
-        $user = Auth::user();
-        $orders = Order::where('user_id', $user->id)
-            ->where('is_done', true)->get();
-        return OrderResource::collection($orders);
+        try {
+            $user = Auth::user();
+            $orders = Order::where('user_id', $user->id)->get();
+            return OrderResource::collection($orders);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 
     public function getOrdersCountChartData()

@@ -41,6 +41,31 @@ class UserController extends Controller
         }
     }
 
+    public function updateuser(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|email|unique:users',
+                'password' => 'required',
+            ]);
+            $user->update($request->all());
+            return response()->json([
+                'status' => true,
+                'message' => 'User updated successfully',
+                'user' => new UserResource($user)
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+
+
     public function login(Request $request)
     {
         try {

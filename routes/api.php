@@ -151,7 +151,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [UserController::class, 'logout']);
     /// get the authenticatided user
     Route::get('/getuser', [UserController::class, 'getuser']);
-
+    Route::put('/updateuser', [UserController::class, 'updateuser']);
+    Route::get('/order_history', [OrderController::class, 'order_history']);
     Route::get('/getBestDealsProducts', [ProductController::class, 'getBestDealsProducts']);
 });
 
