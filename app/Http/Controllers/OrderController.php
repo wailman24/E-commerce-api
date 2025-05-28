@@ -81,10 +81,10 @@ class OrderController extends Controller
             $data = DB::table('orders')
                 ->join('order_items', 'orders.id', '=', 'order_items.order_id')
                 ->join('products', 'order_items.product_id', '=', 'products.id')
-                ->selectRaw('DATE(orders.created_at) as date, COUNT(*) as ordersCount')
+                ->selectRaw('DATE(order_items.created_at) as date, COUNT(*) as ordersCount')
                 ->where('products.seller_id', '=', $seller->id)
                 ->where('orders.is_done', true) // Optional: filter only completed orders
-                ->groupBy(DB::raw('DATE(orders.created_at)'))
+                ->groupBy(DB::raw('DATE(order_items.created_at)'))
                 ->orderBy('date')
                 ->get();
 
@@ -98,7 +98,7 @@ class OrderController extends Controller
 
             $user = request()->user(); // <- This works ONLY IF auth:sanctum is applied
             // ✅ always works
-
+            //dd($user);
             if (!$user) {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
@@ -116,16 +116,23 @@ class OrderController extends Controller
                     //'pendingOrders' => $pendingOrders,
                 ]);
             } elseif ($user->role_id === 2) {
-                // $orders = Order_item::where('seller_id', $user->id)->where('is_done', true)->get();
-                $orders = Order_item::whereHas('product', function ($query) use ($user) {
-                    $query->where('seller_id', $user->id)
+                $seller = Seller::where('user_id', $user->id)->first();
+                if (!$seller) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Seller not found for this user.',
+                    ], 404);
+                }
+                $orders = Order_item::whereHas('product', function ($query) use ($seller) {
+                    $query->where('seller_id', $seller->id)
                         ->where('is_valid', true);
                 })->get();
-                $pendingProducts = Product::where('seller_id', $user->id)->where('is_valid', false)->count();
+                $pendingProducts = Product::where('seller_id', $seller->id)->where('is_valid', false)->count();
 
+                //dd(Order_item::all()->where('seller_id', $user->id)->where('is_done', true));
                 return response()->json([
                     'role' => 'seller',
-                    'myProducts' => DB::table('products')->where('seller_id', $user->id)->count(),
+                    'myProducts' => DB::table('products')->where('seller_id', $seller->id)->count(),
                     'myOrders' => $orders->count(),
                     'myRevenue' => $orders->sum('price'),
                     'pendingProducts' => $pendingProducts,
