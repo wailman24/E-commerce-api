@@ -8,6 +8,7 @@ use App\Models\Seller;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\SellerResource;
 use App\Http\Resources\UserResource;
 use Illuminate\Database\Eloquent\Collection;
@@ -81,28 +82,34 @@ class SellerController extends Controller
                 'store' => 'required|string',
                 'phone' => 'required',
                 'adress' => 'required|string',
-                'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // make logo optional
                 'paypal' => 'required'
             ]);
 
             // Find seller
             $seller = Seller::findOrFail($id);
-            if (!$seller) {
-                return response()->json(['status' => false, 'message' => 'Seller not found'], 404);
-            }
-            $imagePath = null;
-            if ($request->hasFile('logo')) {
-                $imagePath = $request->file('logo')->store('uploads/images', 'public');
-                $seller->update(['logo' => $imagePath]);
-            }
-            // Update seller details
-            $seller->update([
+
+            // Prepare update data
+            $data = [
                 'store' => $request->store,
                 'phone' => $request->phone,
                 'adress' => $request->adress,
-                'logo' => $imagePath,
                 'paypal' => $request->paypal
-            ]);
+            ];
+
+            // Only update the logo if a new file is uploaded
+            if ($request->hasFile('logo')) {
+                // Delete the old logo if exists (optional cleanup)
+                if ($seller->logo && Storage::disk('public')->exists($seller->logo)) {
+                    Storage::disk('public')->delete($seller->logo);
+                }
+
+                $imagePath = $request->file('logo')->store('uploads/images', 'public');
+                $data['logo'] = $imagePath;
+            }
+
+            // Update seller with data
+            $seller->update($data);
 
             return new SellerResource($seller);
         } catch (\Throwable $th) {
@@ -112,6 +119,7 @@ class SellerController extends Controller
             ], 500);
         }
     }
+
     public function updatesellerstatus(Request $request, $id)
     {
         try {

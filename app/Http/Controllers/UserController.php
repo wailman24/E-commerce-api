@@ -47,8 +47,8 @@ class UserController extends Controller
             $user = Auth::user();
             $request->validate([
                 'name' => 'required|string',
-                'email' => 'required|email|unique:users',
-                'password' => 'required',
+                'email' => 'required|email',
+                'password' => 'nullable|string|min:8|confirmed',
             ]);
             $user->update($request->all());
             return response()->json([
