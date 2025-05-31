@@ -12,7 +12,6 @@ use App\Http\Resources\ImageResource;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
-
 class ImageController extends Controller
 {
     /**
@@ -20,55 +19,26 @@ class ImageController extends Controller
      */
     public function index()
     {
-        $Image = Image::get();
-        if ($Image->count() > 0) {
-            return ImageResource::collection($Image);
+        $images = Image::get();
+        if ($images->count() > 0) {
+            return ImageResource::collection($images);
         } else {
-
             return response()->json(['message' => 'No Image Available'], 200);
         }
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Product $Product, Image $Image)
+    public function store(Request $request)
     {
         try {
             $user = Auth::user();
 
             $validator = Validator::make($request->all(), [
-                'image_url' => 'required|mimes:png,jpg,jpeg,webp',
+                'image' => 'required|mimes:png,jpg,jpeg,webp',
                 'product_id' => 'required|integer|exists:products,id',
-
             ]);
-            $isMain = 1;
-            if (Image::where('product_id', $request->product_id)->count() > 0) {
-                $isMain = 0;
-            }
-
-            $Product = Product::where('id', $request->product_id)->first();
-
-            $seller = Seller::where('user_id', $user->id)->first();
-
-            if ($Product->seller_id !== $seller->id) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'you are not allowed to store images in other seller\'s products ',
-                    'sp_id' => $Product->seller_id,
-                    's_id' => $seller->id
-
-                ], 403);
-            }
-
 
             if ($validator->fails()) {
                 return response()->json([
@@ -76,26 +46,37 @@ class ImageController extends Controller
                 ], 422);
             }
 
-            $imagePath = null;
-            if ($request->hasFile('image_url')) {
-                $imagePath = $request->file('image_url')->store('uploads/images', 'public');
+            $product = Product::find($request->product_id);
+            $seller = Seller::where('user_id', $user->id)->first();
+
+            if ($product->seller_id !== $seller->id) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'You are not allowed to store images in other seller\'s products.',
+                ], 403);
             }
 
-            $data = Image::create([
+            $isMain = Image::where('product_id', $request->product_id)->exists() ? 0 : 1;
+
+            $imagePath = null;
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('uploads/images', 'public');
+            }
+
+            $image = Image::create([
                 'image_url' => $imagePath,
                 'product_id' => $request->product_id,
                 'is_main' => $isMain,
-
             ]);
 
             return response()->json([
                 'message' => 'Image created successfully',
-                'DATA' => new ImageResource($data),
+                'DATA' => new ImageResource($image),
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
@@ -103,154 +84,126 @@ class ImageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Image $Image)
+    public function show(Image $image)
     {
-        return new ImageResource($Image);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return new ImageResource($image);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function updateimage(Request $request, Image $Image)
+    public function updateImage(Request $request, Image $image)
     {
         try {
             $user = Auth::user();
 
+            $validator = Validator::make($request->all(), [
+                'image' => 'nullable|mimes:png,jpg,jpeg,webp',
+                'product_id' => 'required|integer|exists:products,id',
+                'is_main' => 'boolean',
+            ]);
 
-        $main = $Image->is_main;
+            if ($validator->fails()) {
+                return response()->json([
+                    'error' => $validator->messages(),
+                ], 422);
+            }
 
-
-        $validator =Validator::make($request->all(),[
-            'image_url'=>'required|mimes:png,jpg,jpeg,webp',
-            'product_id'=>'required|integer|exists:products,id',
-            'is_main'=>'boolean',
-
-         ]);
-
-            $Product = Product::where('id', $request->product_id)->first();
-        $Product = Product::where('id', $request->product_id)->first();
-
+            $product = Product::find($request->product_id);
             $seller = Seller::where('user_id', $user->id)->first();
 
-            if ($Product->seller_id !== $seller->id) {
+            if ($product->seller_id !== $seller->id) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'you are not allowed to modify images of other seller\'s products '
+                    'message' => 'You are not allowed to modify images of other seller\'s products.',
                 ], 403);
             }
 
-
-
-         if ($validator->fails()) {
-             return response()->json([
-                 'error'=>$validator->messages(),
-             ],422);
-         }
-
-            if ($main == 1 && $request->is_main == 0 && $request->is_main !== null) {
+            if ($image->is_main && $request->is_main === 0) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'you are not allowed to remove the main images directly'
-        if ($main == 1 && $request->is_main == 0 && $request->is_main !== null) {
-            return response()->json([
-                'status' => false,
-                'message' => 'you are not allowed to remove the main images directly'
-
+                    'message' => 'You are not allowed to remove the main image directly.',
                 ], 403);
             }
-            ////
-            if ($request->hasFile('image_url')) {
-                if ($Image->image_url && Storage::disk('public')->exists($Image->image_url)) {
-                    Storage::disk('public')->delete($Image->image_url);
+
+            $path = $image->image_url;
+
+            if ($request->hasFile('image')) {
+                if ($image->image_url && Storage::disk('public')->exists($image->image_url)) {
+                    Storage::disk('public')->delete($image->image_url);
                 }
-                $path = $request->file('image_url')->store('uploads/images', 'public');
-                $Image->image_url = $path;
+                $path = $request->file('image')->store('uploads/images', 'public');
             }
 
-        $Image->product_id = $request->product_id;
-        $Image->save();
-
-
-            $Image->product_id = $request->product_id;
-            $Image->save();
-
-
-
-            if ($main == 0 && $request->is_main == 1 && $request->is_main !== null) {
-                $mainImage = Image::where('is_main', 1)
-                    ->where('product_id', $request->product_id)->first();
-                $mainImage->update(['is_main' => 0]);
+            // If changing to main, demote existing main image
+            if (!$image->is_main && $request->is_main == 1) {
+                Image::where('product_id', $request->product_id)
+                    ->where('is_main', 1)
+                    ->update(['is_main' => 0]);
             }
 
-            if ($request->is_main !== null) {
-                $main = $request->is_main;
-            }
-
-            $Image->update([
+            $image->update([
                 'image_url' => $path,
                 'product_id' => $request->product_id,
-                'is_main' => $main,
+                'is_main' => $request->is_main ?? $image->is_main,
+            ]);
 
-         ]);
-
-         return response()->json([
-             'message'=>'Image updated successfully',
-             'DATA' => new ImageResource($Image) ,
-         ],200);
+            return response()->json([
+                'message' => 'Image updated successfully',
+                'DATA' => new ImageResource($image),
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Image $Image, Product $Product)
+    public function destroy(Image $image)
     {
         try {
             $user = Auth::user();
+
             if ($user->role_id !== 2) {
+                $seller = Seller::where('user_id', $user->id)->first();
+                $product = Product::find($image->product_id);
 
-            $seller = Seller::where('user_id', $user->id)->first();
-
-            $Product = Product::where('id', $Image->product_id)->first();
-
-                if ($Product->seller_id !== $seller->id) {
+                if ($product->seller_id !== $seller->id) {
                     return response()->json([
                         'status' => false,
-                        'message' => 'you are not allowed not delete images of other seller\'s products '
+                        'message' => 'You are not allowed to delete images of other seller\'s products.',
                     ], 403);
                 }
             }
 
-            $main = $Image->is_main;
-            $productId = $Image->product_id;
+            $main = $image->is_main;
+            $productId = $image->product_id;
 
-            if ($Image->image_url && Storage::disk('public')->exists($Image->image_url)) {
-                Storage::disk('public')->delete($Image->image_url);
+            if ($image->image_url && Storage::disk('public')->exists($image->image_url)) {
+                Storage::disk('public')->delete($image->image_url);
             }
 
-            $Image->delete();
+            $image->delete();
 
             if ($main) {
-                $mainImage = Image::where('is_main', 0)
-                    ->where('product_id', $productId)
-                    ->first();
-                if ($mainImage) {
-                    $mainImage->update(['is_main' => 1]);
+                $newMain = Image::where('product_id', $productId)->first();
+                if ($newMain) {
+                    $newMain->update(['is_main' => 1]);
                 }
             }
 
-        return response()->json([
-            'message'=>'Image deleted successfully',
-        ],200);
-
-
-
+            return response()->json([
+                'message' => 'Image deleted successfully',
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 }
