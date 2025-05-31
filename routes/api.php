@@ -88,7 +88,7 @@ Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
 
     /////////////////////////////////////////////////
 
-    Route::delete('/reviews/{reviewId}', [ReviewController::class, 'destroy']);
+
 });
 
 
@@ -104,8 +104,8 @@ Route::middleware(['auth:sanctum', 'isClientOrSeller'])->group(function () {
     Route::post('/wishlist/add', [WishlistController::class, 'add_to_wishlist']);
     //Route::delete('/wishlist/remove', [WishlistController::class, 'remove_from_wishlist']);
     Route::get('/existinwishlist/{product}', [WishlistController::class, 'is_in_wishlist']);
-    Route::post('/products/{productId}/reviews', [ReviewController::class, 'store']);
-    Route::put('/reviews/{reviewId}', [ReviewController::class, 'update']);
+    Route::post('/addreview/{productId}', [ReviewController::class, 'store']);
+    Route::put('/updatereview/{reviewId}', [ReviewController::class, 'update']);
 
     ////////////////////////////////////////////////
 
@@ -124,7 +124,7 @@ Route::middleware(['auth:sanctum', 'isClientOrSeller'])->group(function () {
 });
 
 Route::get('/getproduct/{id}', [ProductController::class, 'getproduct']);
-Route::get('/products/{productId}/reviews', [ReviewController::class, 'index']);
+Route::get('/reviews/{productId}', [ReviewController::class, 'index']);
 
 /////////////////////////////////////////////////
 
@@ -154,6 +154,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/updateuser', [UserController::class, 'updateuser']);
     Route::get('/order_history', [OrderController::class, 'order_history']);
     Route::get('/getBestDealsProducts', [ProductController::class, 'getBestDealsProducts']);
+    Route::delete('/deletereview/{reviewId}', [ReviewController::class, 'destroy']);
 });
 
 Route::get('/getPopularCategories', [CategorieController::class, 'getPopularCategories']);

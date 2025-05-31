@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ReviewResource;
 use App\Models\Review;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -15,12 +16,19 @@ class ReviewController extends Controller
      */
     public function index($productId)
     {
-        $reviews = Review::where('product_id', $productId)
-            ->with('user:id,name')
-            ->latest()
-            ->get();
-
-        return response()->json($reviews, 200);
+        try {
+            $reviews = Review::where('product_id', $productId)
+                ->with('user')
+                ->latest()
+                ->get();
+            //return $reviews;
+            return ReviewResource::collection($reviews);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -36,7 +44,8 @@ class ReviewController extends Controller
         if (!Product::find($productId)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Product Not Found'], 404);
+                'message' => 'Product Not Found'
+            ], 404);
         }
 
         $review = Review::create([
@@ -48,7 +57,9 @@ class ReviewController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Review Has Been Added Successfully', 'review' => $review], 201);
+            'message' => 'Review Has Been Added Successfully',
+            'review' => $review
+        ], 201);
     }
 
 
@@ -62,7 +73,8 @@ class ReviewController extends Controller
         if (!$review) {
             return response()->json([
                 'success' => false,
-                'message' => 'Review Not Found'], 404);
+                'message' => 'Review Not Found'
+            ], 404);
         }
 
         return response()->json($review, 200);
@@ -73,33 +85,44 @@ class ReviewController extends Controller
      */
     public function update(Request $request, $reviewId)
     {
-        $request->validate([
-            'rating' => 'integer|min:1|max:5',
-            'comment' => 'nullable|string|max:500',
-        ]);
+        try {
+            $request->validate([
+                'rating' => 'integer|min:1|max:5',
+                'comment' => 'nullable|string|max:500',
+            ]);
 
-        $review = DB::table('reviews')->where('id', $reviewId)
-            ->first();
+            $review = Review::where('id', $reviewId)
+                ->first();
 
-        if ($review->user_id !== Auth::id()) {
+            if ($review->user_id !== Auth::id()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'You are not allowed to update this review'], 403);
-        }
+                    'message' => 'You are not allowed to update this review'
+                ], 403);
+            }
 
-        if (!$review) {
+            if (!$review) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Review Not Found'
+                ], 404);
+            }
+            $review->update([
+                'rating' => $request->rating ?? $review->rating,
+                'comment' => $request->comment ?? $review->comment,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Review Updated',
+                'review' => $review
+            ], 200);
+        } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
-                'message' => 'Review Not Found'], 404);
+                'message' => $th->getMessage()
+            ], 500);
         }
-
-        
-
-        $review->update($request->only(['rating', 'comment']));
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Review Updated', 'review' => $review], 200);
     }
 
     /**
@@ -113,13 +136,15 @@ class ReviewController extends Controller
         if (!$review) {
             return response()->json([
                 'success' => false,
-                'message' => 'Review Not Found'], 404);
+                'message' => 'Review Not Found'
+            ], 404);
         }
 
-        if ($review->user_id !== Auth::id()) {
+        if ($review->user_id !== Auth::user()->id) {
             return response()->json([
                 'success' => false,
-                'message' => 'You Are Not Allowed To Update This Review'], 403);
+                'message' => 'You Are Not Allowed To delete This Review'
+            ], 403);
         }
 
         $review->delete();
