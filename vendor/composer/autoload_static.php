@@ -48,26 +48,26 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
     );
 
     public static $prefixLengthsPsr4 = array (
-        'v' => 
+        'v' =>
         array (
             'voku\\' => 5,
         ),
-        'p' => 
+        'p' =>
         array (
             'phpDocumentor\\Reflection\\' => 25,
         ),
-        'W' => 
+        'W' =>
         array (
             'Whoops\\' => 7,
             'Webmozart\\Assert\\' => 17,
         ),
-        'T' => 
+        'T' =>
         array (
             'TijsVerkoyen\\CssToInlineStyles\\' => 31,
             'Tests\\' => 6,
             'Termwind\\' => 9,
         ),
-        'S' => 
+        'S' =>
         array (
             'Symfony\\Polyfill\\Uuid\\' => 22,
             'Symfony\\Polyfill\\Php83\\' => 23,
@@ -99,12 +99,12 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
             'Symfony\\Component\\Clock\\' => 24,
             'Srmklive\\PayPal\\' => 16,
         ),
-        'R' => 
+        'R' =>
         array (
             'Ramsey\\Uuid\\' => 12,
             'Ramsey\\Collection\\' => 18,
         ),
-        'P' => 
+        'P' =>
         array (
             'Pusher\\' => 7,
             'Psy\\' => 4,
@@ -115,6 +115,7 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
             'Psr\\EventDispatcher\\' => 20,
             'Psr\\Container\\' => 14,
             'Psr\\Clock\\' => 10,
+            'Psr\\Cache\\' => 10,
             'PhpParser\\' => 10,
             'PhpOption\\' => 10,
             'Pest\\Plugin\\' => 12,
@@ -126,16 +127,16 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
             'PHPUnit\\Architecture\\' => 21,
             'PHPStan\\PhpDocParser\\' => 21,
         ),
-        'N' => 
+        'N' =>
         array (
             'NunoMaduro\\Collision\\' => 21,
         ),
-        'M' => 
+        'M' =>
         array (
             'Monolog\\' => 8,
             'Mockery\\' => 8,
         ),
-        'L' => 
+        'L' =>
         array (
             'League\\Uri\\' => 11,
             'League\\MimeTypeDetection\\' => 25,
@@ -151,17 +152,17 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
             'Laravel\\Prompts\\' => 16,
             'Laravel\\Pail\\' => 13,
         ),
-        'J' => 
+        'J' =>
         array (
             'Jean85\\' => 7,
         ),
-        'I' => 
+        'I' =>
         array (
             'Illuminate\\Support\\' => 19,
             'Illuminate\\' => 11,
             'Ichtrojan\\Otp\\' => 14,
         ),
-        'G' => 
+        'G' =>
         array (
             'GuzzleHttp\\UriTemplate\\' => 23,
             'GuzzleHttp\\Psr7\\' => 16,
@@ -169,445 +170,454 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
             'GuzzleHttp\\' => 11,
             'GrahamCampbell\\ResultType\\' => 26,
         ),
-        'F' => 
+        'F' =>
         array (
             'Fruitcake\\Cors\\' => 15,
             'Fidry\\CpuCoreCounter\\' => 21,
             'Faker\\' => 6,
         ),
-        'E' => 
+        'E' =>
         array (
             'Egulias\\EmailValidator\\' => 23,
         ),
-        'D' => 
+        'D' =>
         array (
             'Dotenv\\' => 7,
             'Doctrine\\Inflector\\' => 19,
             'Doctrine\\Deprecations\\' => 22,
+            'Doctrine\\DBAL\\' => 14,
             'Doctrine\\Common\\Lexer\\' => 22,
             'Dflydev\\DotAccessData\\' => 22,
             'DeepCopy\\' => 9,
             'Database\\Seeders\\' => 17,
             'Database\\Factories\\' => 19,
         ),
-        'C' => 
+        'C' =>
         array (
             'Cron\\' => 5,
             'Carbon\\Doctrine\\' => 16,
             'Carbon\\' => 7,
         ),
-        'B' => 
+        'B' =>
         array (
             'Brick\\Math\\' => 11,
         ),
-        'A' => 
+        'A' =>
         array (
             'App\\' => 4,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'voku\\' => 
+        'voku\\' =>
         array (
             0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
         ),
-        'phpDocumentor\\Reflection\\' => 
+        'phpDocumentor\\Reflection\\' =>
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
-        'Whoops\\' => 
+        'Whoops\\' =>
         array (
             0 => __DIR__ . '/..' . '/filp/whoops/src/Whoops',
         ),
-        'Webmozart\\Assert\\' => 
+        'Webmozart\\Assert\\' =>
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
-        'TijsVerkoyen\\CssToInlineStyles\\' => 
+        'TijsVerkoyen\\CssToInlineStyles\\' =>
         array (
             0 => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src',
         ),
-        'Tests\\' => 
+        'Tests\\' =>
         array (
             0 => __DIR__ . '/../..' . '/tests',
         ),
-        'Termwind\\' => 
+        'Termwind\\' =>
         array (
             0 => __DIR__ . '/..' . '/nunomaduro/termwind/src',
         ),
-        'Symfony\\Polyfill\\Uuid\\' => 
+        'Symfony\\Polyfill\\Uuid\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-uuid',
         ),
-        'Symfony\\Polyfill\\Php83\\' => 
+        'Symfony\\Polyfill\\Php83\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php83',
         ),
-        'Symfony\\Polyfill\\Php80\\' => 
+        'Symfony\\Polyfill\\Php80\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
         ),
-        'Symfony\\Polyfill\\Mbstring\\' => 
+        'Symfony\\Polyfill\\Mbstring\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
-        'Symfony\\Polyfill\\Intl\\Normalizer\\' => 
+        'Symfony\\Polyfill\\Intl\\Normalizer\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer',
         ),
-        'Symfony\\Polyfill\\Intl\\Idn\\' => 
+        'Symfony\\Polyfill\\Intl\\Idn\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-idn',
         ),
-        'Symfony\\Polyfill\\Intl\\Grapheme\\' => 
+        'Symfony\\Polyfill\\Intl\\Grapheme\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme',
         ),
-        'Symfony\\Polyfill\\Ctype\\' => 
+        'Symfony\\Polyfill\\Ctype\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
-        'Symfony\\Contracts\\Translation\\' => 
+        'Symfony\\Contracts\\Translation\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/translation-contracts',
         ),
-        'Symfony\\Contracts\\Service\\' => 
+        'Symfony\\Contracts\\Service\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/service-contracts',
         ),
-        'Symfony\\Contracts\\EventDispatcher\\' => 
+        'Symfony\\Contracts\\EventDispatcher\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher-contracts',
         ),
-        'Symfony\\Component\\Yaml\\' => 
+        'Symfony\\Component\\Yaml\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
         ),
-        'Symfony\\Component\\VarDumper\\' => 
+        'Symfony\\Component\\VarDumper\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/var-dumper',
         ),
-        'Symfony\\Component\\Uid\\' => 
+        'Symfony\\Component\\Uid\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/uid',
         ),
-        'Symfony\\Component\\Translation\\' => 
+        'Symfony\\Component\\Translation\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/translation',
         ),
-        'Symfony\\Component\\String\\' => 
+        'Symfony\\Component\\String\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/string',
         ),
-        'Symfony\\Component\\Routing\\' => 
+        'Symfony\\Component\\Routing\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/routing',
         ),
-        'Symfony\\Component\\Process\\' => 
+        'Symfony\\Component\\Process\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/process',
         ),
-        'Symfony\\Component\\Mime\\' => 
+        'Symfony\\Component\\Mime\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/mime',
         ),
-        'Symfony\\Component\\Mailer\\' => 
+        'Symfony\\Component\\Mailer\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/mailer',
         ),
-        'Symfony\\Component\\HttpKernel\\' => 
+        'Symfony\\Component\\HttpKernel\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/http-kernel',
         ),
-        'Symfony\\Component\\HttpFoundation\\' => 
+        'Symfony\\Component\\HttpFoundation\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/http-foundation',
         ),
-        'Symfony\\Component\\Finder\\' => 
+        'Symfony\\Component\\Finder\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/finder',
         ),
-        'Symfony\\Component\\EventDispatcher\\' => 
+        'Symfony\\Component\\EventDispatcher\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
         ),
-        'Symfony\\Component\\ErrorHandler\\' => 
+        'Symfony\\Component\\ErrorHandler\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/error-handler',
         ),
-        'Symfony\\Component\\CssSelector\\' => 
+        'Symfony\\Component\\CssSelector\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/css-selector',
         ),
-        'Symfony\\Component\\Console\\' => 
+        'Symfony\\Component\\Console\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
-        'Symfony\\Component\\Clock\\' => 
+        'Symfony\\Component\\Clock\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/clock',
         ),
-        'Srmklive\\PayPal\\' => 
+        'Srmklive\\PayPal\\' =>
         array (
             0 => __DIR__ . '/..' . '/srmklive/paypal/src',
         ),
-        'Ramsey\\Uuid\\' => 
+        'Ramsey\\Uuid\\' =>
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
         ),
-        'Ramsey\\Collection\\' => 
+        'Ramsey\\Collection\\' =>
         array (
             0 => __DIR__ . '/..' . '/ramsey/collection/src',
         ),
-        'Pusher\\' => 
+        'Pusher\\' =>
         array (
             0 => __DIR__ . '/..' . '/pusher/pusher-php-server/src',
         ),
-        'Psy\\' => 
+        'Psy\\' =>
         array (
             0 => __DIR__ . '/..' . '/psy/psysh/src',
         ),
-        'Psr\\SimpleCache\\' => 
+        'Psr\\SimpleCache\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/simple-cache/src',
         ),
-        'Psr\\Log\\' => 
+        'Psr\\Log\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
         ),
-        'Psr\\Http\\Message\\' => 
+        'Psr\\Http\\Message\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
             1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
-        'Psr\\Http\\Client\\' => 
+        'Psr\\Http\\Client\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
-        'Psr\\EventDispatcher\\' => 
+        'Psr\\EventDispatcher\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/event-dispatcher/src',
         ),
-        'Psr\\Container\\' => 
+        'Psr\\Container\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
-        'Psr\\Clock\\' => 
+        'Psr\\Clock\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/clock/src',
         ),
-        'PhpParser\\' => 
+        'Psr\\Cache\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/psr/cache/src',
+        ),
+        'PhpParser\\' =>
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
         ),
-        'PhpOption\\' => 
+        'PhpOption\\' =>
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
         ),
-        'Pest\\Plugin\\' => 
+        'Pest\\Plugin\\' =>
         array (
             0 => __DIR__ . '/..' . '/pestphp/pest-plugin/src',
         ),
-        'Pest\\Mutate\\' => 
+        'Pest\\Mutate\\' =>
         array (
             0 => __DIR__ . '/..' . '/pestphp/pest-plugin-mutate/src',
         ),
-        'Pest\\Laravel\\' => 
+        'Pest\\Laravel\\' =>
         array (
             0 => __DIR__ . '/..' . '/pestphp/pest-plugin-laravel/src',
         ),
-        'Pest\\Arch\\' => 
+        'Pest\\Arch\\' =>
         array (
             0 => __DIR__ . '/..' . '/pestphp/pest-plugin-arch/src',
         ),
-        'Pest\\' => 
+        'Pest\\' =>
         array (
             0 => __DIR__ . '/..' . '/pestphp/pest/src',
         ),
-        'ParaTest\\' => 
+        'ParaTest\\' =>
         array (
             0 => __DIR__ . '/..' . '/brianium/paratest/src',
         ),
-        'PHPUnit\\Architecture\\' => 
+        'PHPUnit\\Architecture\\' =>
         array (
             0 => __DIR__ . '/..' . '/ta-tikoma/phpunit-architecture-test/src',
         ),
-        'PHPStan\\PhpDocParser\\' => 
+        'PHPStan\\PhpDocParser\\' =>
         array (
             0 => __DIR__ . '/..' . '/phpstan/phpdoc-parser/src',
         ),
-        'NunoMaduro\\Collision\\' => 
+        'NunoMaduro\\Collision\\' =>
         array (
             0 => __DIR__ . '/..' . '/nunomaduro/collision/src',
         ),
-        'Monolog\\' => 
+        'Monolog\\' =>
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
-        'Mockery\\' => 
+        'Mockery\\' =>
         array (
             0 => __DIR__ . '/..' . '/mockery/mockery/library/Mockery',
         ),
-        'League\\Uri\\' => 
+        'League\\Uri\\' =>
         array (
             0 => __DIR__ . '/..' . '/league/uri',
             1 => __DIR__ . '/..' . '/league/uri-interfaces',
         ),
-        'League\\MimeTypeDetection\\' => 
+        'League\\MimeTypeDetection\\' =>
         array (
             0 => __DIR__ . '/..' . '/league/mime-type-detection/src',
         ),
-        'League\\Flysystem\\Local\\' => 
+        'League\\Flysystem\\Local\\' =>
         array (
             0 => __DIR__ . '/..' . '/league/flysystem-local',
         ),
-        'League\\Flysystem\\' => 
+        'League\\Flysystem\\' =>
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
         ),
-        'League\\Csv\\' => 
+        'League\\Csv\\' =>
         array (
             0 => __DIR__ . '/..' . '/league/csv/src',
         ),
-        'League\\Config\\' => 
+        'League\\Config\\' =>
         array (
             0 => __DIR__ . '/..' . '/league/config/src',
         ),
-        'League\\CommonMark\\' => 
+        'League\\CommonMark\\' =>
         array (
             0 => __DIR__ . '/..' . '/league/commonmark/src',
         ),
-        'Laravel\\Tinker\\' => 
+        'Laravel\\Tinker\\' =>
         array (
             0 => __DIR__ . '/..' . '/laravel/tinker/src',
         ),
-        'Laravel\\SerializableClosure\\' => 
+        'Laravel\\SerializableClosure\\' =>
         array (
             0 => __DIR__ . '/..' . '/laravel/serializable-closure/src',
         ),
-        'Laravel\\Sanctum\\' => 
+        'Laravel\\Sanctum\\' =>
         array (
             0 => __DIR__ . '/..' . '/laravel/sanctum/src',
         ),
-        'Laravel\\Sail\\' => 
+        'Laravel\\Sail\\' =>
         array (
             0 => __DIR__ . '/..' . '/laravel/sail/src',
         ),
-        'Laravel\\Prompts\\' => 
+        'Laravel\\Prompts\\' =>
         array (
             0 => __DIR__ . '/..' . '/laravel/prompts/src',
         ),
-        'Laravel\\Pail\\' => 
+        'Laravel\\Pail\\' =>
         array (
             0 => __DIR__ . '/..' . '/laravel/pail/src',
         ),
-        'Jean85\\' => 
+        'Jean85\\' =>
         array (
             0 => __DIR__ . '/..' . '/jean85/pretty-package-versions/src',
         ),
-        'Illuminate\\Support\\' => 
+        'Illuminate\\Support\\' =>
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Macroable',
             1 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Collections',
             2 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Conditionable',
         ),
-        'Illuminate\\' => 
+        'Illuminate\\' =>
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate',
         ),
-        'Ichtrojan\\Otp\\' => 
+        'Ichtrojan\\Otp\\' =>
         array (
             0 => __DIR__ . '/..' . '/ichtrojan/laravel-otp/src',
         ),
-        'GuzzleHttp\\UriTemplate\\' => 
+        'GuzzleHttp\\UriTemplate\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/uri-template/src',
         ),
-        'GuzzleHttp\\Psr7\\' => 
+        'GuzzleHttp\\Psr7\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
         ),
-        'GuzzleHttp\\Promise\\' => 
+        'GuzzleHttp\\Promise\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
         ),
-        'GuzzleHttp\\' => 
+        'GuzzleHttp\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
-        'GrahamCampbell\\ResultType\\' => 
+        'GrahamCampbell\\ResultType\\' =>
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
         ),
-        'Fruitcake\\Cors\\' => 
+        'Fruitcake\\Cors\\' =>
         array (
             0 => __DIR__ . '/..' . '/fruitcake/php-cors/src',
         ),
-        'Fidry\\CpuCoreCounter\\' => 
+        'Fidry\\CpuCoreCounter\\' =>
         array (
             0 => __DIR__ . '/..' . '/fidry/cpu-core-counter/src',
         ),
-        'Faker\\' => 
+        'Faker\\' =>
         array (
             0 => __DIR__ . '/..' . '/fakerphp/faker/src/Faker',
         ),
-        'Egulias\\EmailValidator\\' => 
+        'Egulias\\EmailValidator\\' =>
         array (
             0 => __DIR__ . '/..' . '/egulias/email-validator/src',
         ),
-        'Dotenv\\' => 
+        'Dotenv\\' =>
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
-        'Doctrine\\Inflector\\' => 
+        'Doctrine\\Inflector\\' =>
         array (
             0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Inflector',
         ),
-        'Doctrine\\Deprecations\\' => 
+        'Doctrine\\Deprecations\\' =>
         array (
             0 => __DIR__ . '/..' . '/doctrine/deprecations/src',
         ),
-        'Doctrine\\Common\\Lexer\\' => 
+        'Doctrine\\DBAL\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/dbal/src',
+        ),
+        'Doctrine\\Common\\Lexer\\' =>
         array (
             0 => __DIR__ . '/..' . '/doctrine/lexer/src',
         ),
-        'Dflydev\\DotAccessData\\' => 
+        'Dflydev\\DotAccessData\\' =>
         array (
             0 => __DIR__ . '/..' . '/dflydev/dot-access-data/src',
         ),
-        'DeepCopy\\' => 
+        'DeepCopy\\' =>
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
-        'Database\\Seeders\\' => 
+        'Database\\Seeders\\' =>
         array (
             0 => __DIR__ . '/../..' . '/database/seeders',
             1 => __DIR__ . '/..' . '/laravel/pint/database/seeders',
         ),
-        'Database\\Factories\\' => 
+        'Database\\Factories\\' =>
         array (
             0 => __DIR__ . '/../..' . '/database/factories',
             1 => __DIR__ . '/..' . '/laravel/pint/database/factories',
         ),
-        'Cron\\' => 
+        'Cron\\' =>
         array (
             0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
         ),
-        'Carbon\\Doctrine\\' => 
+        'Carbon\\Doctrine\\' =>
         array (
             0 => __DIR__ . '/..' . '/carbonphp/carbon-doctrine-types/src/Carbon/Doctrine',
         ),
-        'Carbon\\' => 
+        'Carbon\\' =>
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
         ),
-        'Brick\\Math\\' => 
+        'Brick\\Math\\' =>
         array (
             0 => __DIR__ . '/..' . '/brick/math/src',
         ),
-        'App\\' => 
+        'App\\' =>
         array (
             0 => __DIR__ . '/../..' . '/app',
             1 => __DIR__ . '/..' . '/laravel/pint/app',
@@ -618,6 +628,7 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
         'App\\Console\\Commands\\ClearExpiredOtps' => __DIR__ . '/../..' . '/app/Console/Commands/ClearExpiredOtps.php',
         'App\\Console\\Commands\\ExportProductsToCSV' => __DIR__ . '/../..' . '/app/Console/Commands/ExportProductsToCSV.php',
         'App\\Console\\Commands\\ImportCategories' => __DIR__ . '/../..' . '/app/Console/Commands/ImportCategories.php',
+        'App\\Console\\Commands\\ImportProducts' => __DIR__ . '/../..' . '/app/Console/Commands/ImportProducts.php',
         'App\\Http\\Controllers\\Api\\CategorieController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/CategorieController.php',
         'App\\Http\\Controllers\\Api\\ImageController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ImageController.php',
         'App\\Http\\Controllers\\Api\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ProductController.php',
@@ -791,6 +802,8 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
         'Database\\Seeders\\OrderItemSeeder' => __DIR__ . '/../..' . '/database/seeders/OrderItemSeeder.php',
         'Database\\Seeders\\OrderSeeder' => __DIR__ . '/../..' . '/database/seeders/OrderSeeder.php',
         'Database\\Seeders\\ProductSeeder' => __DIR__ . '/../..' . '/database/seeders/ProductSeeder.php',
+        'Database\\Seeders\\SellerSeeder' => __DIR__ . '/../..' . '/database/seeders/SellerSeeder.php',
+        'Database\\Seeders\\UserSeeder' => __DIR__ . '/../..' . '/database/seeders/UserSeeder.php',
         'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
         'DateException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateException.php',
         'DateInvalidOperationException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateInvalidOperationException.php',
@@ -834,6 +847,340 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
         'Dflydev\\DotAccessData\\Util' => __DIR__ . '/..' . '/dflydev/dot-access-data/src/Util.php',
         'Doctrine\\Common\\Lexer\\AbstractLexer' => __DIR__ . '/..' . '/doctrine/lexer/src/AbstractLexer.php',
         'Doctrine\\Common\\Lexer\\Token' => __DIR__ . '/..' . '/doctrine/lexer/src/Token.php',
+        'Doctrine\\DBAL\\ArrayParameterType' => __DIR__ . '/..' . '/doctrine/dbal/src/ArrayParameterType.php',
+        'Doctrine\\DBAL\\ArrayParameters\\Exception' => __DIR__ . '/..' . '/doctrine/dbal/src/ArrayParameters/Exception.php',
+        'Doctrine\\DBAL\\ArrayParameters\\Exception\\MissingNamedParameter' => __DIR__ . '/..' . '/doctrine/dbal/src/ArrayParameters/Exception/MissingNamedParameter.php',
+        'Doctrine\\DBAL\\ArrayParameters\\Exception\\MissingPositionalParameter' => __DIR__ . '/..' . '/doctrine/dbal/src/ArrayParameters/Exception/MissingPositionalParameter.php',
+        'Doctrine\\DBAL\\Cache\\ArrayResult' => __DIR__ . '/..' . '/doctrine/dbal/src/Cache/ArrayResult.php',
+        'Doctrine\\DBAL\\Cache\\CacheException' => __DIR__ . '/..' . '/doctrine/dbal/src/Cache/CacheException.php',
+        'Doctrine\\DBAL\\Cache\\Exception\\NoCacheKey' => __DIR__ . '/..' . '/doctrine/dbal/src/Cache/Exception/NoCacheKey.php',
+        'Doctrine\\DBAL\\Cache\\Exception\\NoResultDriverConfigured' => __DIR__ . '/..' . '/doctrine/dbal/src/Cache/Exception/NoResultDriverConfigured.php',
+        'Doctrine\\DBAL\\Cache\\QueryCacheProfile' => __DIR__ . '/..' . '/doctrine/dbal/src/Cache/QueryCacheProfile.php',
+        'Doctrine\\DBAL\\ColumnCase' => __DIR__ . '/..' . '/doctrine/dbal/src/ColumnCase.php',
+        'Doctrine\\DBAL\\Configuration' => __DIR__ . '/..' . '/doctrine/dbal/src/Configuration.php',
+        'Doctrine\\DBAL\\Connection' => __DIR__ . '/..' . '/doctrine/dbal/src/Connection.php',
+        'Doctrine\\DBAL\\ConnectionException' => __DIR__ . '/..' . '/doctrine/dbal/src/ConnectionException.php',
+        'Doctrine\\DBAL\\Connection\\StaticServerVersionProvider' => __DIR__ . '/..' . '/doctrine/dbal/src/Connection/StaticServerVersionProvider.php',
+        'Doctrine\\DBAL\\Connections\\PrimaryReadReplicaConnection' => __DIR__ . '/..' . '/doctrine/dbal/src/Connections/PrimaryReadReplicaConnection.php',
+        'Doctrine\\DBAL\\Driver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver.php',
+        'Doctrine\\DBAL\\DriverManager' => __DIR__ . '/..' . '/doctrine/dbal/src/DriverManager.php',
+        'Doctrine\\DBAL\\Driver\\API\\ExceptionConverter' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/API/ExceptionConverter.php',
+        'Doctrine\\DBAL\\Driver\\API\\IBMDB2\\ExceptionConverter' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/API/IBMDB2/ExceptionConverter.php',
+        'Doctrine\\DBAL\\Driver\\API\\MySQL\\ExceptionConverter' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/API/MySQL/ExceptionConverter.php',
+        'Doctrine\\DBAL\\Driver\\API\\OCI\\ExceptionConverter' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/API/OCI/ExceptionConverter.php',
+        'Doctrine\\DBAL\\Driver\\API\\PostgreSQL\\ExceptionConverter' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/API/PostgreSQL/ExceptionConverter.php',
+        'Doctrine\\DBAL\\Driver\\API\\SQLSrv\\ExceptionConverter' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/API/SQLSrv/ExceptionConverter.php',
+        'Doctrine\\DBAL\\Driver\\API\\SQLite\\ExceptionConverter' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/API/SQLite/ExceptionConverter.php',
+        'Doctrine\\DBAL\\Driver\\AbstractDB2Driver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/AbstractDB2Driver.php',
+        'Doctrine\\DBAL\\Driver\\AbstractException' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/AbstractException.php',
+        'Doctrine\\DBAL\\Driver\\AbstractMySQLDriver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/AbstractMySQLDriver.php',
+        'Doctrine\\DBAL\\Driver\\AbstractOracleDriver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/AbstractOracleDriver.php',
+        'Doctrine\\DBAL\\Driver\\AbstractOracleDriver\\EasyConnectString' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/AbstractOracleDriver/EasyConnectString.php',
+        'Doctrine\\DBAL\\Driver\\AbstractPostgreSQLDriver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/AbstractPostgreSQLDriver.php',
+        'Doctrine\\DBAL\\Driver\\AbstractSQLServerDriver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/AbstractSQLServerDriver.php',
+        'Doctrine\\DBAL\\Driver\\AbstractSQLServerDriver\\Exception\\PortWithoutHost' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/AbstractSQLServerDriver/Exception/PortWithoutHost.php',
+        'Doctrine\\DBAL\\Driver\\AbstractSQLiteDriver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/AbstractSQLiteDriver.php',
+        'Doctrine\\DBAL\\Driver\\AbstractSQLiteDriver\\Middleware\\EnableForeignKeys' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/AbstractSQLiteDriver/Middleware/EnableForeignKeys.php',
+        'Doctrine\\DBAL\\Driver\\Connection' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Connection.php',
+        'Doctrine\\DBAL\\Driver\\Exception' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Exception.php',
+        'Doctrine\\DBAL\\Driver\\Exception\\IdentityColumnsNotSupported' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Exception/IdentityColumnsNotSupported.php',
+        'Doctrine\\DBAL\\Driver\\Exception\\NoIdentityValue' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Exception/NoIdentityValue.php',
+        'Doctrine\\DBAL\\Driver\\FetchUtils' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/FetchUtils.php',
+        'Doctrine\\DBAL\\Driver\\IBMDB2\\Connection' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/IBMDB2/Connection.php',
+        'Doctrine\\DBAL\\Driver\\IBMDB2\\DataSourceName' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/IBMDB2/DataSourceName.php',
+        'Doctrine\\DBAL\\Driver\\IBMDB2\\Driver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/IBMDB2/Driver.php',
+        'Doctrine\\DBAL\\Driver\\IBMDB2\\Exception\\CannotCopyStreamToStream' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/IBMDB2/Exception/CannotCopyStreamToStream.php',
+        'Doctrine\\DBAL\\Driver\\IBMDB2\\Exception\\CannotCreateTemporaryFile' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/IBMDB2/Exception/CannotCreateTemporaryFile.php',
+        'Doctrine\\DBAL\\Driver\\IBMDB2\\Exception\\ConnectionError' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/IBMDB2/Exception/ConnectionError.php',
+        'Doctrine\\DBAL\\Driver\\IBMDB2\\Exception\\ConnectionFailed' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/IBMDB2/Exception/ConnectionFailed.php',
+        'Doctrine\\DBAL\\Driver\\IBMDB2\\Exception\\Factory' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/IBMDB2/Exception/Factory.php',
+        'Doctrine\\DBAL\\Driver\\IBMDB2\\Exception\\PrepareFailed' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/IBMDB2/Exception/PrepareFailed.php',
+        'Doctrine\\DBAL\\Driver\\IBMDB2\\Exception\\StatementError' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/IBMDB2/Exception/StatementError.php',
+        'Doctrine\\DBAL\\Driver\\IBMDB2\\Result' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/IBMDB2/Result.php',
+        'Doctrine\\DBAL\\Driver\\IBMDB2\\Statement' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/IBMDB2/Statement.php',
+        'Doctrine\\DBAL\\Driver\\Middleware' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Middleware.php',
+        'Doctrine\\DBAL\\Driver\\Middleware\\AbstractConnectionMiddleware' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Middleware/AbstractConnectionMiddleware.php',
+        'Doctrine\\DBAL\\Driver\\Middleware\\AbstractDriverMiddleware' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Middleware/AbstractDriverMiddleware.php',
+        'Doctrine\\DBAL\\Driver\\Middleware\\AbstractResultMiddleware' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Middleware/AbstractResultMiddleware.php',
+        'Doctrine\\DBAL\\Driver\\Middleware\\AbstractStatementMiddleware' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Connection' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Connection.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Driver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Driver.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Exception\\ConnectionError' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Exception/ConnectionError.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Exception\\ConnectionFailed' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Exception/ConnectionFailed.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Exception\\FailedReadingStreamOffset' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Exception/FailedReadingStreamOffset.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Exception\\HostRequired' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Exception/HostRequired.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Exception\\InvalidCharset' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Exception/InvalidCharset.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Exception\\InvalidOption' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Exception/InvalidOption.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Exception\\NonStreamResourceUsedAsLargeObject' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Exception/NonStreamResourceUsedAsLargeObject.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Exception\\StatementError' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Exception/StatementError.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Initializer' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Initializer.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Initializer\\Charset' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Initializer/Charset.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Initializer\\Options' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Initializer/Options.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Initializer\\Secure' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Initializer/Secure.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Result' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Result.php',
+        'Doctrine\\DBAL\\Driver\\Mysqli\\Statement' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Mysqli/Statement.php',
+        'Doctrine\\DBAL\\Driver\\OCI8\\Connection' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/OCI8/Connection.php',
+        'Doctrine\\DBAL\\Driver\\OCI8\\ConvertPositionalToNamedPlaceholders' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/OCI8/ConvertPositionalToNamedPlaceholders.php',
+        'Doctrine\\DBAL\\Driver\\OCI8\\Driver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/OCI8/Driver.php',
+        'Doctrine\\DBAL\\Driver\\OCI8\\Exception\\ConnectionFailed' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/OCI8/Exception/ConnectionFailed.php',
+        'Doctrine\\DBAL\\Driver\\OCI8\\Exception\\Error' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/OCI8/Exception/Error.php',
+        'Doctrine\\DBAL\\Driver\\OCI8\\Exception\\InvalidConfiguration' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/OCI8/Exception/InvalidConfiguration.php',
+        'Doctrine\\DBAL\\Driver\\OCI8\\Exception\\NonTerminatedStringLiteral' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/OCI8/Exception/NonTerminatedStringLiteral.php',
+        'Doctrine\\DBAL\\Driver\\OCI8\\Exception\\UnknownParameterIndex' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/OCI8/Exception/UnknownParameterIndex.php',
+        'Doctrine\\DBAL\\Driver\\OCI8\\ExecutionMode' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/OCI8/ExecutionMode.php',
+        'Doctrine\\DBAL\\Driver\\OCI8\\Middleware\\InitializeSession' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/OCI8/Middleware/InitializeSession.php',
+        'Doctrine\\DBAL\\Driver\\OCI8\\Result' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/OCI8/Result.php',
+        'Doctrine\\DBAL\\Driver\\OCI8\\Statement' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/OCI8/Statement.php',
+        'Doctrine\\DBAL\\Driver\\PDO\\Connection' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PDO/Connection.php',
+        'Doctrine\\DBAL\\Driver\\PDO\\Exception' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PDO/Exception.php',
+        'Doctrine\\DBAL\\Driver\\PDO\\Exception\\InvalidConfiguration' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PDO/Exception/InvalidConfiguration.php',
+        'Doctrine\\DBAL\\Driver\\PDO\\MySQL\\Driver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PDO/MySQL/Driver.php',
+        'Doctrine\\DBAL\\Driver\\PDO\\OCI\\Driver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PDO/OCI/Driver.php',
+        'Doctrine\\DBAL\\Driver\\PDO\\PDOConnect' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PDO/PDOConnect.php',
+        'Doctrine\\DBAL\\Driver\\PDO\\PgSQL\\Driver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PDO/PgSQL/Driver.php',
+        'Doctrine\\DBAL\\Driver\\PDO\\Result' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PDO/Result.php',
+        'Doctrine\\DBAL\\Driver\\PDO\\SQLSrv\\Connection' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PDO/SQLSrv/Connection.php',
+        'Doctrine\\DBAL\\Driver\\PDO\\SQLSrv\\Driver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PDO/SQLSrv/Driver.php',
+        'Doctrine\\DBAL\\Driver\\PDO\\SQLSrv\\Statement' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PDO/SQLSrv/Statement.php',
+        'Doctrine\\DBAL\\Driver\\PDO\\SQLite\\Driver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PDO/SQLite/Driver.php',
+        'Doctrine\\DBAL\\Driver\\PDO\\Statement' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PDO/Statement.php',
+        'Doctrine\\DBAL\\Driver\\PgSQL\\Connection' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PgSQL/Connection.php',
+        'Doctrine\\DBAL\\Driver\\PgSQL\\ConvertParameters' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PgSQL/ConvertParameters.php',
+        'Doctrine\\DBAL\\Driver\\PgSQL\\Driver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PgSQL/Driver.php',
+        'Doctrine\\DBAL\\Driver\\PgSQL\\Exception' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PgSQL/Exception.php',
+        'Doctrine\\DBAL\\Driver\\PgSQL\\Exception\\UnexpectedValue' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PgSQL/Exception/UnexpectedValue.php',
+        'Doctrine\\DBAL\\Driver\\PgSQL\\Exception\\UnknownParameter' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PgSQL/Exception/UnknownParameter.php',
+        'Doctrine\\DBAL\\Driver\\PgSQL\\Result' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PgSQL/Result.php',
+        'Doctrine\\DBAL\\Driver\\PgSQL\\Statement' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/PgSQL/Statement.php',
+        'Doctrine\\DBAL\\Driver\\Result' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Result.php',
+        'Doctrine\\DBAL\\Driver\\SQLSrv\\Connection' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/SQLSrv/Connection.php',
+        'Doctrine\\DBAL\\Driver\\SQLSrv\\Driver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/SQLSrv/Driver.php',
+        'Doctrine\\DBAL\\Driver\\SQLSrv\\Exception\\Error' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/SQLSrv/Exception/Error.php',
+        'Doctrine\\DBAL\\Driver\\SQLSrv\\Result' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/SQLSrv/Result.php',
+        'Doctrine\\DBAL\\Driver\\SQLSrv\\Statement' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/SQLSrv/Statement.php',
+        'Doctrine\\DBAL\\Driver\\SQLite3\\Connection' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/SQLite3/Connection.php',
+        'Doctrine\\DBAL\\Driver\\SQLite3\\Driver' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/SQLite3/Driver.php',
+        'Doctrine\\DBAL\\Driver\\SQLite3\\Exception' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/SQLite3/Exception.php',
+        'Doctrine\\DBAL\\Driver\\SQLite3\\Result' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/SQLite3/Result.php',
+        'Doctrine\\DBAL\\Driver\\SQLite3\\Statement' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/SQLite3/Statement.php',
+        'Doctrine\\DBAL\\Driver\\Statement' => __DIR__ . '/..' . '/doctrine/dbal/src/Driver/Statement.php',
+        'Doctrine\\DBAL\\Exception' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception.php',
+        'Doctrine\\DBAL\\Exception\\CommitFailedRollbackOnly' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/CommitFailedRollbackOnly.php',
+        'Doctrine\\DBAL\\Exception\\ConnectionException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/ConnectionException.php',
+        'Doctrine\\DBAL\\Exception\\ConnectionLost' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/ConnectionLost.php',
+        'Doctrine\\DBAL\\Exception\\ConstraintViolationException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/ConstraintViolationException.php',
+        'Doctrine\\DBAL\\Exception\\DatabaseDoesNotExist' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/DatabaseDoesNotExist.php',
+        'Doctrine\\DBAL\\Exception\\DatabaseObjectExistsException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/DatabaseObjectExistsException.php',
+        'Doctrine\\DBAL\\Exception\\DatabaseObjectNotFoundException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/DatabaseObjectNotFoundException.php',
+        'Doctrine\\DBAL\\Exception\\DatabaseRequired' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/DatabaseRequired.php',
+        'Doctrine\\DBAL\\Exception\\DeadlockException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/DeadlockException.php',
+        'Doctrine\\DBAL\\Exception\\DriverException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/DriverException.php',
+        'Doctrine\\DBAL\\Exception\\DriverRequired' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/DriverRequired.php',
+        'Doctrine\\DBAL\\Exception\\ForeignKeyConstraintViolationException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/ForeignKeyConstraintViolationException.php',
+        'Doctrine\\DBAL\\Exception\\InvalidArgumentException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/InvalidArgumentException.php',
+        'Doctrine\\DBAL\\Exception\\InvalidColumnDeclaration' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/InvalidColumnDeclaration.php',
+        'Doctrine\\DBAL\\Exception\\InvalidColumnIndex' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/InvalidColumnIndex.php',
+        'Doctrine\\DBAL\\Exception\\InvalidColumnType' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/InvalidColumnType.php',
+        'Doctrine\\DBAL\\Exception\\InvalidColumnType\\ColumnLengthRequired' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/InvalidColumnType/ColumnLengthRequired.php',
+        'Doctrine\\DBAL\\Exception\\InvalidColumnType\\ColumnPrecisionRequired' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/InvalidColumnType/ColumnPrecisionRequired.php',
+        'Doctrine\\DBAL\\Exception\\InvalidColumnType\\ColumnScaleRequired' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/InvalidColumnType/ColumnScaleRequired.php',
+        'Doctrine\\DBAL\\Exception\\InvalidColumnType\\ColumnValuesRequired' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/InvalidColumnType/ColumnValuesRequired.php',
+        'Doctrine\\DBAL\\Exception\\InvalidDriverClass' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/InvalidDriverClass.php',
+        'Doctrine\\DBAL\\Exception\\InvalidFieldNameException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/InvalidFieldNameException.php',
+        'Doctrine\\DBAL\\Exception\\InvalidWrapperClass' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/InvalidWrapperClass.php',
+        'Doctrine\\DBAL\\Exception\\LockWaitTimeoutException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/LockWaitTimeoutException.php',
+        'Doctrine\\DBAL\\Exception\\MalformedDsnException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/MalformedDsnException.php',
+        'Doctrine\\DBAL\\Exception\\NoActiveTransaction' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/NoActiveTransaction.php',
+        'Doctrine\\DBAL\\Exception\\NoKeyValue' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/NoKeyValue.php',
+        'Doctrine\\DBAL\\Exception\\NonUniqueFieldNameException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/NonUniqueFieldNameException.php',
+        'Doctrine\\DBAL\\Exception\\NotNullConstraintViolationException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/NotNullConstraintViolationException.php',
+        'Doctrine\\DBAL\\Exception\\ReadOnlyException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/ReadOnlyException.php',
+        'Doctrine\\DBAL\\Exception\\RetryableException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/RetryableException.php',
+        'Doctrine\\DBAL\\Exception\\SavepointsNotSupported' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/SavepointsNotSupported.php',
+        'Doctrine\\DBAL\\Exception\\SchemaDoesNotExist' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/SchemaDoesNotExist.php',
+        'Doctrine\\DBAL\\Exception\\ServerException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/ServerException.php',
+        'Doctrine\\DBAL\\Exception\\SyntaxErrorException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/SyntaxErrorException.php',
+        'Doctrine\\DBAL\\Exception\\TableExistsException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/TableExistsException.php',
+        'Doctrine\\DBAL\\Exception\\TableNotFoundException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/TableNotFoundException.php',
+        'Doctrine\\DBAL\\Exception\\TransactionRolledBack' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/TransactionRolledBack.php',
+        'Doctrine\\DBAL\\Exception\\UniqueConstraintViolationException' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/UniqueConstraintViolationException.php',
+        'Doctrine\\DBAL\\Exception\\UnknownDriver' => __DIR__ . '/..' . '/doctrine/dbal/src/Exception/UnknownDriver.php',
+        'Doctrine\\DBAL\\ExpandArrayParameters' => __DIR__ . '/..' . '/doctrine/dbal/src/ExpandArrayParameters.php',
+        'Doctrine\\DBAL\\LockMode' => __DIR__ . '/..' . '/doctrine/dbal/src/LockMode.php',
+        'Doctrine\\DBAL\\Logging\\Connection' => __DIR__ . '/..' . '/doctrine/dbal/src/Logging/Connection.php',
+        'Doctrine\\DBAL\\Logging\\Driver' => __DIR__ . '/..' . '/doctrine/dbal/src/Logging/Driver.php',
+        'Doctrine\\DBAL\\Logging\\Middleware' => __DIR__ . '/..' . '/doctrine/dbal/src/Logging/Middleware.php',
+        'Doctrine\\DBAL\\Logging\\Statement' => __DIR__ . '/..' . '/doctrine/dbal/src/Logging/Statement.php',
+        'Doctrine\\DBAL\\ParameterType' => __DIR__ . '/..' . '/doctrine/dbal/src/ParameterType.php',
+        'Doctrine\\DBAL\\Platforms\\AbstractMySQLPlatform' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/AbstractMySQLPlatform.php',
+        'Doctrine\\DBAL\\Platforms\\AbstractPlatform' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/AbstractPlatform.php',
+        'Doctrine\\DBAL\\Platforms\\DB2Platform' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/DB2Platform.php',
+        'Doctrine\\DBAL\\Platforms\\DateIntervalUnit' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/DateIntervalUnit.php',
+        'Doctrine\\DBAL\\Platforms\\Exception\\InvalidPlatformVersion' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/Exception/InvalidPlatformVersion.php',
+        'Doctrine\\DBAL\\Platforms\\Exception\\NoColumnsSpecifiedForTable' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/Exception/NoColumnsSpecifiedForTable.php',
+        'Doctrine\\DBAL\\Platforms\\Exception\\NotSupported' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/Exception/NotSupported.php',
+        'Doctrine\\DBAL\\Platforms\\Exception\\PlatformException' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/Exception/PlatformException.php',
+        'Doctrine\\DBAL\\Platforms\\Keywords\\DB2Keywords' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/Keywords/DB2Keywords.php',
+        'Doctrine\\DBAL\\Platforms\\Keywords\\KeywordList' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/Keywords/KeywordList.php',
+        'Doctrine\\DBAL\\Platforms\\Keywords\\MariaDBKeywords' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/Keywords/MariaDBKeywords.php',
+        'Doctrine\\DBAL\\Platforms\\Keywords\\MySQL80Keywords' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/Keywords/MySQL80Keywords.php',
+        'Doctrine\\DBAL\\Platforms\\Keywords\\MySQL84Keywords' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/Keywords/MySQL84Keywords.php',
+        'Doctrine\\DBAL\\Platforms\\Keywords\\MySQLKeywords' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/Keywords/MySQLKeywords.php',
+        'Doctrine\\DBAL\\Platforms\\Keywords\\OracleKeywords' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/Keywords/OracleKeywords.php',
+        'Doctrine\\DBAL\\Platforms\\Keywords\\PostgreSQLKeywords' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/Keywords/PostgreSQLKeywords.php',
+        'Doctrine\\DBAL\\Platforms\\Keywords\\SQLServerKeywords' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/Keywords/SQLServerKeywords.php',
+        'Doctrine\\DBAL\\Platforms\\Keywords\\SQLiteKeywords' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/Keywords/SQLiteKeywords.php',
+        'Doctrine\\DBAL\\Platforms\\MariaDB1010Platform' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/MariaDB1010Platform.php',
+        'Doctrine\\DBAL\\Platforms\\MariaDB1052Platform' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/MariaDB1052Platform.php',
+        'Doctrine\\DBAL\\Platforms\\MariaDB1060Platform' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/MariaDB1060Platform.php',
+        'Doctrine\\DBAL\\Platforms\\MariaDBPlatform' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/MariaDBPlatform.php',
+        'Doctrine\\DBAL\\Platforms\\MySQL80Platform' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/MySQL80Platform.php',
+        'Doctrine\\DBAL\\Platforms\\MySQL84Platform' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/MySQL84Platform.php',
+        'Doctrine\\DBAL\\Platforms\\MySQLPlatform' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/MySQLPlatform.php',
+        'Doctrine\\DBAL\\Platforms\\MySQL\\CharsetMetadataProvider' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/MySQL/CharsetMetadataProvider.php',
+        'Doctrine\\DBAL\\Platforms\\MySQL\\CharsetMetadataProvider\\CachingCharsetMetadataProvider' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/MySQL/CharsetMetadataProvider/CachingCharsetMetadataProvider.php',
+        'Doctrine\\DBAL\\Platforms\\MySQL\\CharsetMetadataProvider\\ConnectionCharsetMetadataProvider' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/MySQL/CharsetMetadataProvider/ConnectionCharsetMetadataProvider.php',
+        'Doctrine\\DBAL\\Platforms\\MySQL\\CollationMetadataProvider' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/MySQL/CollationMetadataProvider.php',
+        'Doctrine\\DBAL\\Platforms\\MySQL\\CollationMetadataProvider\\CachingCollationMetadataProvider' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/MySQL/CollationMetadataProvider/CachingCollationMetadataProvider.php',
+        'Doctrine\\DBAL\\Platforms\\MySQL\\CollationMetadataProvider\\ConnectionCollationMetadataProvider' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/MySQL/CollationMetadataProvider/ConnectionCollationMetadataProvider.php',
+        'Doctrine\\DBAL\\Platforms\\MySQL\\Comparator' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/MySQL/Comparator.php',
+        'Doctrine\\DBAL\\Platforms\\MySQL\\DefaultTableOptions' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/MySQL/DefaultTableOptions.php',
+        'Doctrine\\DBAL\\Platforms\\OraclePlatform' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/OraclePlatform.php',
+        'Doctrine\\DBAL\\Platforms\\PostgreSQL120Platform' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/PostgreSQL120Platform.php',
+        'Doctrine\\DBAL\\Platforms\\PostgreSQLPlatform' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/PostgreSQLPlatform.php',
+        'Doctrine\\DBAL\\Platforms\\SQLServerPlatform' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/SQLServerPlatform.php',
+        'Doctrine\\DBAL\\Platforms\\SQLServer\\Comparator' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/SQLServer/Comparator.php',
+        'Doctrine\\DBAL\\Platforms\\SQLServer\\SQL\\Builder\\SQLServerSelectSQLBuilder' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/SQLServer/SQL/Builder/SQLServerSelectSQLBuilder.php',
+        'Doctrine\\DBAL\\Platforms\\SQLitePlatform' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/SQLitePlatform.php',
+        'Doctrine\\DBAL\\Platforms\\SQLite\\Comparator' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/SQLite/Comparator.php',
+        'Doctrine\\DBAL\\Platforms\\TrimMode' => __DIR__ . '/..' . '/doctrine/dbal/src/Platforms/TrimMode.php',
+        'Doctrine\\DBAL\\Portability\\Connection' => __DIR__ . '/..' . '/doctrine/dbal/src/Portability/Connection.php',
+        'Doctrine\\DBAL\\Portability\\Converter' => __DIR__ . '/..' . '/doctrine/dbal/src/Portability/Converter.php',
+        'Doctrine\\DBAL\\Portability\\Driver' => __DIR__ . '/..' . '/doctrine/dbal/src/Portability/Driver.php',
+        'Doctrine\\DBAL\\Portability\\Middleware' => __DIR__ . '/..' . '/doctrine/dbal/src/Portability/Middleware.php',
+        'Doctrine\\DBAL\\Portability\\OptimizeFlags' => __DIR__ . '/..' . '/doctrine/dbal/src/Portability/OptimizeFlags.php',
+        'Doctrine\\DBAL\\Portability\\Result' => __DIR__ . '/..' . '/doctrine/dbal/src/Portability/Result.php',
+        'Doctrine\\DBAL\\Portability\\Statement' => __DIR__ . '/..' . '/doctrine/dbal/src/Portability/Statement.php',
+        'Doctrine\\DBAL\\Query' => __DIR__ . '/..' . '/doctrine/dbal/src/Query.php',
+        'Doctrine\\DBAL\\Query\\Exception\\NonUniqueAlias' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/Exception/NonUniqueAlias.php',
+        'Doctrine\\DBAL\\Query\\Exception\\UnknownAlias' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/Exception/UnknownAlias.php',
+        'Doctrine\\DBAL\\Query\\Expression\\CompositeExpression' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/Expression/CompositeExpression.php',
+        'Doctrine\\DBAL\\Query\\Expression\\ExpressionBuilder' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/Expression/ExpressionBuilder.php',
+        'Doctrine\\DBAL\\Query\\ForUpdate' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/ForUpdate.php',
+        'Doctrine\\DBAL\\Query\\ForUpdate\\ConflictResolutionMode' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/ForUpdate/ConflictResolutionMode.php',
+        'Doctrine\\DBAL\\Query\\From' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/From.php',
+        'Doctrine\\DBAL\\Query\\Join' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/Join.php',
+        'Doctrine\\DBAL\\Query\\Limit' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/Limit.php',
+        'Doctrine\\DBAL\\Query\\QueryBuilder' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/QueryBuilder.php',
+        'Doctrine\\DBAL\\Query\\QueryException' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/QueryException.php',
+        'Doctrine\\DBAL\\Query\\QueryType' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/QueryType.php',
+        'Doctrine\\DBAL\\Query\\SelectQuery' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/SelectQuery.php',
+        'Doctrine\\DBAL\\Query\\Union' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/Union.php',
+        'Doctrine\\DBAL\\Query\\UnionQuery' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/UnionQuery.php',
+        'Doctrine\\DBAL\\Query\\UnionType' => __DIR__ . '/..' . '/doctrine/dbal/src/Query/UnionType.php',
+        'Doctrine\\DBAL\\Result' => __DIR__ . '/..' . '/doctrine/dbal/src/Result.php',
+        'Doctrine\\DBAL\\SQL\\Builder\\CreateSchemaObjectsSQLBuilder' => __DIR__ . '/..' . '/doctrine/dbal/src/SQL/Builder/CreateSchemaObjectsSQLBuilder.php',
+        'Doctrine\\DBAL\\SQL\\Builder\\DefaultSelectSQLBuilder' => __DIR__ . '/..' . '/doctrine/dbal/src/SQL/Builder/DefaultSelectSQLBuilder.php',
+        'Doctrine\\DBAL\\SQL\\Builder\\DefaultUnionSQLBuilder' => __DIR__ . '/..' . '/doctrine/dbal/src/SQL/Builder/DefaultUnionSQLBuilder.php',
+        'Doctrine\\DBAL\\SQL\\Builder\\DropSchemaObjectsSQLBuilder' => __DIR__ . '/..' . '/doctrine/dbal/src/SQL/Builder/DropSchemaObjectsSQLBuilder.php',
+        'Doctrine\\DBAL\\SQL\\Builder\\SelectSQLBuilder' => __DIR__ . '/..' . '/doctrine/dbal/src/SQL/Builder/SelectSQLBuilder.php',
+        'Doctrine\\DBAL\\SQL\\Builder\\UnionSQLBuilder' => __DIR__ . '/..' . '/doctrine/dbal/src/SQL/Builder/UnionSQLBuilder.php',
+        'Doctrine\\DBAL\\SQL\\Parser' => __DIR__ . '/..' . '/doctrine/dbal/src/SQL/Parser.php',
+        'Doctrine\\DBAL\\SQL\\Parser\\Exception' => __DIR__ . '/..' . '/doctrine/dbal/src/SQL/Parser/Exception.php',
+        'Doctrine\\DBAL\\SQL\\Parser\\Exception\\RegularExpressionError' => __DIR__ . '/..' . '/doctrine/dbal/src/SQL/Parser/Exception/RegularExpressionError.php',
+        'Doctrine\\DBAL\\SQL\\Parser\\Visitor' => __DIR__ . '/..' . '/doctrine/dbal/src/SQL/Parser/Visitor.php',
+        'Doctrine\\DBAL\\Schema\\AbstractAsset' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/AbstractAsset.php',
+        'Doctrine\\DBAL\\Schema\\AbstractSchemaManager' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/AbstractSchemaManager.php',
+        'Doctrine\\DBAL\\Schema\\Column' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Column.php',
+        'Doctrine\\DBAL\\Schema\\ColumnDiff' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/ColumnDiff.php',
+        'Doctrine\\DBAL\\Schema\\Comparator' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Comparator.php',
+        'Doctrine\\DBAL\\Schema\\DB2SchemaManager' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/DB2SchemaManager.php',
+        'Doctrine\\DBAL\\Schema\\DefaultSchemaManagerFactory' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/DefaultSchemaManagerFactory.php',
+        'Doctrine\\DBAL\\Schema\\Exception\\ColumnAlreadyExists' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Exception/ColumnAlreadyExists.php',
+        'Doctrine\\DBAL\\Schema\\Exception\\ColumnDoesNotExist' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Exception/ColumnDoesNotExist.php',
+        'Doctrine\\DBAL\\Schema\\Exception\\ForeignKeyDoesNotExist' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Exception/ForeignKeyDoesNotExist.php',
+        'Doctrine\\DBAL\\Schema\\Exception\\IndexAlreadyExists' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Exception/IndexAlreadyExists.php',
+        'Doctrine\\DBAL\\Schema\\Exception\\IndexDoesNotExist' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Exception/IndexDoesNotExist.php',
+        'Doctrine\\DBAL\\Schema\\Exception\\IndexNameInvalid' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Exception/IndexNameInvalid.php',
+        'Doctrine\\DBAL\\Schema\\Exception\\InvalidTableName' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Exception/InvalidTableName.php',
+        'Doctrine\\DBAL\\Schema\\Exception\\NamespaceAlreadyExists' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Exception/NamespaceAlreadyExists.php',
+        'Doctrine\\DBAL\\Schema\\Exception\\SequenceAlreadyExists' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Exception/SequenceAlreadyExists.php',
+        'Doctrine\\DBAL\\Schema\\Exception\\SequenceDoesNotExist' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Exception/SequenceDoesNotExist.php',
+        'Doctrine\\DBAL\\Schema\\Exception\\TableAlreadyExists' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Exception/TableAlreadyExists.php',
+        'Doctrine\\DBAL\\Schema\\Exception\\TableDoesNotExist' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Exception/TableDoesNotExist.php',
+        'Doctrine\\DBAL\\Schema\\Exception\\UniqueConstraintDoesNotExist' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Exception/UniqueConstraintDoesNotExist.php',
+        'Doctrine\\DBAL\\Schema\\Exception\\UnknownColumnOption' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Exception/UnknownColumnOption.php',
+        'Doctrine\\DBAL\\Schema\\ForeignKeyConstraint' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/ForeignKeyConstraint.php',
+        'Doctrine\\DBAL\\Schema\\Identifier' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Identifier.php',
+        'Doctrine\\DBAL\\Schema\\Index' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Index.php',
+        'Doctrine\\DBAL\\Schema\\MySQLSchemaManager' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/MySQLSchemaManager.php',
+        'Doctrine\\DBAL\\Schema\\OracleSchemaManager' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/OracleSchemaManager.php',
+        'Doctrine\\DBAL\\Schema\\PostgreSQLSchemaManager' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/PostgreSQLSchemaManager.php',
+        'Doctrine\\DBAL\\Schema\\SQLServerSchemaManager' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/SQLServerSchemaManager.php',
+        'Doctrine\\DBAL\\Schema\\SQLiteSchemaManager' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/SQLiteSchemaManager.php',
+        'Doctrine\\DBAL\\Schema\\Schema' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Schema.php',
+        'Doctrine\\DBAL\\Schema\\SchemaConfig' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/SchemaConfig.php',
+        'Doctrine\\DBAL\\Schema\\SchemaDiff' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/SchemaDiff.php',
+        'Doctrine\\DBAL\\Schema\\SchemaException' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/SchemaException.php',
+        'Doctrine\\DBAL\\Schema\\SchemaManagerFactory' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/SchemaManagerFactory.php',
+        'Doctrine\\DBAL\\Schema\\Sequence' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Sequence.php',
+        'Doctrine\\DBAL\\Schema\\Table' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/Table.php',
+        'Doctrine\\DBAL\\Schema\\TableDiff' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/TableDiff.php',
+        'Doctrine\\DBAL\\Schema\\UniqueConstraint' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/UniqueConstraint.php',
+        'Doctrine\\DBAL\\Schema\\View' => __DIR__ . '/..' . '/doctrine/dbal/src/Schema/View.php',
+        'Doctrine\\DBAL\\ServerVersionProvider' => __DIR__ . '/..' . '/doctrine/dbal/src/ServerVersionProvider.php',
+        'Doctrine\\DBAL\\Statement' => __DIR__ . '/..' . '/doctrine/dbal/src/Statement.php',
+        'Doctrine\\DBAL\\Tools\\Console\\Command\\RunSqlCommand' => __DIR__ . '/..' . '/doctrine/dbal/src/Tools/Console/Command/RunSqlCommand.php',
+        'Doctrine\\DBAL\\Tools\\Console\\ConnectionNotFound' => __DIR__ . '/..' . '/doctrine/dbal/src/Tools/Console/ConnectionNotFound.php',
+        'Doctrine\\DBAL\\Tools\\Console\\ConnectionProvider' => __DIR__ . '/..' . '/doctrine/dbal/src/Tools/Console/ConnectionProvider.php',
+        'Doctrine\\DBAL\\Tools\\Console\\ConnectionProvider\\SingleConnectionProvider' => __DIR__ . '/..' . '/doctrine/dbal/src/Tools/Console/ConnectionProvider/SingleConnectionProvider.php',
+        'Doctrine\\DBAL\\Tools\\DsnParser' => __DIR__ . '/..' . '/doctrine/dbal/src/Tools/DsnParser.php',
+        'Doctrine\\DBAL\\TransactionIsolationLevel' => __DIR__ . '/..' . '/doctrine/dbal/src/TransactionIsolationLevel.php',
+        'Doctrine\\DBAL\\Types\\AsciiStringType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/AsciiStringType.php',
+        'Doctrine\\DBAL\\Types\\BigIntType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/BigIntType.php',
+        'Doctrine\\DBAL\\Types\\BinaryType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/BinaryType.php',
+        'Doctrine\\DBAL\\Types\\BlobType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/BlobType.php',
+        'Doctrine\\DBAL\\Types\\BooleanType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/BooleanType.php',
+        'Doctrine\\DBAL\\Types\\ConversionException' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/ConversionException.php',
+        'Doctrine\\DBAL\\Types\\DateImmutableType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/DateImmutableType.php',
+        'Doctrine\\DBAL\\Types\\DateIntervalType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/DateIntervalType.php',
+        'Doctrine\\DBAL\\Types\\DateTimeImmutableType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/DateTimeImmutableType.php',
+        'Doctrine\\DBAL\\Types\\DateTimeType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/DateTimeType.php',
+        'Doctrine\\DBAL\\Types\\DateTimeTzImmutableType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/DateTimeTzImmutableType.php',
+        'Doctrine\\DBAL\\Types\\DateTimeTzType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/DateTimeTzType.php',
+        'Doctrine\\DBAL\\Types\\DateType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/DateType.php',
+        'Doctrine\\DBAL\\Types\\DecimalType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/DecimalType.php',
+        'Doctrine\\DBAL\\Types\\EnumType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/EnumType.php',
+        'Doctrine\\DBAL\\Types\\Exception\\InvalidFormat' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/Exception/InvalidFormat.php',
+        'Doctrine\\DBAL\\Types\\Exception\\InvalidType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/Exception/InvalidType.php',
+        'Doctrine\\DBAL\\Types\\Exception\\SerializationFailed' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/Exception/SerializationFailed.php',
+        'Doctrine\\DBAL\\Types\\Exception\\TypeAlreadyRegistered' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/Exception/TypeAlreadyRegistered.php',
+        'Doctrine\\DBAL\\Types\\Exception\\TypeNotFound' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/Exception/TypeNotFound.php',
+        'Doctrine\\DBAL\\Types\\Exception\\TypeNotRegistered' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/Exception/TypeNotRegistered.php',
+        'Doctrine\\DBAL\\Types\\Exception\\TypesAlreadyExists' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/Exception/TypesAlreadyExists.php',
+        'Doctrine\\DBAL\\Types\\Exception\\TypesException' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/Exception/TypesException.php',
+        'Doctrine\\DBAL\\Types\\Exception\\UnknownColumnType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/Exception/UnknownColumnType.php',
+        'Doctrine\\DBAL\\Types\\Exception\\ValueNotConvertible' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/Exception/ValueNotConvertible.php',
+        'Doctrine\\DBAL\\Types\\FloatType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/FloatType.php',
+        'Doctrine\\DBAL\\Types\\GuidType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/GuidType.php',
+        'Doctrine\\DBAL\\Types\\IntegerType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/IntegerType.php',
+        'Doctrine\\DBAL\\Types\\JsonType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/JsonType.php',
+        'Doctrine\\DBAL\\Types\\PhpDateMappingType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/PhpDateMappingType.php',
+        'Doctrine\\DBAL\\Types\\PhpDateTimeMappingType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/PhpDateTimeMappingType.php',
+        'Doctrine\\DBAL\\Types\\PhpIntegerMappingType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/PhpIntegerMappingType.php',
+        'Doctrine\\DBAL\\Types\\PhpTimeMappingType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/PhpTimeMappingType.php',
+        'Doctrine\\DBAL\\Types\\SimpleArrayType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/SimpleArrayType.php',
+        'Doctrine\\DBAL\\Types\\SmallFloatType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/SmallFloatType.php',
+        'Doctrine\\DBAL\\Types\\SmallIntType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/SmallIntType.php',
+        'Doctrine\\DBAL\\Types\\StringType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/StringType.php',
+        'Doctrine\\DBAL\\Types\\TextType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/TextType.php',
+        'Doctrine\\DBAL\\Types\\TimeImmutableType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/TimeImmutableType.php',
+        'Doctrine\\DBAL\\Types\\TimeType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/TimeType.php',
+        'Doctrine\\DBAL\\Types\\Type' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/Type.php',
+        'Doctrine\\DBAL\\Types\\TypeRegistry' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/TypeRegistry.php',
+        'Doctrine\\DBAL\\Types\\Types' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/Types.php',
+        'Doctrine\\DBAL\\Types\\VarDateTimeImmutableType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/VarDateTimeImmutableType.php',
+        'Doctrine\\DBAL\\Types\\VarDateTimeType' => __DIR__ . '/..' . '/doctrine/dbal/src/Types/VarDateTimeType.php',
         'Doctrine\\Deprecations\\Deprecation' => __DIR__ . '/..' . '/doctrine/deprecations/src/Deprecation.php',
         'Doctrine\\Deprecations\\PHPUnit\\VerifyDeprecations' => __DIR__ . '/..' . '/doctrine/deprecations/src/PHPUnit/VerifyDeprecations.php',
         'Doctrine\\Inflector\\CachedWordInflector' => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Inflector/CachedWordInflector.php',
@@ -5859,6 +6206,10 @@ class ComposerStaticInit4fcc7fa354b9676075787f44d92cec81
         'PhpParser\\PrettyPrinter\\Standard' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/PrettyPrinter/Standard.php',
         'PhpParser\\Token' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Token.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
+        'Psr\\Cache\\CacheException' => __DIR__ . '/..' . '/psr/cache/src/CacheException.php',
+        'Psr\\Cache\\CacheItemInterface' => __DIR__ . '/..' . '/psr/cache/src/CacheItemInterface.php',
+        'Psr\\Cache\\CacheItemPoolInterface' => __DIR__ . '/..' . '/psr/cache/src/CacheItemPoolInterface.php',
+        'Psr\\Cache\\InvalidArgumentException' => __DIR__ . '/..' . '/psr/cache/src/InvalidArgumentException.php',
         'Psr\\Clock\\ClockInterface' => __DIR__ . '/..' . '/psr/clock/src/ClockInterface.php',
         'Psr\\Container\\ContainerExceptionInterface' => __DIR__ . '/..' . '/psr/container/src/ContainerExceptionInterface.php',
         'Psr\\Container\\ContainerInterface' => __DIR__ . '/..' . '/psr/container/src/ContainerInterface.php',

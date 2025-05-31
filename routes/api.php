@@ -3,21 +3,22 @@
 use App\Http\Controllers\ProductRecommendationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\OrderController;
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\Api\ImageController;
 
+use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\Api\ProductController;
-use App\Http\Controllers\Api\CategorieController;
-use App\Http\Controllers\OtpController;
 //use App\Http\Controllers\Auth\AuthController;
-//use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Api\CategorieController;
+use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\ProductRecommendationController;
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
@@ -96,6 +97,10 @@ Route::middleware(['auth:sanctum', 'isSellerOrAdmin'])->group(function () {
     Route::get('/getCardsData', [OrderController::class, 'getCardsData']);
 
     Route::get('/getOrdersCountChartData', [OrderController::class, 'getOrdersCountChartData']);
+
+    //////////////////////////////////////////
+
+    Route::get('/recommendations/users/{UserID}', [ProductRecommendationController::class, 'getRecommendations_collaborative']);
 });
 
 
