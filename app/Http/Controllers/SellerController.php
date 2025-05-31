@@ -11,7 +11,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\SellerResource;
-use Illuminate\Support\Facades\Storage;
+//use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
 
 class SellerController extends Controller
@@ -106,7 +106,7 @@ class SellerController extends Controller
                 'phone' => $request->phone,
                 'adress' => $request->adress,
                 'paypal' => $request->paypal
-            ];
+            ]);
 
             // Only update the logo if a new file is uploaded
             if ($request->hasFile('logo')) {

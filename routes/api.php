@@ -18,7 +18,8 @@ use App\Http\Controllers\Api\ProductController;
 //use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Api\CategorieController;
 use App\Http\Controllers\EmailVerificationController;
-use App\Http\Controllers\ProductRecommendationController;
+use App\Http\Controllers\OtpController;
+//use App\Http\Controllers\ProductRecommendationController;
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);

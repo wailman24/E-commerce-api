@@ -7,9 +7,13 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Console\\Commands\\ClearExpiredOtps' => $baseDir . '/app/Console/Commands/ClearExpiredOtps.php',
+    'App\\Console\\Commands\\ExportCategories' => $baseDir . '/app/Console/Commands/ExportCategories.php',
     'App\\Console\\Commands\\ExportProductsToCSV' => $baseDir . '/app/Console/Commands/ExportProductsToCSV.php',
+    'App\\Console\\Commands\\ExportReviewsToCSV' => $baseDir . '/app/Console/Commands/ExportReviewsToCSV.php',
     'App\\Console\\Commands\\ImportCategories' => $baseDir . '/app/Console/Commands/ImportCategories.php',
+    'App\\Console\\Commands\\ImportImagesFromCSV' => $baseDir . '/app/Console/Commands/ImportImagesFromCSV.php',
     'App\\Console\\Commands\\ImportProducts' => $baseDir . '/app/Console/Commands/ImportProducts.php',
+    'App\\Console\\Commands\\ImportRatingsFromCSV' => $baseDir . '/app/Console/Commands/ImportRatingsFromCSV.php',
     'App\\Http\\Controllers\\Api\\CategorieController' => $baseDir . '/app/Http/Controllers/Api/CategorieController.php',
     'App\\Http\\Controllers\\Api\\ImageController' => $baseDir . '/app/Http/Controllers/Api/ImageController.php',
     'App\\Http\\Controllers\\Api\\ProductController' => $baseDir . '/app/Http/Controllers/Api/ProductController.php',
@@ -56,6 +60,7 @@ return array(
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\Wishlist' => $baseDir . '/app/Models/Wishlist.php',
     'App\\Notifications\\ApiVerifyEmail' => $baseDir . '/app/Notifications/ApiVerifyEmail.php',
+    'App\\Notifications\\ProductAddedNotification' => $baseDir . '/app/Notifications/ProductAddedNotification.php',
     'App\\Policies\\OrderItemPolicy' => $baseDir . '/app/Policies/OrderItemPolicy.php',
     'App\\Policies\\OrderPolicy' => $baseDir . '/app/Policies/OrderPolicy.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
