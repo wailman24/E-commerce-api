@@ -26,6 +26,7 @@ class SellerResource extends JsonResource
             'logo' => $this->logo,
             'status' => $this->status,
             'paypal' => $this->paypal,
+
         ];
     }
 }

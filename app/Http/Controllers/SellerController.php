@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EarningResource;
 use App\Models\User;
 use App\Models\Seller;
 
@@ -11,6 +12,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\SellerResource;
+use App\Models\Seller_earning;
 //use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -198,5 +200,18 @@ class SellerController extends Controller
     {
         $pendingSellers = Seller::where('status', 'pending')->get();
         return SellerResource::collection($pendingSellers);
+    }
+
+    public function getallsellerearnings()
+    {
+        try {
+            $sellers = Seller_earning::all();
+            return EarningResource::collection($sellers);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 }

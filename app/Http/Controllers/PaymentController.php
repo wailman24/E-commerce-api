@@ -24,15 +24,13 @@ class PaymentController extends Controller
     {
         try {
             $user = Auth::user();
+
             $request->validate([
                 'order_id' => 'required|exists:orders,id',
             ]);
-            $order = Order::where('id', $request->order_id)->first();
 
-            $payment = Payment::create([
-                'order_id' => $request->order_id,
-                'methode' => 'paypal',
-            ]);
+            $order = Order::findOrFail($request->order_id);
+
             $provider = new PayPalClient;
             $provider->setApiCredentials(config('paypal'));
             $provider->getAccessToken();
@@ -43,19 +41,32 @@ class PaymentController extends Controller
                     [
                         "amount" => [
                             "currency_code" => "USD",
-                            "value" => $order->total // Replace with actual amount
+                            "value" => $order->total
                         ]
                     ]
                 ],
                 "application_context" => [
-                    "return_url" => route('payment.success', ['user_id' => $user->id]),
+                    "return_url" => route('payment.success'),
                     "cancel_url" => route('payment.cancel')
                 ]
             ]);
             //dd($response);
+
             if (isset($response['id']) && $response['id'] != null) {
+                $paypalToken = $response['id']; // Save PayPal Order ID
+
+
+                // Save the payment with the PayPal token
+                Payment::create([
+                    'order_id' => $order->id,
+                    'methode' => 'paypal',
+                    'status' => 'pending',
+                    'paypal_order_id' => $paypalToken, // Requires migration!
+                ]);
+
                 return response()->json([
                     'status' => 'success',
+                    'token' => $paypalToken,
                     'approval_url' => $response['links'][1]['href']
                 ]);
             } else {
@@ -72,41 +83,44 @@ class PaymentController extends Controller
         }
     }
 
-    public function Success(Request $request)
+    public function success(Request $request)
     {
         try {
+            $paypalToken = $request->query('token'); // The PayPal Order ID
+
+            if (!$paypalToken) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Missing PayPal token.'
+                ], 400);
+            }
 
             $provider = new PayPalClient;
             $provider->setApiCredentials(config('paypal'));
             $provider->getAccessToken();
 
-            $response = $provider->capturePaymentOrder($request->token);
+            $response = $provider->capturePaymentOrder($paypalToken);
 
-            //dd($response);
-            $user = User::find($request->query('user_id'));
+            $payment = Payment::where('paypal_order_id', $paypalToken)->first();
 
-            $payment = DB::table('payments')
-                ->join('orders', 'payments.order_id', '=', 'orders.id')
-                ->where('orders.user_id', $user->id) // Ensure user_id is from orders table
-                ->where('payments.status', 'pending') // Apply status filter after the join
-                ->select('payments.id', 'payments.order_id') // Select payments data only
-                ->first();
-            if ($response['status'] == 'COMPLETED') {
+            if (!$payment) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Payment not found.'
+                ], 404);
+            }
 
-                /// firstful change status to compeleted
-                if ($payment) {
-                    DB::table('payments')
-                        ->where('id', $payment->id)
-                        ->update(['status' => 'completed']);
-                }
+            if ($response['status'] === 'COMPLETED') {
+                // 1. Update payment status
+                $payment->status = 'completed';
+                $payment->save();
 
-                /// update is_done to true in order table
-                DB::table('orders')
-                    ->where('id', $payment->order_id)
-                    ->update(['is_done' => true]);
+                // 2. Mark order as done
+                $order = Order::find($payment->order_id);
+                $order->is_done = true;
+                $order->save();
 
-                /// start working on sellers_earnings table
-
+                // 3. Calculate seller earnings
                 $sellers = DB::table('orders')
                     ->join('order_items', 'orders.id', '=', 'order_items.order_id')
                     ->join('products', 'order_items.product_id', '=', 'products.id')
@@ -114,7 +128,7 @@ class PaymentController extends Controller
                     ->select('products.seller_id')
                     ->distinct()
                     ->get();
-                //dd($sellers);
+
                 $items = DB::table('order_items')
                     ->join('products', 'order_items.product_id', '=', 'products.id')
                     ->where('order_items.order_id', $payment->order_id)
@@ -122,47 +136,29 @@ class PaymentController extends Controller
                     ->get();
 
                 foreach ($sellers as $seller) {
-
                     foreach ($items as $item) {
-                        // check if the seller exist
-                        $seller_exist = Seller_earning::where('seller_id', $seller->seller_id)
-                            ->first();
-
                         if ($item->seller_id == $seller->seller_id) {
-                            if ($seller_exist) {
-                                // update the upaid_amount
-                                DB::table('seller_earnings')
-                                    ->where('seller_id', $seller_exist->seller_id)
-                                    ->update(['unpaid_amount' => $seller_exist->unpaid_amount + $item->price]);
-                            } else {
-                                Seller_earning::create([
-                                    'seller_id' => $seller->seller_id,
-                                    'unpaid_amount' => $item->price
-                                ]);
-                            }
+                            $sellerEarning = Seller_earning::firstOrCreate(
+                                ['seller_id' => $seller->seller_id],
+                                ['unpaid_amount' => 0]
+                            );
 
-                            /// decrease qte from the product
+                            $sellerEarning->unpaid_amount += $item->price;
+                            $sellerEarning->save();
 
-                            //dd($item->stock);
-
-                            $U_qte = $item->stock - $item->qte;
-
-                            //// update product
+                            $updatedStock = $item->stock - $item->qte;
                             DB::table('products')
                                 ->where('id', $item->product_id)
-                                ->update(['stock' => $U_qte]);
+                                ->update(['stock' => $updatedStock]);
                         }
                     }
                 }
-                return response()->json([
-                    'message' => 'Payment successful!',
-                ]);
+
+                return response()->json(['message' => 'Payment successful!']);
             } else {
-                if ($payment) {
-                    DB::table('payments')
-                        ->where('id', $payment->id)
-                        ->update(['status' => 'failed']);
-                }
+                $payment->status = 'failed';
+                $payment->save();
+
                 return response()->json(['message' => 'Payment failed!'], 500);
             }
         } catch (\Throwable $th) {
@@ -173,12 +169,13 @@ class PaymentController extends Controller
         }
     }
 
+
     public function Cancel()
     {
         return response()->json(['message' => 'Payment cancelled.']);
     }
 
-    public function payoutToSeller(Request $request, Seller $seller)
+    public function payoutToSeller(Request $request, $id)
     {
         try {
 
@@ -186,7 +183,7 @@ class PaymentController extends Controller
             $provider->setApiCredentials(config('paypal'));
             $provider->getAccessToken();
 
-
+            $seller = Seller::where('id', $id)->first();
             if (!$seller) {
                 return response()->json([
                     'message' => 'seller not found'

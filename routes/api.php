@@ -89,8 +89,9 @@ Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
     Route::delete('/deleteimageadmin/{Image}', [ImageController::class, 'destroy']);
 
     /////////////////////////////////////////////////
-
-
+    Route::get('/getallsellerearnings', [SellerController::class, 'getallsellerearnings']);
+    Route::post('/payoutToSeller/{id}', [PaymentController::class, 'payoutToSeller']);
+    ////////////////////////////////////////////
 });
 
 
