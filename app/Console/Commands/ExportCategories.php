@@ -2,50 +2,36 @@
 
 namespace App\Console\Commands;
 
-use SplFileObject;
 use League\Csv\Writer;
 use App\Models\Categorie;
 use Illuminate\Console\Command;
+use League\Csv\CannotInsertRecord;
+use SplTempFileObject;
 
 class ExportCategories extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'app:export-categories';
+    protected $description = 'Export categories to a CSV file';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Command description';
-
-    /**
-     * Execute the console command.
-     */
-    public function handle()
+    public function handle(): void
     {
+        // Get categories
+        $categories = Categorie::all();
 
-        $category = Categorie::all();
+        // Create CSV writer using temporary memory file
+        $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-        // Create a new CSV writer object that writes to a file
-        $csv = Writer::createFromFileObject(new SplFileObject(storage_path('app/category.csv'), 'w'));
-
-        // Insert column headers
+        // Insert header row
         $csv->insertOne(['name', 'category_id']);
 
-        // Insert product data
-        foreach ($category as $categorys) {
-
-            $csv->insertOne([$categorys->name, $categorys->category_id]);
+        // Insert data
+        foreach ($categories as $cat) {
+            $csv->insertOne([$cat->name, $cat->category_id]);
         }
 
-        // Inform the user that the export was successful
-        $this->info('category have been successfully exported to products.csv in the storage directory.');
+        // Write to storage file
+        file_put_contents(storage_path('app/category.csv'), $csv->toString());
 
-        //to execute this command : php artisan app:export-products-to-csv
+        $this->info('Categories exported to storage/app/category.csv');
     }
 }

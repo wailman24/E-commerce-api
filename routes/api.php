@@ -43,6 +43,9 @@ Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {
     Route::post('/addproduct', [ProductController::class, 'store']);
     Route::put('/updateproduct/{Product}', [ProductController::class, 'update']);
     Route::delete('/deleteproduct/{id}', [ProductController::class, 'destroy']);
+
+
+    Route::get('/getMyPayouts', [SellerController::class, 'getMyPayouts']);
 });
 
 Route::middleware(['auth:sanctum', 'isClient'])->group(function () {
@@ -127,7 +130,7 @@ Route::middleware(['auth:sanctum', 'isClientOrSeller'])->group(function () {
     Route::put('/inc/{order_item}', [OrderItemController::class, 'inc']);
 
     ///////////////////
-
+    Route::post('/payment', [PaymentController::class, 'createPayment'])->name('payment');
 });
 
 Route::get('/getproduct/{id}', [ProductController::class, 'getproduct']);
@@ -165,5 +168,24 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/getPopularCategories', [CategorieController::class, 'getPopularCategories']);
+
 Route::post('/recommendation', [ProductRecommendationController::class, 'getRecommendations']);
-/*  */
+
+////////////////////// Recommandation/////////////
+
+///conntent-based ==> product page
+Route::get('/recommendations/content/{productID}', [ProductRecommendationController::class, 'getRecommendations_content']);
+/////popularity ==> user page
+Route::get('/recommendations/popular', [ProductRecommendationController::class, 'getRecommendations_popularity']);
+////collaborative ==> user page
+Route::get('/recommendations/users/{UserID}', [ProductRecommendationController::class, 'getRecommendations_collaborative']);
+///////////////////
+
+Route::get('/export-recommendation-data', function (Request $request) {
+    if ($request->header('X-Secret-Key') !== env('EXPORT_SECRET')) {
+        abort(403, 'Unauthorized');
+    }
+    Artisan::call('app:export-products-to-csv');
+    Artisan::call('export:reviews');
+    return response()->json(['status' => 'Export triggered']);
+});

@@ -9,6 +9,7 @@ use App\Models\Order_item;
 use App\Models\Seller;
 use Illuminate\Http\Request;
 use App\Models\Seller_earning;
+use App\Models\SellerPayout;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
@@ -61,7 +62,7 @@ class PaymentController extends Controller
                     'order_id' => $order->id,
                     'methode' => 'paypal',
                     'status' => 'pending',
-                    'paypal_order_id' => $paypalToken, // Requires migration!
+                    'paypal_order_id' => $paypalToken,
                 ]);
 
                 return response()->json([
@@ -216,9 +217,16 @@ class PaymentController extends Controller
                 $paid = $seller_earn->paid_amount + $seller_earn->unpaid_amount;
 
                 $seller_earn->update([
-
                     'unpaid_amount' => 0,
                     'paid_amount' => $paid
+                ]);
+
+                // ✅ Save to payouts history
+                SellerPayout::create([
+                    'seller_id' => $seller->id,
+                    'amount_paid' => $seller_earn->unpaid_amount,
+                    'batch_id' => $response['batch_header']['payout_batch_id'],
+                    'paid_at' => now(),
                 ]);
 
                 return response()->json([

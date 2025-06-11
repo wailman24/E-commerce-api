@@ -15,7 +15,7 @@ class ImportCategories extends Command
     protected $description = 'Import categories from a CSV file into the database';
 
     /**
-     
+
 Execute the console command.*/
     public function handle()
     {
@@ -44,7 +44,9 @@ Execute the console command.*/
             // Insert into DB
             Categorie::create([
                 'name' => $record['name'],
-                'category_id' => $record['category_id'] ?? null,
+                //'category_id' => $record['category_id'] ?? null,
+                'category_id' => $record['category_id'] !== '' ? (int) $record['category_id'] : null,
+
             ]);
 
             $imported++;

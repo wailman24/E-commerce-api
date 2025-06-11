@@ -95,7 +95,7 @@ user_counts = filtered_ratings['User ID'].value_counts()
 active_users = user_counts[user_counts > 10].index
 filtered_ratings = filtered_ratings[filtered_ratings['User ID'].isin(active_users)]
 
-#Step 3: transform the dataset into a metrics (pivote_table) 
+#Step 3: transform the dataset into a metrics (pivote_table)
 df_colab_pivot = filtered_ratings.pivot_table(columns="Product ID", index="User ID", values="Rating").fillna(0)
 
 #searching for optimal k number of clusters
@@ -104,6 +104,8 @@ sse = []
 K_range = range(1, 21)
 for k in K_range:
     kmeans = KMeans(n_clusters=k, n_init=5, init='k-means++', random_state=42)
+    ## print("df_colab_pivot shape:", df_colab_pivot.shape)
+
     kmeans.fit(df_colab_pivot)
     sse.append(kmeans.inertia_)
 
@@ -168,7 +170,7 @@ def recommend_products_for_users(user_id):
 # Step 1: Group by Product ID and aggregate average rating, count, and take one product name
 popular = ratings.groupby('Product ID').agg({
     'Rating': ['mean', 'count'],
-    'Product Name': 'first'  
+    'Product Name': 'first'
 })
 
 # Step 2: Flatten the column names
@@ -183,7 +185,7 @@ popular = popular.reset_index()
 # Step 5: Reorder columns
 popular = popular[['Product ID', 'Product Name', 'rating_counts', 'average_rating']]
 
-# Step 6: filter the dataset to take only the products highly rated at least 100 times 
+# Step 6: filter the dataset to take only the products highly rated at least 100 times
 ratings_mean_count = popular[(popular['average_rating'] > 3) & (popular['rating_counts'] > 100)]
 ratings_mean_count = ratings_mean_count.sort_values(by=['rating_counts'], ascending=[ False]).head(15)
 

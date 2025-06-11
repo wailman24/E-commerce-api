@@ -61,7 +61,7 @@ class ProductController extends Controller
 
     public function getvalidproducts()
     {
-        $Products = Product::where('is_valid', true)->get();
+        $Products = Product::where('is_valid', true)->orderBy('created_at', 'desc')->paginate(12);
         //return new ProductResource($Products);
         return ProductResource::collection($Products);
     }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\EarningResource;
+use App\Http\Resources\PayoutResource;
+use App\Models\SellerPayout;
 use App\Models\User;
 use App\Models\Seller;
 
@@ -213,5 +215,19 @@ class SellerController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+
+    public function getMyPayouts(Request $request)
+    {
+        $user = Auth::user();
+        $seller = $user->seller;
+
+        if (!$seller) {
+            return response()->json(['error' => 'Not a seller'], 403);
+        }
+
+        $payouts = SellerPayout::where('seller_id', $seller->id)->orderByDesc('created_at')->get();
+
+        return PayoutResource::collection($payouts);
     }
 }
