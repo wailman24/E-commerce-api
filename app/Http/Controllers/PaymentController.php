@@ -155,7 +155,10 @@ class PaymentController extends Controller
                     }
                 }
 
-                return response()->json(['message' => 'Payment successful!']);
+                $token = $request->query('token');
+                $payerId = $request->query('PayerID');
+
+                return redirect()->away("http://localhost:5173/payment/success?token=$token&PayerID=$payerId");
             } else {
                 $payment->status = 'failed';
                 $payment->save();
@@ -173,7 +176,7 @@ class PaymentController extends Controller
 
     public function Cancel()
     {
-        return response()->json(['message' => 'Payment cancelled.']);
+        return redirect('http://localhost:5173/payment/cancel');
     }
 
     public function payoutToSeller(Request $request, $id)
@@ -192,6 +195,11 @@ class PaymentController extends Controller
             }
 
             $seller_earn = Seller_earning::where('seller_id', $seller->id)->first();
+            if (!$seller_earn) {
+                return response()->json([
+                    'message' => 'Earnings not found for this seller'
+                ], 404);
+            }
             $payoutData = [
                 "sender_batch_header" => [
                     "email_subject" => "You have received a payout!"
@@ -239,6 +247,42 @@ class PaymentController extends Controller
                     'message' => 'Payout failed!'
                 ], 500);
             }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function paymentondelivery(Request $request, $id)
+    {
+        try {
+            $user = Auth::user();
+            $order = Order::findOrFail($id);
+
+            if ($order->user_id !== $user->id) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'You are not allowed to pay for this order.'
+                ], 403);
+            }
+
+            // Update order status to completed
+            $order->is_done = true;
+            $order->save();
+
+            // Mark payment as completed
+            Payment::create([
+                'order_id' => $order->id,
+                'methode' => 'cash_on_delivery',
+                'status' => 'completed',
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Payment completed successfully.'
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,

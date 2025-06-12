@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\ProductController;
 //use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Api\CategorieController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\OtpController;
 //use App\Http\Controllers\ProductRecommendationController;
 
@@ -28,7 +29,6 @@ Route::post('/login', [UserController::class, 'login']);
 Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {
     Route::post('/updateseller/{id}', [SellerController::class, 'updateseller']);
 
-    Route::get('/getseller/{id}', [SellerController::class, 'getseller']);
 
     Route::post('/addimage', [ImageController::class, 'store']);
     Route::post('/updateimage/{Image}', [ImageController::class, 'updateimage']);
@@ -62,7 +62,7 @@ Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
     Route::get('/getalluser', [UserController::class, 'getalluser']);
     Route::delete('/deleteuser/{id}', [UserController::class, 'delete']);
 
-    Route::post('/payout/{seller}', [PaymentController::class, 'payoutToSeller']);
+    //Route::post('/payout/{seller}', [PaymentController::class, 'payoutToSeller']);
 
     //////
 
@@ -106,6 +106,8 @@ Route::middleware(['auth:sanctum', 'isSellerOrAdmin'])->group(function () {
     //////////////////////////////////////////
 
     Route::get('/recommendations/users/{UserID}', [ProductRecommendationController::class, 'getRecommendations_collaborative']);
+
+    Route::get('/getseller/{id}', [SellerController::class, 'getseller']);
 });
 
 
@@ -131,6 +133,9 @@ Route::middleware(['auth:sanctum', 'isClientOrSeller'])->group(function () {
 
     ///////////////////
     Route::post('/payment', [PaymentController::class, 'createPayment'])->name('payment');
+    Route::post('/paymentondelivery/{id}', [PaymentController::class, 'paymentondelivery']);
+
+    Route::put('/updateadressdelivery/{id}', [OrderController::class, 'updateadressdelivery']);
 });
 
 Route::get('/getproduct/{id}', [ProductController::class, 'getproduct']);
@@ -160,9 +165,11 @@ Route::post('/verify-otp', [OtpController::class, 'verifyOtp']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [UserController::class, 'logout']);
     /// get the authenticatided user
+    Route::post('/addFeedback', [FeedbackController::class, 'store']);
+    Route::get('/getuserbyid/{id}', [UserController::class, 'getuserbyid']);
     Route::get('/getuser', [UserController::class, 'getuser']);
     Route::put('/updateuser', [UserController::class, 'updateuser']);
-    Route::get('/order_history', [OrderController::class, 'order_history']);
+    Route::get('/order_history/{id}', [OrderController::class, 'order_history']);
     Route::get('/getBestDealsProducts', [ProductController::class, 'getBestDealsProducts']);
     Route::delete('/deletereview/{reviewId}', [ReviewController::class, 'destroy']);
 });

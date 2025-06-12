@@ -10,6 +10,8 @@ use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order_item;
 use App\Models\Product;
 use App\Models\Seller;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 
@@ -44,10 +46,10 @@ class OrderController extends Controller
         }
     }
  */
-    public function order_history()
+    public function order_history($id)
     {
         try {
-            $user = Auth::user();
+            $user = User::findOrFail($id);
             $orders = Order::where('user_id', $user->id)->get();
             return OrderResource::collection($orders);
         } catch (\Throwable $th) {
@@ -146,5 +148,25 @@ class OrderController extends Controller
         }
 
         // return response()->json(['error' => 'Unauthorized'], 403);
+    }
+
+    public function updateadressdelivery(Request $request, $id)
+    {
+        try {
+            $order = Order::findOrFail($id);
+            $order->update([
+                'adress_delivery' => $request->adress_delivery,
+            ]);
+            return response()->json([
+                'status' => true,
+                'message' => 'Order address and delivery updated successfully.',
+                'order' => new OrderResource($order),
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 }

@@ -178,7 +178,7 @@ class SellerController extends Controller
     }
 
 
-    public function destroy(string $id)
+    public function destroy($id)
     {
         $seller = Seller::where('id', $id)->first();
         if (!$seller) {

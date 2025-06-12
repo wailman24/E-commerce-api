@@ -83,7 +83,7 @@ class OrderItemController extends Controller
                 'status' => $request->status
             ]);
 
-            $statuses = $Item->order->order_item()->pluck('status')->unique();
+            $statuses = $Item->order->items()->pluck('status')->unique();
             $order = $Item->order;
 
             // Mise à jour du statut global de la commande

@@ -17,6 +17,7 @@ class PayoutResource extends JsonResource
         return [
             'id' => $this->id,
             'seller_id' => $this->seller_id,
+            'seller_email' => $this->seller->paypal,
             'amount_paid' => $this->amount_paid,
             'batch_id' => $this->batch_id,
             'paid_at' => $this->paid_at,

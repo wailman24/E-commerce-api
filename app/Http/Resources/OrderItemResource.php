@@ -22,7 +22,7 @@ class OrderItemResource extends JsonResource
         return [
             'id' => $this->id,
             'product' => new ProductResource($product),
-            //'order' => new OrderResource($order),
+            'adress_delivery' => $order->adress_delivery ?? 'Unknown Address',
             'order_id' => $this->order_id,
             'qte' => $this->qte,
             'price' => $this->price,

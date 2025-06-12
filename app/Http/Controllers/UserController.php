@@ -139,4 +139,17 @@ class UserController extends Controller
     {
         return UserResource::collection(User::all());
     }
+
+    public function getuserbyid($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            return new UserResource($user);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User not found'
+            ], 404);
+        }
+    }
 }
