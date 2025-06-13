@@ -32,6 +32,33 @@ class ReviewController extends Controller
         }
     }
 
+    public function getallreviews(Request $request)
+    {
+        try {
+            $reviews = Review::with('user') // Eager load user for performance
+                ->latest() // Optional: order by latest first
+                ->paginate(10); // Limit to 10 per page
+
+            return response()->json([
+                'success' => true,
+                'data' => ReviewResource::collection($reviews),
+                'meta' => [
+                    'current_page' => $reviews->currentPage(),
+                    'last_page' => $reviews->lastPage(),
+                    'per_page' => $reviews->perPage(),
+                    'total' => $reviews->total(),
+                ]
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+
+
     /**
      * Store a newly created resource in storage.
      */
@@ -110,15 +137,16 @@ class ReviewController extends Controller
                 ], 403);
             }
 
-        if (!$review) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Review Not Found'], 404);
-        }
+            if (!$review) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Review Not Found'
+                ], 404);
+            }
 
 
 
-        $review->update($request->only(['rating', 'comment']));
+            $review->update($request->only(['rating', 'comment']));
 
             return response()->json([
                 'success' => true,
@@ -146,13 +174,6 @@ class ReviewController extends Controller
                 'success' => false,
                 'message' => 'Review Not Found'
             ], 404);
-        }
-
-        if ($review->user_id !== Auth::user()->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'You Are Not Allowed To delete This Review'
-            ], 403);
         }
 
         $review->delete();

@@ -75,7 +75,8 @@ Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
 
     ///////////////////////////////////////////////////
     //Route::get('/getCardsData', [OrderController::class, 'getCardsData']);
-
+    Route::get('/getallreviews', [ReviewController::class, 'getallreviews']);
+    ////////
     Route::get('/getOrdersCountChartData', [OrderController::class, 'getOrdersCountChartData']);
     Route::get('/allorders', [OrderController::class, 'index']);
 
@@ -172,7 +173,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getuser', [UserController::class, 'getuser']);
     Route::put('/updateuser', [UserController::class, 'updateuser']);
     Route::get('/order_history/{id}', [OrderController::class, 'order_history']);
-     Route::get('/getBestDealsProducts', [ProductController::class, 'getBestDealsProducts']);
+    Route::get('/getBestDealsProducts', [ProductController::class, 'getBestDealsProducts']);
     Route::delete('/deletereview/{reviewId}', [ReviewController::class, 'destroy']);
 });
 
