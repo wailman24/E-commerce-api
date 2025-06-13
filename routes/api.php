@@ -65,7 +65,8 @@ Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
     //Route::post('/payout/{seller}', [PaymentController::class, 'payoutToSeller']);
 
     //////
-
+    Route::get('/getallfbks', [FeedbackController::class, 'getallfbks']);
+    /////////
     Route::get('/getallseller', [SellerController::class, 'index']);
     Route::get('/getpendingsellers', [SellerController::class, 'getpendingsellers']);
     Route::put('/updatesellerstatus/{id}', [SellerController::class, 'updatesellerstatus']);
@@ -166,11 +167,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [UserController::class, 'logout']);
     /// get the authenticatided user
     Route::post('/addFeedback', [FeedbackController::class, 'store']);
+    Route::get('/getfdbksbyuserid/{id}', [FeedbackController::class, 'getbyuserid']);
     Route::get('/getuserbyid/{id}', [UserController::class, 'getuserbyid']);
     Route::get('/getuser', [UserController::class, 'getuser']);
     Route::put('/updateuser', [UserController::class, 'updateuser']);
     Route::get('/order_history/{id}', [OrderController::class, 'order_history']);
-    Route::get('/getBestDealsProducts', [ProductController::class, 'getBestDealsProducts']);
+     Route::get('/getBestDealsProducts', [ProductController::class, 'getBestDealsProducts']);
     Route::delete('/deletereview/{reviewId}', [ReviewController::class, 'destroy']);
 });
 

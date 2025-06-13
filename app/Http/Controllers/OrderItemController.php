@@ -117,47 +117,57 @@ class OrderItemController extends Controller
             $user = Auth::user();
 
             $request->validate([
-                'product_id' => 'required',
-                //'qte' => 'required',
-                //'adress_delivery' => 'nullable',
+                'product_id' => 'required|exists:products,id',
+                'qte' => 'nullable|integer|min:1',
             ]);
+
+            $qte = $request->input('qte', 1); // Default to 1 if not provided
 
             $product = DB::table('products')
                 ->select('prix', 'stock')
-                ->where('id', $request->product_id)->first();
+                ->where('id', $request->product_id)
+                ->first();
 
-            //$fields['price'] = ($product->prix) * $fields['qte'];
-            $price = $product->prix;
-            $order = Order::where('user_id', $user->id)
-                ->where('is_done', false)->first();
+            if (!$product) {
+                return response()->json(['message' => 'Product not found.'], 404);
+            }
 
-
-            /*     if ($request->qte > $product->stock) {
+            if ($qte > $product->stock) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'you should take qte less than or equal to ' . $product->stock
-                ], 500);
+                    'message' => 'Quantity cannot exceed available stock (' . $product->stock . ')'
+                ], 400);
             }
-            */
-            //$total = $order->total + $price;
-            if (isset($order)) {
+
+            $price = $product->prix * $qte;
+
+            $order = Order::where('user_id', $user->id)
+                ->where('is_done', false)
+                ->first();
+
+            if ($order) {
                 $order_item = Order_item::where('order_id', $order->id)
                     ->where('product_id', $request->product_id)
                     ->first();
 
                 if ($order_item) {
+                    $newQte = $order_item->qte + $qte;
 
-                    if ($order_item->qte == $product->stock) {
-                        return response()->json([]);
-                    } else {
-                        $order_item->update([
-                            'qte' => $order_item->qte + 1,
-                            'price' => $order_item->price + $product->prix
-                        ]);
-
-                        $order->update(['total' => $order->total + $product->prix]);
-                        return new OrderItemResource($order_item);
+                    if ($newQte > $product->stock) {
+                        return response()->json([
+                            'status' => false,
+                            'message' => 'Total quantity exceeds stock.'
+                        ], 400);
                     }
+
+                    $order_item->update([
+                        'qte' => $newQte,
+                        'price' => $order_item->price + $price
+                    ]);
+
+                    $order->update(['total' => $order->total + $price]);
+
+                    return new OrderItemResource($order_item);
                 }
             } else {
                 $order = Order::create([
@@ -168,11 +178,10 @@ class OrderItemController extends Controller
                 ]);
             }
 
-
             $order_item = Order_item::create([
                 'product_id' => $request->product_id,
                 'order_id' => $order->id,
-                'qte' => 1,
+                'qte' => $qte,
                 'price' => $price
             ]);
 
@@ -186,6 +195,7 @@ class OrderItemController extends Controller
             ], 500);
         }
     }
+
 
     /**
      * Update the specified resource in storage.

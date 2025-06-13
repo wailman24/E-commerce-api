@@ -222,6 +222,13 @@ class PaymentController extends Controller
 
             if (isset($response['batch_header'])) {
 
+                SellerPayout::create([
+                    'seller_id' => $seller->id,
+                    'amount_paid' => $seller_earn->unpaid_amount,
+                    'batch_id' => $response['batch_header']['payout_batch_id'],
+                    'paid_at' => now(),
+                ]);
+
                 $paid = $seller_earn->paid_amount + $seller_earn->unpaid_amount;
 
                 $seller_earn->update([
@@ -230,12 +237,6 @@ class PaymentController extends Controller
                 ]);
 
                 // ✅ Save to payouts history
-                SellerPayout::create([
-                    'seller_id' => $seller->id,
-                    'amount_paid' => $seller_earn->unpaid_amount,
-                    'batch_id' => $response['batch_header']['payout_batch_id'],
-                    'paid_at' => now(),
-                ]);
 
                 return response()->json([
                     'status' => 'success',

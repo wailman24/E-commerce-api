@@ -140,7 +140,7 @@ class ProductController extends Controller
     public function getBestDealsProducts()
     {
 
-        $products = Product::with(['images'])->withSum('order_item as total_qte', 'qte')->orderByDesc('total_qte')->take(env('TOP_PURCHASED_PRODUCT'))->get();
+        $products = Product::with(['images'])->withSum('order_item as total_qte', 'qte')->orderByDesc('total_qte')->take(20)->get();
         //return new ProductResource($products);
         return ProductResource::collection($products);
     }
