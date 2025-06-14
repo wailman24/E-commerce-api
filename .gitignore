@@ -1,1 +1,25 @@
+# Laravel
 /vendor
+/node_modules
+/public/storage
+/storage/*.key
+.env
+.env.*
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+.idea/
+.vscode/
+.phpunit.result.cache
+.php_cs.cache
+composer.lock
+*.log
+
+# Laravel storage except .gitignore
+/storage/app/*
+!/storage/app/.gitignore
+/storage/framework/*
+!/storage/framework/.gitignore
+/storage/logs/*
+!/storage/logs/.gitignore
