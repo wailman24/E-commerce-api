@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategorieController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\OtpController;
 //use App\Http\Controllers\ProductRecommendationController;
 
@@ -199,3 +200,7 @@ Route::get('/export-recommendation-data', function (Request $request) {
     Artisan::call('export:reviews');
     return response()->json(['status' => 'Export triggered']);
 });
+
+
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::post('/reset-password', [ForgotPasswordController::class, 'reset']);
