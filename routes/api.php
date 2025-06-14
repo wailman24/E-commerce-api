@@ -1,0 +1,206 @@
+<?php
+
+use App\Http\Controllers\ProductRecommendationController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\UserController;
+
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SellerController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\WishlistController;
+
+use App\Http\Controllers\Api\ImageController;
+use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\Api\ProductController;
+//use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Api\CategorieController;
+use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\OtpController;
+//use App\Http\Controllers\ProductRecommendationController;
+
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
+
+
+Route::middleware(['auth:sanctum', 'isSeller'])->group(function () {
+    Route::post('/updateseller/{id}', [SellerController::class, 'updateseller']);
+
+
+    Route::post('/addimage', [ImageController::class, 'store']);
+    Route::post('/updateimage/{Image}', [ImageController::class, 'updateimage']);
+    Route::delete('/deleteimage/{Image}', [ImageController::class, 'destroy']);
+
+    Route::put('/updateitemstatus/{Item}', [OrderItemController::class, 'updateitemstatus']);
+
+    Route::get('/getallselleritems', [OrderItemController::class, 'getallselleritems']);
+
+    Route::get('/getallproductsforsellers', [ProductController::class, 'getallproductsforsellers']);
+    Route::get('/getnotvalidproductforseller', [ProductController::class, 'getnotvalidproductforseller']);
+    Route::post('/addproduct', [ProductController::class, 'store']);
+    Route::put('/updateproduct/{Product}', [ProductController::class, 'update']);
+    Route::delete('/deleteproduct/{id}', [ProductController::class, 'destroy']);
+
+
+    Route::get('/getMyPayouts', [SellerController::class, 'getMyPayouts']);
+});
+
+Route::middleware(['auth:sanctum', 'isClient'])->group(function () {
+
+    Route::post('/payment', [PaymentController::class, 'createPayment'])->name('payment');
+
+    ///////
+
+    Route::post('/addseller', [SellerController::class, 'store']);
+});
+
+Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
+
+    Route::get('/getalluser', [UserController::class, 'getalluser']);
+    Route::delete('/deleteuser/{id}', [UserController::class, 'delete']);
+
+    //Route::post('/payout/{seller}', [PaymentController::class, 'payoutToSeller']);
+
+    //////
+    Route::get('/getallfbks', [FeedbackController::class, 'getallfbks']);
+    /////////
+    Route::get('/getallseller', [SellerController::class, 'index']);
+    Route::get('/getpendingsellers', [SellerController::class, 'getpendingsellers']);
+    Route::put('/updatesellerstatus/{id}', [SellerController::class, 'updatesellerstatus']);
+    Route::delete('/deleteseller/{id}', [SellerController::class, 'destroy']);
+    Route::get('/getallproducts', [ProductController::class, 'getallproducts']);
+
+    ///////////////////////////////////////////////////
+    //Route::get('/getCardsData', [OrderController::class, 'getCardsData']);
+    Route::get('/getallreviews', [ReviewController::class, 'getallreviews']);
+    ////////
+    Route::get('/getOrdersCountChartData', [OrderController::class, 'getOrdersCountChartData']);
+    Route::get('/allorders', [OrderController::class, 'index']);
+
+    Route::get('/allitems', [OrderItemController::class, 'getallitems']);
+    //////////////////////////////////////////////////
+
+    Route::post('/addcategory', [CategorieController::class, 'store']);
+    Route::put('/updatecategory/{id}', [CategorieController::class, 'update']);
+    Route::delete('/deletecategory/{Category}', [CategorieController::class, 'destroy']);
+
+    Route::put('/updateproductstatus/{id}', [ProductController::class, 'updateproductstatus']);
+
+    Route::delete('/deleteproductadmin/{id}', [ProductController::class, 'destroy']);
+    Route::get('/getnotvalidproductforadmin', [ProductController::class, 'getnotvalidproductforadmin']);
+    Route::delete('/deleteimageadmin/{Image}', [ImageController::class, 'destroy']);
+
+    /////////////////////////////////////////////////
+    Route::get('/getallsellerearnings', [SellerController::class, 'getallsellerearnings']);
+    Route::post('/payoutToSeller/{id}', [PaymentController::class, 'payoutToSeller']);
+    ////////////////////////////////////////////
+});
+
+
+Route::middleware(['auth:sanctum', 'isSellerOrAdmin'])->group(function () {
+    Route::get('/getCardsData', [OrderController::class, 'getCardsData']);
+
+    Route::get('/getOrdersCountChartData', [OrderController::class, 'getOrdersCountChartData']);
+
+    //////////////////////////////////////////
+
+    Route::get('/recommendations/users/{UserID}', [ProductRecommendationController::class, 'getRecommendations_collaborative']);
+
+    Route::get('/getseller/{id}', [SellerController::class, 'getseller']);
+});
+
+
+Route::middleware(['auth:sanctum', 'isClientOrSeller'])->group(function () {
+    Route::get('/wishlist', [WishlistController::class, 'view_wishlist']);
+    Route::post('/wishlist/add', [WishlistController::class, 'add_to_wishlist']);
+    //Route::delete('/wishlist/remove', [WishlistController::class, 'remove_from_wishlist']);
+    Route::get('/existinwishlist/{product}', [WishlistController::class, 'is_in_wishlist']);
+    Route::post('/addreview/{productId}', [ReviewController::class, 'store']);
+    Route::put('/updatereview/{reviewId}', [ReviewController::class, 'update']);
+
+    ////////////////////////////////////////////////
+
+    Route::get('/order_item', [OrderItemController::class, 'index']);
+    Route::post('/order_item', [OrderItemController::class, 'store']);
+    Route::put('/order_item/{order_item}', [OrderItemController::class, 'update']);
+    Route::delete('/order_item/{order_item}', [OrderItemController::class, 'destroy']);
+    Route::get('/order_item/{product_id}', [OrderItemController::class, 'is_in_cart']);
+    /// inc and dec ///
+
+    Route::put('/dec/{order_item}', [OrderItemController::class, 'dec']);
+    Route::put('/inc/{order_item}', [OrderItemController::class, 'inc']);
+
+    ///////////////////
+    Route::post('/payment', [PaymentController::class, 'createPayment'])->name('payment');
+    Route::post('/paymentondelivery/{id}', [PaymentController::class, 'paymentondelivery']);
+
+    Route::put('/updateadressdelivery/{id}', [OrderController::class, 'updateadressdelivery']);
+});
+
+Route::get('/getproduct/{id}', [ProductController::class, 'getproduct']);
+Route::get('/reviews/{productId}', [ReviewController::class, 'index']);
+
+/////////////////////////////////////////////////
+
+
+Route::get('/getallcategory', [CategorieController::class, 'getall']);
+Route::get('/getcategory/{Category}', [CategorieController::class, 'show']);
+
+Route::get('/getvalidproducts', [ProductController::class, 'getvalidproducts']);
+Route::get('/getproduct/{Product}', [ProductController::class, 'show']);
+
+Route::get('/getallimage', [ImageController::class, 'index']);
+Route::get('/getimage/{Image}', [ImageController::class, 'show']);
+
+/////////////////////////////////////////////////
+
+//payment
+Route::get('/payment/success', [PaymentController::class, 'Success'])->name('payment.success');
+Route::get('/payment/cancel', [PaymentController::class, 'Cancel'])->name('payment.cancel');
+
+//Route::post('/send-otp', [OtpController::class, 'sendOtp']);
+Route::post('/verify-otp', [OtpController::class, 'verifyOtp']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [UserController::class, 'logout']);
+    /// get the authenticatided user
+    Route::post('/addFeedback', [FeedbackController::class, 'store']);
+    Route::get('/getfdbksbyuserid/{id}', [FeedbackController::class, 'getbyuserid']);
+    Route::get('/getuserbyid/{id}', [UserController::class, 'getuserbyid']);
+    Route::get('/getuser', [UserController::class, 'getuser']);
+    Route::put('/updateuser', [UserController::class, 'updateuser']);
+    Route::get('/order_history/{id}', [OrderController::class, 'order_history']);
+    Route::get('/getBestDealsProducts', [ProductController::class, 'getBestDealsProducts']);
+    Route::delete('/deletereview/{reviewId}', [ReviewController::class, 'destroy']);
+});
+
+Route::get('/getPopularCategories', [CategorieController::class, 'getPopularCategories']);
+
+Route::post('/recommendation', [ProductRecommendationController::class, 'getRecommendations']);
+
+////////////////////// Recommandation/////////////
+
+///conntent-based ==> product page
+Route::get('/recommendations/content/{productID}', [ProductRecommendationController::class, 'getRecommendations_content']);
+/////popularity ==> user page
+Route::get('/recommendations/popular', [ProductRecommendationController::class, 'getRecommendations_popularity']);
+////collaborative ==> user page
+Route::get('/recommendations/users/{UserID}', [ProductRecommendationController::class, 'getRecommendations_collaborative']);
+///////////////////
+
+Route::get('/export-recommendation-data', function (Request $request) {
+    if ($request->header('X-Secret-Key') !== env('EXPORT_SECRET')) {
+        abort(403, 'Unauthorized');
+    }
+    Artisan::call('app:export-products-to-csv');
+    Artisan::call('export:reviews');
+    return response()->json(['status' => 'Export triggered']);
+});
+
+
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::post('/reset-password', [ForgotPasswordController::class, 'reset']);
