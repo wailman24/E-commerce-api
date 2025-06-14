@@ -191,6 +191,8 @@ Route::get('/recommendations/popular', [ProductRecommendationController::class, 
 ////collaborative ==> user page
 Route::get('/recommendations/users/{UserID}', [ProductRecommendationController::class, 'getRecommendations_collaborative']);
 ///////////////////
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::post('/reset-password', [ForgotPasswordController::class, 'reset']);
 
 Route::get('/export-recommendation-data', function (Request $request) {
     if ($request->header('X-Secret-Key') !== env('EXPORT_SECRET')) {
@@ -200,7 +202,3 @@ Route::get('/export-recommendation-data', function (Request $request) {
     Artisan::call('export:reviews');
     return response()->json(['status' => 'Export triggered']);
 });
-
-
-Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
-Route::post('/reset-password', [ForgotPasswordController::class, 'reset']);
