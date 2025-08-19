@@ -97,9 +97,7 @@ This is the backend RESTful API for the [E-commerce-front](https://github.com/wa
 - **Frontend:** [wailman24/E-commerce-front](https://github.com/wailman24/E-commerce-front)
 
 ## License
+This project is licensed for **personal, educational, or non-commercial use only**. See the [LICENSE](LICENSE) file for details.
 
-[MIT](LICENSE)
-
----
 
 > Built with ❤️ using Laravel.
